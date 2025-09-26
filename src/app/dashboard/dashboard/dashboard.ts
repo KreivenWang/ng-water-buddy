@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
   standalone: false,
   template: `
     <div class="dashboard-container max-w-md mx-auto p-4">
-      <app-header></app-header>
       <div class="dashboard-content">
         <app-progress></app-progress>
         <app-reminder></app-reminder>
