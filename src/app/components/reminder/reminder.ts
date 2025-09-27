@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-reminder',
-  standalone: false,
   template: `
     <div class="reminder bg-white p-4 rounded-lg shadow-sm">
       <div class="flex items-center gap-3 mb-3">

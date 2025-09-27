@@ -1,8 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-water-records',
-  standalone: false,
+  imports: [CommonModule],
   template: `
     <div class="water-records bg-white p-6 rounded-lg shadow-sm">
       <h3 class="text-lg font-bold text-gray-800 mb-4 text-center">今日饮水记录</h3>

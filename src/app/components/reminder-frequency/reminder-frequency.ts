@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+// 定义设置的localStorage键名
+const REMINDER_FREQUENCY_KEY = 'waterBuddy_reminderFrequency';
 
 @Component({
   selector: 'app-reminder-frequency',
-  standalone: false,
+  imports: [FormsModule, CommonModule],
   template: `
     <div class="bg-white rounded-lg p-4 shadow-sm">
       <h3 class="text-lg font-medium text-gray-800 mb-4">提醒频率</h3>
@@ -51,7 +56,7 @@ import { Component, OnInit } from '@angular/core';
   `,
   styles: [``]
 })
-export class ReminderFrequency implements OnInit {
+export class ReminderFrequencyComponent implements OnInit {
   frequencyMinutes: number = 30; // 默认30分钟
   displayFrequency: string = '30分钟';
   
@@ -65,11 +70,13 @@ export class ReminderFrequency implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.loadSettings();
     this.updateDisplayFrequency();
   }
 
   onFrequencyChange(): void {
     this.updateDisplayFrequency();
+    this.saveSettings();
   }
 
   updateDisplayFrequency(): void {
@@ -84,5 +91,33 @@ export class ReminderFrequency implements OnInit {
   setFrequency(minutes: number): void {
     this.frequencyMinutes = minutes;
     this.updateDisplayFrequency();
+    this.saveSettings();
+  }
+
+  // 从localStorage加载设置
+  loadSettings(): void {
+    try {
+      const savedSettings = localStorage.getItem(REMINDER_FREQUENCY_KEY);
+      if (savedSettings) {
+        const settings = JSON.parse(savedSettings);
+        this.frequencyMinutes = settings.frequencyMinutes || this.frequencyMinutes;
+      }
+    } catch (error) {
+      console.error('加载提醒频率设置失败:', error);
+    }
+  }
+
+  // 保存设置到localStorage
+  saveSettings(): void {
+    try {
+      const settings = {
+        frequencyMinutes: this.frequencyMinutes,
+        displayFrequency: this.displayFrequency,
+        lastUpdated: new Date().toISOString()
+      };
+      localStorage.setItem(REMINDER_FREQUENCY_KEY, JSON.stringify(settings));
+    } catch (error) {
+      console.error('保存提醒频率设置失败:', error);
+    }
   }
 }

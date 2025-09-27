@@ -1,8 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { ProgressComponent } from '@components/progress/progress';
+import { ReminderComponent } from '@components/reminder/reminder';
+import { WaterRecordsComponent } from '@components/water-records/water-records';
 
 @Component({
   selector: 'app-dashboard',
-  standalone: false,
+  imports: [CommonModule, ProgressComponent, ReminderComponent, WaterRecordsComponent],
   template: `
     <div class="dashboard-container max-w-md mx-auto p-4">
       <div class="dashboard-content">

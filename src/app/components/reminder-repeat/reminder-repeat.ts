@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+// 定义设置的localStorage键名
+const REMINDER_REPEAT_KEY = 'waterBuddy_reminderRepeat';
 
 @Component({
   selector: 'app-reminder-repeat',
-  standalone: false,
+  imports: [FormsModule, CommonModule],
   template: `
     <div class="bg-white rounded-lg p-4 shadow-sm">
       <h3 class="text-lg font-medium text-gray-800 mb-4">提醒重复设置</h3>
@@ -18,6 +23,7 @@ import { Component, OnInit } from '@angular/core';
           max="10" 
           step="1" 
           [(ngModel)]="repeatCount"
+          (ngModelChange)="saveSettings()"
           class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
         >
         <div class="flex justify-between text-sm text-gray-500 mt-1">
@@ -49,6 +55,7 @@ import { Component, OnInit } from '@angular/core';
           <input 
             type="checkbox" 
             [(ngModel)]="neverEnding"
+            (change)="saveSettings()"
             class="sr-only peer"
           >
           <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
@@ -65,17 +72,48 @@ import { Component, OnInit } from '@angular/core';
   `,
   styles: [``]
 })
-export class ReminderRepeat implements OnInit {
+export class ReminderRepeatComponent implements OnInit {
   repeatCount: number = 3; // 默认3次
   neverEnding: boolean = false;
   repeatPresets: number[] = [1, 2, 3, 5, 10];
 
   constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadSettings();
+  }
 
   setRepeatCount(count: number): void {
     this.repeatCount = count;
     this.neverEnding = false; // 选择具体次数时，取消永不关闭选项
+    this.saveSettings();
+  }
+
+  // 从localStorage加载设置
+  loadSettings(): void {
+    try {
+      const savedSettings = localStorage.getItem(REMINDER_REPEAT_KEY);
+      if (savedSettings) {
+        const settings = JSON.parse(savedSettings);
+        this.repeatCount = settings.repeatCount || this.repeatCount;
+        this.neverEnding = settings.neverEnding || this.neverEnding;
+      }
+    } catch (error) {
+      console.error('加载提醒重复设置失败:', error);
+    }
+  }
+
+  // 保存设置到localStorage
+  saveSettings(): void {
+    try {
+      const settings = {
+        repeatCount: this.repeatCount,
+        neverEnding: this.neverEnding,
+        lastUpdated: new Date().toISOString()
+      };
+      localStorage.setItem(REMINDER_REPEAT_KEY, JSON.stringify(settings));
+    } catch (error) {
+      console.error('保存提醒重复设置失败:', error);
+    }
   }
 }

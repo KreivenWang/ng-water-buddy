@@ -1,8 +1,13 @@
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+
+// 定义设置的localStorage键名
+const DAILY_CUP_SETTINGS_KEY = 'waterBuddy_dailyCupSettings';
 
 @Component({
   selector: 'app-daily-cup',
-  standalone: false,
+  imports: [FormsModule, CommonModule],
   template: `
     <div class="bg-white rounded-lg p-4 shadow-sm">
       <h3 class="text-lg font-medium text-gray-800 mb-4">每日饮水目标</h3>
@@ -16,6 +21,7 @@ import { Component, OnInit } from '@angular/core';
           max="20" 
           step="1" 
           [(ngModel)]="dailyCups"
+          (ngModelChange)="saveSettings()"
           class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
         >
         <div class="flex justify-between text-sm text-gray-500 mt-1">
@@ -47,14 +53,16 @@ import { Component, OnInit } from '@angular/core';
   `,
   styles: [``]
 })
-export class DailyCup implements OnInit {
+export class DailyCupComponent implements OnInit {
   dailyCups: number = 8;
   cupSize: number = 250; // 默认杯子大小，单位：毫升
   quickCups: number[] = [6, 8, 10];
 
   constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadSettings();
+  }
 
   get totalLiters(): number {
     return (this.dailyCups * this.cupSize) / 1000;
@@ -62,5 +70,34 @@ export class DailyCup implements OnInit {
 
   setCups(cups: number): void {
     this.dailyCups = cups;
+    this.saveSettings();
+  }
+
+  // 从localStorage加载设置
+  loadSettings(): void {
+    try {
+      const savedSettings = localStorage.getItem(DAILY_CUP_SETTINGS_KEY);
+      if (savedSettings) {
+        const settings = JSON.parse(savedSettings);
+        this.dailyCups = settings.dailyCups || this.dailyCups;
+        this.cupSize = settings.cupSize || this.cupSize;
+      }
+    } catch (error) {
+      console.error('加载每日饮水目标设置失败:', error);
+    }
+  }
+
+  // 保存设置到localStorage
+  saveSettings(): void {
+    try {
+      const settings = {
+        dailyCups: this.dailyCups,
+        cupSize: this.cupSize,
+        lastUpdated: new Date().toISOString()
+      };
+      localStorage.setItem(DAILY_CUP_SETTINGS_KEY, JSON.stringify(settings));
+    } catch (error) {
+      console.error('保存每日饮水目标设置失败:', error);
+    }
   }
 }

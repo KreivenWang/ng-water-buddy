@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-cup-setting',
-  standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   template: `
     <div class="cup-setting-container max-w-md mx-auto p-6 bg-white rounded-lg shadow-sm">

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-progress',
-  standalone: false,
   template: `
     <div class="progress bg-white p-6 rounded-lg shadow-sm">
       <h2 class="text-3xl font-bold text-blue-600 text-center mb-2">{{ currentAmount }}/{{ totalAmount }}</h2>
