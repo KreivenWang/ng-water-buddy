@@ -1,5 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs';
+import { of, Subject, Subscription, timer } from 'rxjs';
+import { concatMap } from 'rxjs/operators';
+import { CONFIRMATION_SOUND_CONFIG, DEFAULT_BEEP_CONFIG, REMINDER_SOUND_PATTERN } from '../models/audio';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +12,9 @@ export class AudioService implements OnDestroy {
     [key: string]: { oscillator: OscillatorNode; gainNode: GainNode; playing: boolean };
   } = {};
   private audioContextCreated = false;
+  
+  // Subscription for reminder sound sequence
+  private reminderSoundSubscription: Subscription | null = null;
 
   // 音频事件通知
   private soundPlayedSubject = new Subject<string>();
@@ -63,9 +68,9 @@ export class AudioService implements OnDestroy {
    * @param soundId 声音ID，用于追踪和停止特定声音
    */
   playBeep(
-    frequency: number = 800,
-    duration: number = 500,
-    volume: number = 0.1,
+    frequency: number = DEFAULT_BEEP_CONFIG.frequency,
+    duration: number = DEFAULT_BEEP_CONFIG.duration,
+    volume: number = DEFAULT_BEEP_CONFIG.volume,
     soundId: string = 'default'
   ): void {
     if (!this.ensureAudioContextRunning()) {
@@ -128,36 +133,81 @@ export class AudioService implements OnDestroy {
   }
 
   /**
-   * 播放提醒声音
+   * 播放提醒声音 - 使用RxJS实现可中断的声音序列
    */
   playReminderSound(): void {
-    const beeps = [
-      { frequency: 1200, duration: 300, volume: 0.1 },
-      { frequency: 600, duration: 400, volume: 0.1 },
-      { frequency: 800, duration: 200, volume: 0.1 },
-      { frequency: 1000, duration: 300, volume: 0.1 },
-    ];
-    const pause = { pause: 1000 };
-    const beepPattern = [...beeps, pause, ...beeps, pause, ...beeps, pause, ...beeps];
+    // 停止之前的声音序列订阅
+    this.stopReminderSoundSequence();
+    
+    if (!this.ensureAudioContextRunning()) {
+      return;
+    }
+    
+    // 使用RxJS创建声音序列
+    const soundSequence$ = of(...REMINDER_SOUND_PATTERN).pipe(
+      // 对每个声音事件进行延迟处理
+      concatMap((event, index) => {
+        // 为每个声音创建一个唯一ID
+        const soundId = `reminder-${index}`;
+        
+        // 根据事件类型处理
+        if (event.type === 'beep') {
+          // 播放声音，并在持续时间后返回完成信号
+          return timer(0).pipe(
+            concatMap(() => {
+              this.playBeep(event.frequency, event.duration, event.volume, soundId);
+              // 返回一个延迟等于持续时间的Observable
+              return timer(event.duration);
+            })
+          );
+        } else { // pause
+          // 仅返回延迟的Observable
+          return timer(event.duration);
+        }
+      })
+    );
 
-    let delay = 0;
-    beepPattern.forEach((item, index) => {
-      if ('frequency' in item) {
-        setTimeout(() => {
-          this.playBeep(item.frequency, item.duration, item.volume, `reminder-${index}`);
-        }, delay);
-        delay += item.duration ?? 0;
-      } else {
-        delay += item.pause;
+    // 订阅声音序列并保存引用，以便后续可以取消订阅
+    this.reminderSoundSubscription = soundSequence$.subscribe(
+      () => {
+        // 每个事件完成时触发
+      },
+      (error) => {
+        console.error('声音序列执行错误:', error);
+      },
+      () => {
+        // 声音序列完成时清理订阅引用
+        this.reminderSoundSubscription = null;
       }
-    });
+    );
+  }
+
+  /**
+   * 停止提醒声音序列
+   */
+  private stopReminderSoundSequence(): void {
+    // 取消订阅，停止后续的声音事件
+    if (this.reminderSoundSubscription) {
+      this.reminderSoundSubscription.unsubscribe();
+      this.reminderSoundSubscription = null;
+    }
+    
+    // 停止所有当前正在播放的提醒声音
+    Object.keys(this.oscillators)
+      .filter(soundId => soundId.startsWith('reminder-'))
+      .forEach(soundId => this.stopSound(soundId));
   }
 
   /**
    * 播放确认声音
    */
   playConfirmationSound(): void {
-    this.playBeep(400, 1000, 0.08, 'confirmation');
+    this.playBeep(
+      CONFIRMATION_SOUND_CONFIG.frequency,
+      CONFIRMATION_SOUND_CONFIG.duration,
+      CONFIRMATION_SOUND_CONFIG.volume,
+      'confirmation'
+    );
   }
 
   /**
@@ -181,6 +231,10 @@ export class AudioService implements OnDestroy {
    * 停止所有正在播放的声音
    */
   stopAllSounds(): void {
+    // 停止提醒声音序列
+    this.stopReminderSoundSequence();
+    
+    // 停止所有其他正在播放的声音
     Object.keys(this.oscillators).forEach((soundId) => {
       this.stopSound(soundId);
     });
