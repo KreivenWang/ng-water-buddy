@@ -142,23 +142,23 @@ export class ReminderComponent implements OnInit, OnDestroy {
     try {
       // 清除之前可能存在的重复订阅
       this.clearSoundRepeat();
-      
+
       // 播放第一次提醒音
       this.audioService.playReminderSound();
-      
+
       // 获取重复次数设置，默认为5次
-      const repeatCount = 1// = this.settings.reminderRepeat?.repeatCount || 5;
-      
+      const repeatCount = this.settings.reminderRepeat?.repeatCount || 5;
+
       // 如果需要重复播放（重复次数大于1）
       if (repeatCount > 1) {
-        // 使用RxJS interval创建重复流，每隔3秒触发一次，总共触发repeatCount-1次
-        this.soundRepeatSubscription = interval(3000)
+        // 使用RxJS interval创建重复流，每隔2分钟触发一次，总共触发repeatCount-1次
+        this.soundRepeatSubscription = interval(2 * 60000)
           .pipe(take(repeatCount - 1))
           .subscribe(() => {
             // 播放提醒音
             this.audioService.playReminderSound();
           });
-        
+
         // 将这个订阅添加到主订阅列表中
         this.subscriptions.add(this.soundRepeatSubscription);
       }
@@ -168,7 +168,7 @@ export class ReminderComponent implements OnInit, OnDestroy {
       this.clearSoundRepeat();
     }
   }
-  
+
   /**
    * 清除声音重复订阅
    */
@@ -182,7 +182,7 @@ export class ReminderComponent implements OnInit, OnDestroy {
   closeModal(hasDrunk: boolean): void {
     // 关闭弹窗
     this.showModal = false;
-    
+
     // 清除声音重复订阅
     this.clearSoundRepeat();
 
