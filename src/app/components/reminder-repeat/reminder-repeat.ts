@@ -1,10 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
-// 定义设置的localStorage键名
-const REMINDER_REPEAT_KEY = 'waterBuddy_reminderRepeat';
-
+import { SettingsService } from '../../services/settings.service';
 @Component({
   selector: 'app-reminder-repeat',
   imports: [FormsModule, CommonModule],
@@ -76,6 +73,8 @@ export class ReminderRepeatComponent implements OnInit {
   repeatCount: number = 3; // 默认3次
   neverEnding: boolean = false;
   repeatPresets: number[] = [1, 2, 3, 5, 10];
+  
+  private settingsService = inject(SettingsService);
 
   constructor() { }
 
@@ -89,29 +88,25 @@ export class ReminderRepeatComponent implements OnInit {
     this.saveSettings();
   }
 
-  // 从localStorage加载设置
+  // 从服务加载设置
   loadSettings(): void {
     try {
-      const savedSettings = localStorage.getItem(REMINDER_REPEAT_KEY);
-      if (savedSettings) {
-        const settings = JSON.parse(savedSettings);
-        this.repeatCount = settings.repeatCount || this.repeatCount;
-        this.neverEnding = settings.neverEnding || this.neverEnding;
-      }
+      const settings = this.settingsService.loadReminderRepeatSettings();
+      this.repeatCount = settings.repeatCount || this.repeatCount;
+      this.neverEnding = settings.neverEnding || this.neverEnding;
     } catch (error) {
       console.error('加载提醒重复设置失败:', error);
     }
   }
 
-  // 保存设置到localStorage
+  // 保存设置到服务
   saveSettings(): void {
     try {
       const settings = {
         repeatCount: this.repeatCount,
-        neverEnding: this.neverEnding,
-        lastUpdated: new Date().toISOString()
+        neverEnding: this.neverEnding
       };
-      localStorage.setItem(REMINDER_REPEAT_KEY, JSON.stringify(settings));
+      this.settingsService.saveReminderRepeatSettings(settings);
     } catch (error) {
       console.error('保存提醒重复设置失败:', error);
     }

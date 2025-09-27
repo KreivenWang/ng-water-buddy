@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
-
-// 定义设置的localStorage键名
-const DAILY_CUP_SETTINGS_KEY = 'waterBuddy_dailyCupSettings';
+import { Component, OnInit, inject } from '@angular/core';
+import { SettingsService } from '../../services/settings.service';
 
 @Component({
   selector: 'app-daily-cup',
@@ -57,6 +55,8 @@ export class DailyCupComponent implements OnInit {
   dailyCups: number = 8;
   cupSize: number = 250; // 默认杯子大小，单位：毫升
   quickCups: number[] = [6, 8, 10];
+  
+  private settingsService = inject(SettingsService);
 
   constructor() { }
 
@@ -73,29 +73,25 @@ export class DailyCupComponent implements OnInit {
     this.saveSettings();
   }
 
-  // 从localStorage加载设置
+  // 从服务加载设置
   loadSettings(): void {
     try {
-      const savedSettings = localStorage.getItem(DAILY_CUP_SETTINGS_KEY);
-      if (savedSettings) {
-        const settings = JSON.parse(savedSettings);
-        this.dailyCups = settings.dailyCups || this.dailyCups;
-        this.cupSize = settings.cupSize || this.cupSize;
-      }
+      const settings = this.settingsService.loadDailyCupSettings();
+      this.dailyCups = settings.dailyCups || this.dailyCups;
+      this.cupSize = settings.cupSize || this.cupSize;
     } catch (error) {
       console.error('加载每日饮水目标设置失败:', error);
     }
   }
 
-  // 保存设置到localStorage
+  // 保存设置到服务
   saveSettings(): void {
     try {
       const settings = {
         dailyCups: this.dailyCups,
-        cupSize: this.cupSize,
-        lastUpdated: new Date().toISOString()
+        cupSize: this.cupSize
       };
-      localStorage.setItem(DAILY_CUP_SETTINGS_KEY, JSON.stringify(settings));
+      this.settingsService.saveDailyCupSettings(settings);
     } catch (error) {
       console.error('保存每日饮水目标设置失败:', error);
     }

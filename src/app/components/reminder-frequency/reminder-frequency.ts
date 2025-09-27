@@ -1,10 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
-// 定义设置的localStorage键名
-const REMINDER_FREQUENCY_KEY = 'waterBuddy_reminderFrequency';
-
+import { SettingsService } from '../../services/settings.service';
 @Component({
   selector: 'app-reminder-frequency',
   imports: [FormsModule, CommonModule],
@@ -66,6 +63,8 @@ export class ReminderFrequencyComponent implements OnInit {
     { label: '1小时', value: 60 },
     { label: '2小时', value: 120 }
   ];
+  
+  private settingsService = inject(SettingsService);
 
   constructor() { }
 
@@ -94,28 +93,23 @@ export class ReminderFrequencyComponent implements OnInit {
     this.saveSettings();
   }
 
-  // 从localStorage加载设置
+  // 从服务加载设置
   loadSettings(): void {
     try {
-      const savedSettings = localStorage.getItem(REMINDER_FREQUENCY_KEY);
-      if (savedSettings) {
-        const settings = JSON.parse(savedSettings);
-        this.frequencyMinutes = settings.frequencyMinutes || this.frequencyMinutes;
-      }
+      const settings = this.settingsService.loadReminderFrequencySettings();
+      this.frequencyMinutes = settings.frequencyMinutes || this.frequencyMinutes;
     } catch (error) {
       console.error('加载提醒频率设置失败:', error);
     }
   }
 
-  // 保存设置到localStorage
+  // 保存设置到服务
   saveSettings(): void {
     try {
       const settings = {
-        frequencyMinutes: this.frequencyMinutes,
-        displayFrequency: this.displayFrequency,
-        lastUpdated: new Date().toISOString()
+        frequencyMinutes: this.frequencyMinutes
       };
-      localStorage.setItem(REMINDER_FREQUENCY_KEY, JSON.stringify(settings));
+      this.settingsService.saveReminderFrequencySettings(settings);
     } catch (error) {
       console.error('保存提醒频率设置失败:', error);
     }

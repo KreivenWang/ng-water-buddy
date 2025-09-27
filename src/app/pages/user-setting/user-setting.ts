@@ -7,7 +7,7 @@ import { ReminderRepeatComponent } from '../../components/reminder-repeat/remind
 import { SettingsService } from '../../services/settings.service';
 
 @Component({
-  selector: 'app-target-setting',
+  selector: 'app-user-setting',
   imports: [CommonModule, FormsModule, DailyCupComponent, ReminderFrequencyComponent, ReminderRepeatComponent],
   template: `
     <div class="max-w-3xl mx-auto p-4">
@@ -44,7 +44,7 @@ import { SettingsService } from '../../services/settings.service';
   `,
   styles: [``]
 })
-export class TargetSettingComponent implements OnInit {
+export class UserSettingComponent implements OnInit {
   @ViewChild('dailyCupComponent') dailyCupComponent: any;
   @ViewChild('reminderFrequencyComponent') reminderFrequencyComponent: any;
   @ViewChild('reminderRepeatComponent') reminderRepeatComponent: any;

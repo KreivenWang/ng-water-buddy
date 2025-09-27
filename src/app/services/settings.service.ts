@@ -19,10 +19,17 @@ interface ReminderRepeatSettings {
   lastUpdated?: string;
 }
 
+interface NotificationSettings {
+  reminderEnabled: boolean;
+  soundEnabled: boolean;
+  lastUpdated?: string;
+}
+
 interface AllSettings {
   dailyCup: DailyCupSettings;
   reminderFrequency: ReminderFrequencySettings;
   reminderRepeat: ReminderRepeatSettings;
+  notificationSettings: NotificationSettings;
   lastSaved?: string;
 }
 
@@ -35,6 +42,7 @@ export class SettingsService {
   private readonly REMINDER_FREQUENCY_KEY = 'waterBuddy_reminderFrequency';
   private readonly REMINDER_REPEAT_KEY = 'waterBuddy_reminderRepeat';
   private readonly ALL_SETTINGS_KEY = 'waterBuddy_allSettings';
+  private readonly NOTIFICATION_SETTINGS_KEY = 'waterBuddy_notificationSettings';
 
   // 默认设置
   private readonly DEFAULT_DAILY_CUP: DailyCupSettings = {
@@ -49,6 +57,11 @@ export class SettingsService {
   private readonly DEFAULT_REMINDER_REPEAT: ReminderRepeatSettings = {
     repeatCount: 3,
     neverEnding: false
+  };
+  
+  private readonly DEFAULT_NOTIFICATION_SETTINGS: NotificationSettings = {
+    reminderEnabled: true,
+    soundEnabled: true
   };
 
   constructor(private localStorageService: LocalStorageService) { }
@@ -94,6 +107,20 @@ export class SettingsService {
   loadReminderRepeatSettings(): ReminderRepeatSettings {
     return this.localStorageService.load(this.REMINDER_REPEAT_KEY, this.DEFAULT_REMINDER_REPEAT);
   }
+  
+  /**
+   * 保存通知设置
+   */
+  saveNotificationSettings(settings: NotificationSettings): boolean {
+    return this.localStorageService.save(this.NOTIFICATION_SETTINGS_KEY, settings);
+  }
+
+  /**
+   * 加载通知设置
+   */
+  loadNotificationSettings(): NotificationSettings {
+    return this.localStorageService.load(this.NOTIFICATION_SETTINGS_KEY, this.DEFAULT_NOTIFICATION_SETTINGS);
+  }
 
   /**
    * 保存所有设置
@@ -107,6 +134,7 @@ export class SettingsService {
       this.saveDailyCupSettings(settings.dailyCup);
       this.saveReminderFrequencySettings(settings.reminderFrequency);
       this.saveReminderRepeatSettings(settings.reminderRepeat);
+      this.saveNotificationSettings(settings.notificationSettings);
     }
     
     return success;
@@ -120,7 +148,8 @@ export class SettingsService {
     const allSettings = this.localStorageService.load<AllSettings>(this.ALL_SETTINGS_KEY, {
       dailyCup: this.DEFAULT_DAILY_CUP,
       reminderFrequency: this.DEFAULT_REMINDER_FREQUENCY,
-      reminderRepeat: this.DEFAULT_REMINDER_REPEAT
+      reminderRepeat: this.DEFAULT_REMINDER_REPEAT,
+      notificationSettings: this.DEFAULT_NOTIFICATION_SETTINGS
     });
     
     // 如果整体设置不存在，则从各个单独的设置中加载
@@ -129,6 +158,7 @@ export class SettingsService {
         dailyCup: this.loadDailyCupSettings(),
         reminderFrequency: this.loadReminderFrequencySettings(),
         reminderRepeat: this.loadReminderRepeatSettings(),
+        notificationSettings: this.loadNotificationSettings(),
         lastSaved: new Date().toISOString()
       };
     }
@@ -144,7 +174,8 @@ export class SettingsService {
       this.DAILY_CUP_KEY,
       this.REMINDER_FREQUENCY_KEY,
       this.REMINDER_REPEAT_KEY,
-      this.ALL_SETTINGS_KEY
+      this.ALL_SETTINGS_KEY,
+      this.NOTIFICATION_SETTINGS_KEY
     ];
     
     return keys.every(key => this.localStorageService.remove(key));
