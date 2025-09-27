@@ -2,11 +2,13 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AudioService implements OnDestroy {
   private audioContext: AudioContext | null = null;
-  private oscillators: { [key: string]: { oscillator: OscillatorNode; gainNode: GainNode; playing: boolean } } = {};
+  private oscillators: {
+    [key: string]: { oscillator: OscillatorNode; gainNode: GainNode; playing: boolean };
+  } = {};
   private audioContextCreated = false;
 
   // 音频事件通知
@@ -60,7 +62,12 @@ export class AudioService implements OnDestroy {
    * @param volume 音量 (0-1)
    * @param soundId 声音ID，用于追踪和停止特定声音
    */
-  playBeep(frequency: number = 800, duration: number = 500, volume: number = 0.1, soundId: string = 'default'): void {
+  playBeep(
+    frequency: number = 800,
+    duration: number = 500,
+    volume: number = 0.1,
+    soundId: string = 'default'
+  ): void {
     if (!this.ensureAudioContextRunning()) {
       console.warn('无法播放声音，音频上下文不可用');
       return;
@@ -72,31 +79,31 @@ export class AudioService implements OnDestroy {
     try {
       const oscillator = this.audioContext!.createOscillator();
       const gainNode = this.audioContext!.createGain();
-      
+
       // 连接节点
       oscillator.connect(gainNode);
       gainNode.connect(this.audioContext!.destination);
-      
+
       // 设置音频参数
       oscillator.frequency.value = frequency; // 频率
       gainNode.gain.value = volume; // 音量
-      
+
       // 保存振荡器引用以便后续停止
       this.oscillators[soundId] = {
         oscillator,
         gainNode,
-        playing: true
+        playing: true,
       };
-      
+
       // 设置音量渐变，使声音听起来更自然
       const now = this.audioContext!.currentTime;
       gainNode.gain.setValueAtTime(0, now);
       gainNode.gain.linearRampToValueAtTime(volume, now + 0.05);
       gainNode.gain.exponentialRampToValueAtTime(0.001, now + duration / 1000);
-      
+
       // 启动音频
       oscillator.start(now);
-      
+
       // 在持续时间后停止
       setTimeout(() => {
         if (this.oscillators[soundId]) {
@@ -108,10 +115,9 @@ export class AudioService implements OnDestroy {
           delete this.oscillators[soundId];
         }
       }, duration);
-      
+
       // 通知声音播放
       this.soundPlayedSubject.next(soundId);
-      
     } catch (error) {
       console.error(`播放声音失败 (${soundId}):`, error);
       // 清理失败的声音引用
@@ -125,14 +131,33 @@ export class AudioService implements OnDestroy {
    * 播放提醒声音
    */
   playReminderSound(): void {
-    this.playBeep(800, 500, 0.1, 'reminder');
+    const beeps = [
+      { frequency: 1200, duration: 300, volume: 0.1 },
+      { frequency: 600, duration: 400, volume: 0.1 },
+      { frequency: 800, duration: 200, volume: 0.1 },
+      { frequency: 1000, duration: 300, volume: 0.1 },
+    ];
+    const pause = { pause: 1000 };
+    const beepPattern = [...beeps, pause, ...beeps, pause, ...beeps, pause, ...beeps];
+
+    let delay = 0;
+    beepPattern.forEach((item, index) => {
+      if ('frequency' in item) {
+        setTimeout(() => {
+          this.playBeep(item.frequency, item.duration, item.volume, `reminder-${index}`);
+        }, delay);
+        delay += item.duration ?? 0;
+      } else {
+        delay += item.pause;
+      }
+    });
   }
 
   /**
    * 播放确认声音
    */
   playConfirmationSound(): void {
-    this.playBeep(1200, 300, 0.08, 'confirmation');
+    this.playBeep(400, 1000, 0.08, 'confirmation');
   }
 
   /**
@@ -156,7 +181,7 @@ export class AudioService implements OnDestroy {
    * 停止所有正在播放的声音
    */
   stopAllSounds(): void {
-    Object.keys(this.oscillators).forEach(soundId => {
+    Object.keys(this.oscillators).forEach((soundId) => {
       this.stopSound(soundId);
     });
   }
