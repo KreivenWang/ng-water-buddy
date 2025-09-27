@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SettingsService } from '../../services/settings.service';
+
 @Component({
   selector: 'app-reminder-frequency',
   imports: [FormsModule, CommonModule],
@@ -75,7 +76,6 @@ export class ReminderFrequencyComponent implements OnInit {
 
   onFrequencyChange(): void {
     this.updateDisplayFrequency();
-    this.saveSettings();
   }
 
   updateDisplayFrequency(): void {
@@ -90,28 +90,15 @@ export class ReminderFrequencyComponent implements OnInit {
   setFrequency(minutes: number): void {
     this.frequencyMinutes = minutes;
     this.updateDisplayFrequency();
-    this.saveSettings();
   }
 
   // 从服务加载设置
   loadSettings(): void {
     try {
-      const settings = this.settingsService.loadReminderFrequencySettings();
-      this.frequencyMinutes = settings.frequencyMinutes || this.frequencyMinutes;
+      const allSettings = this.settingsService.loadAllSettings();
+      this.frequencyMinutes = allSettings.reminderFrequency.frequencyMinutes || this.frequencyMinutes;
     } catch (error) {
       console.error('加载提醒频率设置失败:', error);
-    }
-  }
-
-  // 保存设置到服务
-  saveSettings(): void {
-    try {
-      const settings = {
-        frequencyMinutes: this.frequencyMinutes
-      };
-      this.settingsService.saveReminderFrequencySettings(settings);
-    } catch (error) {
-      console.error('保存提醒频率设置失败:', error);
     }
   }
 }

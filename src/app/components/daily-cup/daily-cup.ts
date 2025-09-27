@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Component, OnInit, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { SettingsService } from '../../services/settings.service';
 
 @Component({
@@ -19,7 +19,6 @@ import { SettingsService } from '../../services/settings.service';
           max="20" 
           step="1" 
           [(ngModel)]="dailyCups"
-          (ngModelChange)="saveSettings()"
           class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
         >
         <div class="flex justify-between text-sm text-gray-500 mt-1">
@@ -70,30 +69,16 @@ export class DailyCupComponent implements OnInit {
 
   setCups(cups: number): void {
     this.dailyCups = cups;
-    this.saveSettings();
   }
 
   // 从服务加载设置
   loadSettings(): void {
     try {
-      const settings = this.settingsService.loadDailyCupSettings();
-      this.dailyCups = settings.dailyCups || this.dailyCups;
-      this.cupSize = settings.cupSize || this.cupSize;
+      const allSettings = this.settingsService.loadAllSettings();
+      this.dailyCups = allSettings.dailyCup.dailyCups || this.dailyCups;
+      this.cupSize = allSettings.dailyCup.cupSize || this.cupSize;
     } catch (error) {
       console.error('加载每日饮水目标设置失败:', error);
-    }
-  }
-
-  // 保存设置到服务
-  saveSettings(): void {
-    try {
-      const settings = {
-        dailyCups: this.dailyCups,
-        cupSize: this.cupSize
-      };
-      this.settingsService.saveDailyCupSettings(settings);
-    } catch (error) {
-      console.error('保存每日饮水目标设置失败:', error);
     }
   }
 }

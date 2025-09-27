@@ -20,7 +20,6 @@ import { SettingsService } from '../../services/settings.service';
           max="10" 
           step="1" 
           [(ngModel)]="repeatCount"
-          (ngModelChange)="saveSettings()"
           class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
         >
         <div class="flex justify-between text-sm text-gray-500 mt-1">
@@ -52,7 +51,6 @@ import { SettingsService } from '../../services/settings.service';
           <input 
             type="checkbox" 
             [(ngModel)]="neverEnding"
-            (change)="saveSettings()"
             class="sr-only peer"
           >
           <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
@@ -85,30 +83,16 @@ export class ReminderRepeatComponent implements OnInit {
   setRepeatCount(count: number): void {
     this.repeatCount = count;
     this.neverEnding = false; // 选择具体次数时，取消永不关闭选项
-    this.saveSettings();
   }
 
   // 从服务加载设置
   loadSettings(): void {
     try {
-      const settings = this.settingsService.loadReminderRepeatSettings();
-      this.repeatCount = settings.repeatCount || this.repeatCount;
-      this.neverEnding = settings.neverEnding || this.neverEnding;
+      const allSettings = this.settingsService.loadAllSettings();
+      this.repeatCount = allSettings.reminderRepeat.repeatCount || this.repeatCount;
+      this.neverEnding = allSettings.reminderRepeat.neverEnding || this.neverEnding;
     } catch (error) {
       console.error('加载提醒重复设置失败:', error);
-    }
-  }
-
-  // 保存设置到服务
-  saveSettings(): void {
-    try {
-      const settings = {
-        repeatCount: this.repeatCount,
-        neverEnding: this.neverEnding
-      };
-      this.settingsService.saveReminderRepeatSettings(settings);
-    } catch (error) {
-      console.error('保存提醒重复设置失败:', error);
     }
   }
 }
