@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit, inject, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { SettingsService } from '../../services/settings.service';
+import { DataApiService } from '../../services/data-api.service';
 import { TimerService } from '../../services/timer.service';
 import { AudioService } from '../../services/audio.service';
 import { FormsModule } from '@angular/forms';
@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
 import { ReminderModalComponent } from './reminder-modal/reminder-modal';
 import { Subscription, interval } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { DailyRecordService } from 'src/app/services/daily-record.service';
 import { DEFAULT_ALL_SETTINGS } from '../../models/user-setting';
 
 @Component({
@@ -23,15 +22,14 @@ export class ReminderComponent implements OnInit, OnDestroy {
 
   @Output() waterRecorded = new EventEmitter<void>();
 
-  private settingsService = inject(SettingsService);
+  private dataApiService = inject(DataApiService);
   private timerService = inject(TimerService);
   private audioService = inject(AudioService);
-  private dailyRecordService = inject(DailyRecordService);
   private subscriptions: Subscription = new Subscription();
   private soundRepeatSubscription: Subscription | null = null;
 
   // 获取设置，如果没有则使用默认值
-  settings = this.settingsService.loadAllSettings() || DEFAULT_ALL_SETTINGS;
+  settings = this.dataApiService.getSettings() || DEFAULT_ALL_SETTINGS;
 
   ngOnInit(): void {
     this.initialize();
@@ -140,12 +138,18 @@ export class ReminderComponent implements OnInit, OnDestroy {
       // 播放确认声音
       this.audioService.playConfirmationSound();
       // 记录饮水
-      const success = this.dailyRecordService.record();
-      if (success) {
-        // 发射事件通知其他组件更新
-        this.waterRecorded.emit();
-        console.log('已通知其他组件更新数据');
-      }
+      this.dataApiService.recordWaterIntake().subscribe({
+        next: (success) => {
+          if (success) {
+            // 发射事件通知其他组件更新
+            this.waterRecorded.emit();
+            console.log('已通知其他组件更新数据');
+          }
+        },
+        error: (error) => {
+          console.error('记录饮水失败:', error);
+        }
+      });
     }
 
     // 重置并重新启动计时器

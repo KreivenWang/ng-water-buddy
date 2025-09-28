@@ -1,7 +1,7 @@
 ﻿import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SettingsService } from '../../services/settings.service';
+import { DataApiService } from '../../services/data-api.service';
 import { DEFAULT_DAILY_CUP } from '../../models/user-setting';
 
 @Component({
@@ -15,7 +15,7 @@ export class DailyCupComponent implements OnInit {
   cupSize: number = DEFAULT_DAILY_CUP.cupSize;
   quickCups: number[] = [6, 8, 10];
   
-  private settingsService = inject(SettingsService);
+  private dataApiService = inject(DataApiService);
 
   constructor() { }
 
@@ -34,7 +34,7 @@ export class DailyCupComponent implements OnInit {
   // 从服务加载设置
   loadSettings(): void {
     try {
-      const allSettings = this.settingsService.loadAllSettings();
+      const allSettings = this.dataApiService.getSettings();
       this.dailyCups = allSettings.dailyCup.dailyCups || DEFAULT_DAILY_CUP.dailyCups;
       this.cupSize = allSettings.dailyCup.cupSize || DEFAULT_DAILY_CUP.cupSize;
     } catch (error) {

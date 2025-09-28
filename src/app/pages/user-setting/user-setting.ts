@@ -5,8 +5,8 @@ import { DailyCupComponent } from '../../components/daily-cup/daily-cup';
 import { ReminderFrequencyComponent } from '../../components/reminder-frequency/reminder-frequency';
 import { ReminderRepeatComponent } from '../../components/reminder-repeat/reminder-repeat';
 import { ReminderNotificationComponent } from '../../components/reminder-notification/reminder-notification';
-import { SettingsService } from '../../services/settings.service';
 import { DEFAULT_ALL_SETTINGS, AllSettings } from '../../models/user-setting';
+import { DataApiService } from '../../services/data-api.service';
 
 @Component({
   selector: 'app-user-setting',
@@ -27,7 +27,7 @@ export class UserSettingComponent implements OnInit {
   @ViewChild('reminderRepeatComponent') reminderRepeatComponent!: ReminderRepeatComponent;
   @ViewChild('reminderNotificationComponent') reminderNotificationComponent!: ReminderNotificationComponent;
 
-  private settingsService = inject(SettingsService);
+  private dataApi = inject(DataApiService);
 
   constructor() { }
 
@@ -37,7 +37,7 @@ export class UserSettingComponent implements OnInit {
 
   private loadSettings(): void {
     try {
-      const allSettings = this.settingsService.loadAllSettings();
+      const allSettings = this.dataApi.getSettings();
       if (!allSettings) {
         // 如果没有设置，使用默认值
         this.initializeDefaultSettings();
@@ -49,7 +49,7 @@ export class UserSettingComponent implements OnInit {
   }
 
   private initializeDefaultSettings(): void {
-    this.settingsService.saveAllSettings(DEFAULT_ALL_SETTINGS).subscribe({
+    this.dataApi.saveSettings(DEFAULT_ALL_SETTINGS).subscribe({
       next: (success) => {
         if (success) {
           console.log('默认设置已初始化');
@@ -85,7 +85,7 @@ export class UserSettingComponent implements OnInit {
       };
 
       // 通过设置服务保存到localStorage
-      this.settingsService.saveAllSettings(currentSettings).subscribe({
+      this.dataApi.saveSettings(currentSettings).subscribe({
         next: (success) => {
           if (success) {
             console.log('所有设置已保存:', currentSettings);

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WaterRecordsComponent } from './water-records';
+import { CupListComponent } from './cup-list';
 
-describe('WaterRecordsComponent', () => {
-  let component: WaterRecordsComponent;
-  let fixture: ComponentFixture<WaterRecordsComponent>;
+describe('CupListComponent', () => {
+  let component: CupListComponent;
+  let fixture: ComponentFixture<CupListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [WaterRecordsComponent]
+      imports: [CupListComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(WaterRecordsComponent);
+    fixture = TestBed.createComponent(CupListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { SettingsService } from '../../services/settings.service';
+import { DataApiService } from '../../services/data-api.service';
 
 @Component({
   selector: 'app-reminder-repeat',
@@ -14,7 +14,7 @@ export class ReminderRepeatComponent implements OnInit {
   neverEnding: boolean = false;
   repeatPresets: number[] = [1, 2, 3, 5, 10];
   
-  private settingsService = inject(SettingsService);
+  private dataApiService = inject(DataApiService);
 
   constructor() { }
 
@@ -30,7 +30,7 @@ export class ReminderRepeatComponent implements OnInit {
   // 从服务加载设置
   loadSettings(): void {
     try {
-      const allSettings = this.settingsService.loadAllSettings();
+      const allSettings = this.dataApiService.getSettings();
       this.repeatCount = allSettings.reminderRepeat.repeatCount || this.repeatCount;
       this.neverEnding = allSettings.reminderRepeat.neverEnding || this.neverEnding;
     } catch (error) {

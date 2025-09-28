@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { SettingsService } from '../../services/settings.service';
+import { DataApiService } from '../../services/data-api.service';
 
 @Component({
   selector: 'app-reminder-setting',
@@ -14,7 +14,7 @@ export class ReminderNotificationComponent implements OnInit {
   reminderEnabled: boolean = true;
   soundEnabled: boolean = true;
   
-  private settingsService = inject(SettingsService);
+  private dataApiService = inject(DataApiService);
 
   constructor() { }
 
@@ -25,7 +25,7 @@ export class ReminderNotificationComponent implements OnInit {
   // 从服务加载设置
   loadSettings(): void {
     try {
-      const allSettings = this.settingsService.loadAllSettings();
+      const allSettings = this.dataApiService.getSettings();
       this.reminderEnabled = allSettings.notificationSettings?.reminderEnabled ?? this.reminderEnabled;
       this.soundEnabled = allSettings.notificationSettings?.soundEnabled ?? this.soundEnabled;
     } catch (error) {
@@ -36,12 +36,12 @@ export class ReminderNotificationComponent implements OnInit {
   // 保存设置
   saveSettings(): void {
     try {
-      const allSettings = this.settingsService.loadAllSettings();
+      const allSettings = this.dataApiService.getSettings();
       allSettings.notificationSettings = {
         reminderEnabled: this.reminderEnabled,
         soundEnabled: this.soundEnabled
       };
-      this.settingsService.saveAllSettings(allSettings).subscribe({
+      this.dataApiService.saveSettings(allSettings).subscribe({
         next: (success) => {
           if (success) {
             console.log('通知设置已保存');
