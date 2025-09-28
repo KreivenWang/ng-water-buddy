@@ -10,7 +10,7 @@ import { SettingsService } from '../../services/settings.service';
   styleUrl: './reminder-repeat.css'
 })
 export class ReminderRepeatComponent implements OnInit {
-  repeatCount: number = 3; // 默认3次
+  repeatCount: number = 3;
   neverEnding: boolean = false;
   repeatPresets: number[] = [1, 2, 3, 5, 10];
   
@@ -24,7 +24,7 @@ export class ReminderRepeatComponent implements OnInit {
 
   setRepeatCount(count: number): void {
     this.repeatCount = count;
-    this.neverEnding = false; // 选择具体次数时，取消永不关闭选项
+    this.neverEnding = false;
   }
 
   // 从服务加载设置

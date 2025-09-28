@@ -10,8 +10,8 @@ const routes: Routes = [
     loadComponent: () => import('@pages/dashboard/dashboard').then(m => m.DashboardComponent)
   },
   {
-    path: 'target-setting',
-    loadComponent: () => import('@pages/target-setting/target-setting').then(m => m.TargetSettingComponent)
+    path: 'user-setting',
+    loadComponent: () => import('@pages/user-setting/user-setting').then(m => m.UserSettingComponent)
   }
 ];
 

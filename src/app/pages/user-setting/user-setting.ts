@@ -6,7 +6,7 @@ import { ReminderFrequencyComponent } from '../../components/reminder-frequency/
 import { ReminderRepeatComponent } from '../../components/reminder-repeat/reminder-repeat';
 import { ReminderNotificationComponent } from '../../components/reminder-notification/reminder-notification';
 import { SettingsService } from '../../services/settings.service';
-import { DEFAULT_ALL_SETTINGS } from '../../models/user-setting';
+import { DEFAULT_ALL_SETTINGS, AllSettings } from '../../models/user-setting';
 
 @Component({
   selector: 'app-user-setting',
@@ -54,11 +54,38 @@ export class UserSettingComponent implements OnInit {
 
   saveAllSettings(): void {
     try {
-      // 这里可以添加保存逻辑
-      console.log('所有设置已保存');
-      alert('设置已保存！');
+      // 收集所有组件的当前设置值
+      const currentSettings: AllSettings = {
+        dailyCup: {
+          dailyCups: this.dailyCupComponent.dailyCups,
+          cupSize: this.dailyCupComponent.cupSize
+        },
+        reminderFrequency: {
+          frequencyMinutes: this.reminderFrequencyComponent.frequencyMinutes
+        },
+        reminderRepeat: {
+          repeatCount: this.reminderRepeatComponent.repeatCount,
+          neverEnding: this.reminderRepeatComponent.neverEnding
+        },
+        notificationSettings: {
+          reminderEnabled: this.reminderNotificationComponent.reminderEnabled,
+          soundEnabled: this.reminderNotificationComponent.soundEnabled
+        }
+      };
+
+      // 通过设置服务保存到localStorage
+      const success = this.settingsService.saveAllSettings(currentSettings);
+      
+      if (success) {
+        console.log('所有设置已保存:', currentSettings);
+        alert('设置已保存！');
+      } else {
+        console.error('保存设置失败');
+        alert('保存设置失败，请重试');
+      }
     } catch (error) {
       console.error('保存设置失败:', error);
+      alert('保存设置失败，请重试');
     }
   }
 }
