@@ -49,7 +49,18 @@ export class UserSettingComponent implements OnInit {
   }
 
   private initializeDefaultSettings(): void {
-    this.settingsService.saveAllSettings(DEFAULT_ALL_SETTINGS);
+    this.settingsService.saveAllSettings(DEFAULT_ALL_SETTINGS).subscribe({
+      next: (success) => {
+        if (success) {
+          console.log('默认设置已初始化');
+        } else {
+          console.error('初始化默认设置失败');
+        }
+      },
+      error: (error) => {
+        console.error('初始化默认设置时发生错误:', error);
+      }
+    });
   }
 
   saveAllSettings(): void {
@@ -74,15 +85,21 @@ export class UserSettingComponent implements OnInit {
       };
 
       // 通过设置服务保存到localStorage
-      const success = this.settingsService.saveAllSettings(currentSettings);
-      
-      if (success) {
-        console.log('所有设置已保存:', currentSettings);
-        alert('设置已保存！');
-      } else {
-        console.error('保存设置失败');
-        alert('保存设置失败，请重试');
-      }
+      this.settingsService.saveAllSettings(currentSettings).subscribe({
+        next: (success) => {
+          if (success) {
+            console.log('所有设置已保存:', currentSettings);
+            alert('设置已保存！');
+          } else {
+            console.error('保存设置失败');
+            alert('保存设置失败，请重试');
+          }
+        },
+        error: (error) => {
+          console.error('保存设置时发生错误:', error);
+          alert('保存设置失败，请重试');
+        }
+      });
     } catch (error) {
       console.error('保存设置失败:', error);
       alert('保存设置失败，请重试');

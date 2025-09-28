@@ -1,42 +1,67 @@
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from './local-storage.service';
-import { AllSettings, DEFAULT_ALL_SETTINGS } from '../models/user-setting';
+import { Observable } from 'rxjs';
+import { DataApiService } from './data-api.service';
+import { AllSettings, DailyCupSettings, ReminderFrequencySettings, ReminderRepeatSettings, NotificationSettings } from '../models/user-setting';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SettingsService {
-  // 只保留all settings的localStorage键名
-  private readonly ALL_SETTINGS_KEY = 'waterBuddy_allSettings';
-
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor(private dataApiService: DataApiService) {}
 
   /**
    * 保存所有设置
    */
-  saveAllSettings(settings: AllSettings): boolean {
-    // 添加最后保存时间
-    const settingsWithTimestamp = {
-      ...settings,
-      lastSaved: new Date().toISOString(),
-    };
-    return this.localStorageService.save(this.ALL_SETTINGS_KEY, settingsWithTimestamp);
+  saveAllSettings(settings: AllSettings): Observable<boolean> {
+    return this.dataApiService.saveSettings(settings);
   }
 
   /**
    * 加载所有设置
    */
   loadAllSettings(): AllSettings {
-    return this.localStorageService.load<AllSettings>(
-      this.ALL_SETTINGS_KEY,
-      DEFAULT_ALL_SETTINGS
-    );
+    return this.dataApiService.getSettings();
+  }
+
+  /**
+   * 获取设置流
+   */
+  getSettings$(): Observable<AllSettings> {
+    return this.dataApiService.getSettings$();
+  }
+
+  /**
+   * 更新每日杯数设置
+   */
+  updateDailyCupSettings(dailyCup: DailyCupSettings): Observable<boolean> {
+    return this.dataApiService.updateDailyCupSettings(dailyCup);
+  }
+
+  /**
+   * 更新提醒频率设置
+   */
+  updateReminderFrequencySettings(reminderFrequency: ReminderFrequencySettings): Observable<boolean> {
+    return this.dataApiService.updateReminderFrequencySettings(reminderFrequency);
+  }
+
+  /**
+   * 更新提醒重复设置
+   */
+  updateReminderRepeatSettings(reminderRepeat: ReminderRepeatSettings): Observable<boolean> {
+    return this.dataApiService.updateReminderRepeatSettings(reminderRepeat);
+  }
+
+  /**
+   * 更新通知设置
+   */
+  updateNotificationSettings(notificationSettings: NotificationSettings): Observable<boolean> {
+    return this.dataApiService.updateNotificationSettings(notificationSettings);
   }
 
   /**
    * 清除所有设置
    */
-  clearAllSettings(): boolean {
-    return this.localStorageService.remove(this.ALL_SETTINGS_KEY);
+  clearAllSettings(): Observable<boolean> {
+    return this.dataApiService.clearAllData();
   }
 }

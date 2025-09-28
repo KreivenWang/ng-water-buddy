@@ -1,0 +1,99 @@
+<div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6">DataApiService 使用示例</h2>
+  
+  <!-- 当前状态显示 -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <!-- 设置信息 -->
+    <div class="bg-blue-50 p-4 rounded-lg">
+      <h3 class="text-lg font-semibold text-blue-800 mb-3">当前设置</h3>
+      <div *ngIf="settings" class="space-y-2 text-sm">
+        <p><strong>每日杯数:</strong> {{ settings.dailyCup.dailyCups }} 杯</p>
+        <p><strong>杯容量:</strong> {{ settings.dailyCup.cupSize }} ml</p>
+        <p><strong>提醒频率:</strong> {{ settings.reminderFrequency.frequencyMinutes }} 分钟</p>
+        <p><strong>提醒重复:</strong> {{ settings.reminderRepeat.repeatCount }} 次</p>
+        <p><strong>通知启用:</strong> {{ settings.notificationSettings.reminderEnabled ? '是' : '否' }}</p>
+      </div>
+    </div>
+
+    <!-- 今日记录 -->
+    <div class="bg-green-50 p-4 rounded-lg">
+      <h3 class="text-lg font-semibold text-green-800 mb-3">今日记录</h3>
+      <div *ngIf="todayRecords" class="space-y-2 text-sm">
+        <p><strong>已完成:</strong> {{ todayRecords.currentAmount }} / {{ todayRecords.totalAmount }}</p>
+        <p><strong>完成率:</strong> {{ todayRecords.completedPercentage }}%</p>
+        <p><strong>总容量:</strong> {{ todayRecords.totalMl }} ml</p>
+        <p><strong>下一杯:</strong> 第 {{ getNextCupNumber() }} 杯</p>
+      </div>
+    </div>
+
+    <!-- 提醒状态 -->
+    <div class="bg-yellow-50 p-4 rounded-lg">
+      <h3 class="text-lg font-semibold text-yellow-800 mb-3">提醒状态</h3>
+      <div *ngIf="reminderStatus" class="space-y-2 text-sm">
+        <p><strong>倒计时:</strong> {{ reminderStatus.countdownTime }}</p>
+        <p><strong>进度:</strong> {{ reminderStatus.reminderProgress }}%</p>
+        <p><strong>显示模态框:</strong> {{ reminderStatus.showModal ? '是' : '否' }}</p>
+        <p><strong>计时器激活:</strong> {{ reminderStatus.timerActive ? '是' : '否' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 操作按钮 -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <button 
+      class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
+      (click)="recordWater()"
+      [disabled]="isTodayGoalCompleted()"
+    >
+      记录饮水
+    </button>
+    
+    <button 
+      class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
+      (click)="resetTodayRecords()"
+    >
+      重置今日记录
+    </button>
+    
+    <button 
+      class="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
+      (click)="exportData()"
+    >
+      导出数据
+    </button>
+    
+    <button 
+      class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
+      (click)="clearAllData()"
+    >
+      清除所有数据
+    </button>
+  </div>
+
+  <!-- 进度条 -->
+  <div class="mt-8">
+    <h3 class="text-lg font-semibold text-gray-800 mb-3">今日进度</h3>
+    <div class="w-full bg-gray-200 rounded-full h-4">
+      <div 
+        class="bg-blue-600 h-4 rounded-full transition-all duration-300"
+        [style.width.%]="getTodayProgress().percentage"
+      ></div>
+    </div>
+    <p class="text-sm text-gray-600 mt-2">
+      {{ getTodayProgress().current }} / {{ getTodayProgress().total }} 杯 
+      ({{ getTodayProgress().percentage }}%)
+    </p>
+  </div>
+
+  <!-- 使用说明 -->
+  <div class="mt-8 bg-gray-50 p-4 rounded-lg">
+    <h3 class="text-lg font-semibold text-gray-800 mb-3">使用说明</h3>
+    <ul class="text-sm text-gray-600 space-y-1">
+      <li>• <strong>记录饮水:</strong> 点击按钮记录一次饮水，会自动更新进度</li>
+      <li>• <strong>重置今日记录:</strong> 清除今日的所有饮水记录</li>
+      <li>• <strong>导出数据:</strong> 将所有数据导出为JSON文件</li>
+      <li>• <strong>清除所有数据:</strong> 删除所有设置和记录（谨慎使用）</li>
+      <li>• 所有操作都会自动更新界面显示</li>
+    </ul>
+  </div>
+</div>

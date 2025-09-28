@@ -41,8 +41,18 @@ export class ReminderNotificationComponent implements OnInit {
         reminderEnabled: this.reminderEnabled,
         soundEnabled: this.soundEnabled
       };
-      this.settingsService.saveAllSettings(allSettings);
-      console.log('通知设置已保存');
+      this.settingsService.saveAllSettings(allSettings).subscribe({
+        next: (success) => {
+          if (success) {
+            console.log('通知设置已保存');
+          } else {
+            console.error('保存通知设置失败');
+          }
+        },
+        error: (error) => {
+          console.error('保存通知设置失败:', error);
+        }
+      });
     } catch (error) {
       console.error('保存通知设置失败:', error);
     }

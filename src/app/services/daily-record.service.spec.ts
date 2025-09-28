@@ -1,44 +1,60 @@
 ﻿import { TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 import { DailyRecordService } from './daily-record.service';
-import { LocalStorageService } from './local-storage.service';
-import { SettingsService } from './settings.service';
+import { DataApiService } from './data-api.service';
 
 describe('DailyRecordService', () => {
   let service: DailyRecordService;
-  let localStorageService: jasmine.SpyObj<LocalStorageService>;
-  let settingsService: jasmine.SpyObj<SettingsService>;
+  let dataApiService: jasmine.SpyObj<DataApiService>;
 
   beforeEach(() => {
-    const localStorageSpy = jasmine.createSpyObj('LocalStorageService', ['load', 'save', 'remove']);
-    const settingsSpy = jasmine.createSpyObj('SettingsService', ['loadAllSettings']);
+    const dataApiSpy = jasmine.createSpyObj('DataApiService', [
+      'recordWaterIntake', 'getTodayRecords', 'getTodayRecords$', 'getTodayProgress',
+      'resetTodayRecords', 'isTodayGoalCompleted', 'getNextCupNumber'
+    ]);
 
     TestBed.configureTestingModule({
       providers: [
         DailyRecordService,
-        { provide: LocalStorageService, useValue: localStorageSpy },
-        { provide: SettingsService, useValue: settingsSpy }
+        { provide: DataApiService, useValue: dataApiSpy }
       ]
     });
 
     service = TestBed.inject(DailyRecordService);
-    localStorageService = TestBed.inject(LocalStorageService) as jasmine.SpyObj<LocalStorageService>;
-    settingsService = TestBed.inject(SettingsService) as jasmine.SpyObj<SettingsService>;
+    dataApiService = TestBed.inject(DataApiService) as jasmine.SpyObj<DataApiService>;
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should record a drink successfully', () => {
-    // Mock settings
-    settingsService.loadAllSettings.and.returnValue({
-      dailyCup: { dailyCups: 8, cupSize: 250 },
-      reminderFrequency: { frequencyMinutes: 30 },
-      reminderRepeat: { repeatCount: 3, neverEnding: false },
-      notificationSettings: { reminderEnabled: true, soundEnabled: true }
-    });
+  it('should record a drink successfully', (done) => {
+    dataApiService.recordWaterIntake.and.returnValue(of(true));
 
-    // Mock today's records with one incomplete record
+    service.record().subscribe({
+      next: (result) => {
+        expect(result).toBe(true);
+        expect(dataApiService.recordWaterIntake).toHaveBeenCalled();
+        done();
+      },
+      error: done.fail
+    });
+  });
+
+  it('should return false when all drinks are completed', (done) => {
+    dataApiService.recordWaterIntake.and.returnValue(of(false));
+
+    service.record().subscribe({
+      next: (result) => {
+        expect(result).toBe(false);
+        expect(dataApiService.recordWaterIntake).toHaveBeenCalled();
+        done();
+      },
+      error: done.fail
+    });
+  });
+
+  it('should get today records', () => {
     const mockRecords = {
       records: [
         { id: 1, completed: false },
@@ -50,40 +66,52 @@ describe('DailyRecordService', () => {
       totalMl: 2000
     };
 
-    localStorageService.load.and.returnValue(mockRecords);
-    localStorageService.save.and.returnValue(true);
+    dataApiService.getTodayRecords.and.returnValue(mockRecords);
 
-    const result = service.record();
+    const result = service.getTodayRecords();
 
-    expect(result).toBe(true);
-    expect(localStorageService.save).toHaveBeenCalled();
+    expect(result).toEqual(mockRecords);
+    expect(dataApiService.getTodayRecords).toHaveBeenCalled();
   });
 
-  it('should return false when all drinks are completed', () => {
-    // Mock settings
-    settingsService.loadAllSettings.and.returnValue({
-      dailyCup: { dailyCups: 8, cupSize: 250 },
-      reminderFrequency: { frequencyMinutes: 30 },
-      reminderRepeat: { repeatCount: 3, neverEnding: false },
-      notificationSettings: { reminderEnabled: true, soundEnabled: true }
-    });
+  it('should get today progress', () => {
+    const mockProgress = { current: 2, total: 8, percentage: 25 };
+    dataApiService.getTodayProgress.and.returnValue(mockProgress);
 
-    // Mock today's records with all completed
-    const mockRecords = {
-      records: [
-        { id: 1, completed: true },
-        { id: 2, completed: true }
-      ],
-      currentAmount: 2,
-      totalAmount: 2,
-      completedPercentage: 100,
-      totalMl: 500
-    };
+    const result = service.getTodayProgress();
 
-    localStorageService.load.and.returnValue(mockRecords);
+    expect(result).toEqual(mockProgress);
+    expect(dataApiService.getTodayProgress).toHaveBeenCalled();
+  });
 
-    const result = service.record();
+  it('should check if today goal is completed', () => {
+    dataApiService.isTodayGoalCompleted.and.returnValue(false);
+
+    const result = service.isTodayGoalCompleted();
 
     expect(result).toBe(false);
+    expect(dataApiService.isTodayGoalCompleted).toHaveBeenCalled();
+  });
+
+  it('should get next cup number', () => {
+    dataApiService.getNextCupNumber.and.returnValue(3);
+
+    const result = service.getNextCupNumber();
+
+    expect(result).toBe(3);
+    expect(dataApiService.getNextCupNumber).toHaveBeenCalled();
+  });
+
+  it('should reset today records', (done) => {
+    dataApiService.resetTodayRecords.and.returnValue(of(true));
+
+    service.resetTodayRecords().subscribe({
+      next: (result) => {
+        expect(result).toBe(true);
+        expect(dataApiService.resetTodayRecords).toHaveBeenCalled();
+        done();
+      },
+      error: done.fail
+    });
   });
 });
