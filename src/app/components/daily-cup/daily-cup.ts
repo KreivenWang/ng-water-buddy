@@ -2,6 +2,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SettingsService } from '../../services/settings.service';
+import { DEFAULT_DAILY_CUP } from '../../models/user-setting';
 
 @Component({
   selector: 'app-daily-cup',
@@ -10,8 +11,8 @@ import { SettingsService } from '../../services/settings.service';
   styleUrl: './daily-cup.css'
 })
 export class DailyCupComponent implements OnInit {
-  dailyCups: number = 8;
-  cupSize: number = 250; // 默认杯子大小，单位：毫升
+  dailyCups: number = DEFAULT_DAILY_CUP.dailyCups;
+  cupSize: number = DEFAULT_DAILY_CUP.cupSize;
   quickCups: number[] = [6, 8, 10];
   
   private settingsService = inject(SettingsService);
@@ -34,8 +35,8 @@ export class DailyCupComponent implements OnInit {
   loadSettings(): void {
     try {
       const allSettings = this.settingsService.loadAllSettings();
-      this.dailyCups = allSettings.dailyCup.dailyCups || this.dailyCups;
-      this.cupSize = allSettings.dailyCup.cupSize || this.cupSize;
+      this.dailyCups = allSettings.dailyCup.dailyCups || DEFAULT_DAILY_CUP.dailyCups;
+      this.cupSize = allSettings.dailyCup.cupSize || DEFAULT_DAILY_CUP.cupSize;
     } catch (error) {
       console.error('加载每日饮水目标设置失败:', error);
     }

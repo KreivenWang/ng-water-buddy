@@ -8,6 +8,7 @@ import { ReminderModalComponent } from './reminder-modal/reminder-modal';
 import { Subscription, interval } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { DailyRecordService } from 'src/app/services/daily-record.service';
+import { DEFAULT_ALL_SETTINGS } from '../../models/user-setting';
 
 @Component({
   selector: 'app-reminder',
@@ -30,21 +31,7 @@ export class ReminderComponent implements OnInit, OnDestroy {
   private soundRepeatSubscription: Subscription | null = null;
 
   // 获取设置，如果没有则使用默认值
-  settings = this.settingsService.loadAllSettings() || {
-    notificationSettings: {
-      reminderEnabled: true,
-      soundEnabled: true,
-    },
-    reminderFrequency: {
-      frequencyMinutes: 30,
-    },
-    reminderRepeat: {
-      repeatCount: 5,
-    },
-    dailyCup: {
-      dailyCups: 8,
-    },
-  };
+  settings = this.settingsService.loadAllSettings() || DEFAULT_ALL_SETTINGS;
 
   ngOnInit(): void {
     this.initialize();
@@ -59,7 +46,7 @@ export class ReminderComponent implements OnInit, OnDestroy {
 
   private initialize(): void {
     // 从设置中获取提醒频率（分钟），默认为30分钟
-    const frequencyMinutes = this.settings.reminderFrequency?.frequencyMinutes || 30;
+    const frequencyMinutes = this.settings.reminderFrequency?.frequencyMinutes || DEFAULT_ALL_SETTINGS.reminderFrequency.frequencyMinutes;
 
     // 初始化计时器服务
     this.timerService.initialize(frequencyMinutes);
@@ -105,8 +92,8 @@ export class ReminderComponent implements OnInit, OnDestroy {
       // 播放第一次提醒音
       this.audioService.playReminderSound();
 
-      // 获取重复次数设置，默认为5次
-      const repeatCount = this.settings.reminderRepeat?.repeatCount || 5;
+      // 获取重复次数设置，默认为3次
+      const repeatCount = this.settings.reminderRepeat?.repeatCount || DEFAULT_ALL_SETTINGS.reminderRepeat.repeatCount;
 
       // 如果需要重复播放（重复次数大于1）
       if (repeatCount > 1) {

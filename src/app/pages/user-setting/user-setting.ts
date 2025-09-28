@@ -6,6 +6,7 @@ import { ReminderFrequencyComponent } from '../../components/reminder-frequency/
 import { ReminderRepeatComponent } from '../../components/reminder-repeat/reminder-repeat';
 import { ReminderNotificationComponent } from '../../components/reminder-notification/reminder-notification';
 import { SettingsService } from '../../services/settings.service';
+import { DEFAULT_ALL_SETTINGS } from '../../models/user-setting';
 
 @Component({
   selector: 'app-user-setting',
@@ -48,24 +49,7 @@ export class UserSettingComponent implements OnInit {
   }
 
   private initializeDefaultSettings(): void {
-    const defaultSettings = {
-      dailyCup: {
-        dailyCups: 8,
-        cupSize: 250
-      },
-      notificationSettings: {
-        reminderEnabled: true,
-        soundEnabled: true
-      },
-      reminderFrequency: {
-        frequencyMinutes: 30
-      },
-      reminderRepeat: {
-        repeatCount: 3,
-        neverEnding: false
-      }
-    };
-    this.settingsService.saveAllSettings(defaultSettings);
+    this.settingsService.saveAllSettings(DEFAULT_ALL_SETTINGS);
   }
 
   saveAllSettings(): void {
