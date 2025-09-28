@@ -1,0 +1,10 @@
+﻿.dashboard-container {
+  background-color: #f9fafb;
+  min-height: 100vh;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+.dashboard-content {
+  border-radius: 0 0 1rem 1rem;
+  overflow: hidden;
+}

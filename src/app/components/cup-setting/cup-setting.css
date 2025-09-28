@@ -1,0 +1,12 @@
+﻿.cup-setting-container {
+  margin-top: 2rem;
+}
+.upload-area {
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.cup-preset {
+  transition: all 0.2s ease;
+}

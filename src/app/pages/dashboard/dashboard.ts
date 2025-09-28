@@ -7,29 +7,8 @@ import { WaterRecordsComponent } from '@components/water-records/water-records';
 @Component({
   selector: 'app-dashboard',
   imports: [CommonModule, ProgressComponent, ReminderComponent, WaterRecordsComponent],
-  template: `
-    <div class="dashboard-container max-w-md mx-auto p-4">
-      <div class="dashboard-content">
-        <app-progress #progressComponent></app-progress>
-        <app-reminder (waterRecorded)="onWaterRecorded()"></app-reminder>
-        <app-water-records #waterRecordsComponent></app-water-records>
-      </div>
-    </div>
-  `,
-  styles: [
-    `
-      .dashboard-container {
-        background-color: #f9fafb;
-        min-height: 100vh;
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-      }
-      .dashboard-content {
-        border-radius: 0 0 1rem 1rem;
-        overflow: hidden;
-      }
-    `,
-  ],
+  templateUrl: './dashboard.html',
+  styleUrl: './dashboard.css'
 })
 export class DashboardComponent {
   @ViewChild('progressComponent') progressComponent!: ProgressComponent;
@@ -48,6 +27,6 @@ export class DashboardComponent {
       this.waterRecordsComponent.refreshRecords();
     }
 
-    console.log('组件数据已刷新');
+    console.log('组件刷新完成');
   }
 }

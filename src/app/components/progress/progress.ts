@@ -5,31 +5,10 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-progress',
-  template: `
-    <div class="progress bg-white p-6 rounded-lg shadow-sm">
-      <h2 class="text-3xl font-bold text-blue-600 text-center mb-2">{{ currentAmount }}/{{ totalAmount }}</h2>
-      <p class="text-gray-500 text-center mb-4">今日进度</p>
-      <div class="relative h-2 bg-gray-200 rounded-full mb-2">
-        <div 
-          class="absolute top-0 left-0 h-full bg-blue-400 rounded-full transition-all duration-300"
-          [style.width.%]="progressPercentage"
-        ></div>
-      </div>
-      <div class="flex justify-between text-sm text-gray-500">
-        <span>已完成 {{ completedPercentage }}%</span>
-        <span>总计 {{ totalMl }}ml</span>
-      </div>
-    </div>
-  `,
-  styles: [
-    `
-      .progress {
-        margin: 1rem 0;
-      }
-    `
-  ]
+  templateUrl: './progress.html',
+  styleUrl: './progress.css'
 })
-export class ProgressComponent implements OnInit {
+export class ProgressComponent implements OnInit, OnDestroy {
   protected currentAmount = 0;
   protected totalAmount = 8;
   protected completedPercentage = 0;
@@ -40,6 +19,10 @@ export class ProgressComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProgress();
+  }
+
+  ngOnDestroy(): void {
+    // 清理资源
   }
 
   protected get progressPercentage(): number {
