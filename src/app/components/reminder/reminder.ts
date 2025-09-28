@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, OnDestroy } from '@angular/core';
+﻿import { Component, OnInit, inject, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { SettingsService } from '../../services/settings.service';
 import { TimerService } from '../../services/timer.service';
 import { AudioService } from '../../services/audio.service';
@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { ReminderModalComponent } from './reminder-modal/reminder-modal';
 import { Subscription, interval } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { DailyRecordService } from 'src/app/services/daily-record.service';
 
 @Component({
   selector: 'app-reminder',
@@ -64,9 +65,12 @@ export class ReminderComponent implements OnInit, OnDestroy {
   protected reminderProgress = 0;
   protected showModal = false;
 
+  @Output() waterRecorded = new EventEmitter<void>();
+
   private settingsService = inject(SettingsService);
   private timerService = inject(TimerService);
   private audioService = inject(AudioService);
+  private dailyRecordService = inject(DailyRecordService);
   private subscriptions: Subscription = new Subscription();
   private soundRepeatSubscription: Subscription | null = null;
 
@@ -188,12 +192,18 @@ export class ReminderComponent implements OnInit, OnDestroy {
 
     this.audioService.stopAllSounds();
 
-    // 如果用户喝了水，可以在这里添加相应的逻辑
+    // 如果用户喝了水，记录饮水并通知其他组件
     if (hasDrunk) {
       console.log('用户喝了一杯水');
       // 播放确认声音
       this.audioService.playConfirmationSound();
-      // 这里可以添加记录饮水的逻辑
+      // 记录饮水
+      const success = this.dailyRecordService.record();
+      if (success) {
+        // 发射事件通知其他组件更新
+        this.waterRecorded.emit();
+        console.log('已通知其他组件更新数据');
+      }
     }
 
     // 重置并重新启动计时器
