@@ -1,5 +1,57 @@
-<!-- TODO: 实现进度总览模板 -->
 <div class="progress-overview">
-  <h2>家庭进度</h2>
-</div>
+  <!-- 日期标题 -->
+  <div class="overview-header">
+    <h2 class="overview-title">今日喝水</h2>
+    <p class="overview-date">{{ dateText }}</p>
+  </div>
 
+  <!-- 统计卡片 -->
+  <div class="stats-grid">
+    <!-- 总饮水量 -->
+    <div class="stat-card">
+      <div class="stat-icon">💧</div>
+      <div class="stat-details">
+        <p class="stat-label">总饮水量</p>
+        <p class="stat-value">{{ totalAmount }}ml</p>
+      </div>
+    </div>
+
+    <!-- 总目标 -->
+    <div class="stat-card">
+      <div class="stat-icon">🎯</div>
+      <div class="stat-details">
+        <p class="stat-label">总目标</p>
+        <p class="stat-value">{{ totalGoal }}ml</p>
+      </div>
+    </div>
+
+    <!-- 整体完成度 -->
+    <div class="stat-card stat-card-highlight">
+      <div class="stat-icon">📊</div>
+      <div class="stat-details">
+        <p class="stat-label">完成度</p>
+        <p class="stat-value stat-value-large">{{ overallPercentage }}%</p>
+      </div>
+    </div>
+
+    <!-- 完成人数 -->
+    <div class="stat-card">
+      <div class="stat-icon">✅</div>
+      <div class="stat-details">
+        <p class="stat-label">完成人数</p>
+        <p class="stat-value">{{ completedCount }}/{{ totalMembers }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 进度条 -->
+  <div class="overall-progress">
+    <div class="progress-bar-container">
+      <div 
+        class="progress-bar-fill"
+        [class.completed]="overallPercentage >= 100"
+        [style.width.%]="overallPercentage">
+      </div>
+    </div>
+  </div>
+</div>

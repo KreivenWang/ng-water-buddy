@@ -1,2 +1,226 @@
-/* TODO: 实现进度总览样式 */
+/**
+ * Progress Overview Component Styles
+ * 进度总览组件样式 - 应用 Design System
+ */
 
+/* ========== 主容器 ========== */
+.progress-overview {
+  /* 布局 */
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5);
+  
+  /* 样式 */
+  background-color: var(--color-surface);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-5);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
+}
+
+/* ========== 头部 ========== */
+.overview-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.overview-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.overview-date {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* ========== 统计网格 ========== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-3);
+}
+
+/* ========== 统计卡片 ========== */
+.stat-card {
+  /* 布局 */
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  
+  /* 样式 */
+  background-color: var(--color-surface-variant);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-4);
+  
+  /* 过渡动画 */
+  transition: all 0.3s ease-in-out;
+}
+
+[data-theme="dark"] .stat-card {
+  background-color: var(--color-surface-variant);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 高亮卡片（整体完成度） */
+.stat-card-highlight {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: var(--color-text-inverse);
+}
+
+.stat-card-highlight .stat-label,
+.stat-card-highlight .stat-value {
+  color: var(--color-text-inverse);
+}
+
+/* ========== 统计图标 ========== */
+.stat-icon {
+  font-size: 32px;
+  min-width: 40px;
+  text-align: center;
+}
+
+/* ========== 统计详情 ========== */
+.stat-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.stat-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin: 0;
+  font-weight: var(--font-weight-medium);
+}
+
+.stat-card-highlight .stat-label {
+  opacity: 0.9;
+}
+
+.stat-value {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.stat-value-large {
+  font-size: var(--font-size-3xl);
+}
+
+/* ========== 整体进度条 ========== */
+.overall-progress {
+  margin-top: var(--spacing-2);
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 12px;
+  background-color: var(--color-gray-200);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+[data-theme="dark"] .progress-bar-container {
+  background-color: var(--color-surface-variant);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  border-radius: var(--radius-full);
+  transition: width 0.8s ease-out, background 0.3s ease;
+  box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
+}
+
+/* 完成状态的进度条 */
+.progress-bar-fill.completed {
+  background: linear-gradient(90deg, var(--color-success) 0%, #34D399 100%);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.6);
+}
+
+/* ========== 平板响应式 (≥768px) ========== */
+@media (min-width: 768px) {
+  .progress-overview {
+    padding: var(--spacing-6);
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-4);
+  }
+  
+  .stat-icon {
+    font-size: 36px;
+  }
+  
+  .stat-value {
+    font-size: var(--font-size-xl);
+  }
+  
+  .stat-value-large {
+    font-size: var(--font-size-4xl);
+  }
+  
+  .progress-bar-container {
+    height: 16px;
+  }
+}
+
+/* ========== 桌面端响应式 (≥1024px) ========== */
+@media (min-width: 1024px) {
+  .overview-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .progress-overview {
+    padding: var(--spacing-8);
+  }
+  
+  .stat-card {
+    padding: var(--spacing-5);
+  }
+}
+
+/* ========== 尊重动画偏好设置 ========== */
+@media (prefers-reduced-motion: reduce) {
+  .stat-card,
+  .progress-bar-fill {
+    transition: none;
+  }
+}
+
+/**
+ * [设计说明]
+ * 
+ * 1. 统计卡片布局：
+ *    - 移动端：2列网格
+ *    - 平板/桌面端：4列网格
+ *    - 整体完成度卡片：渐变背景高亮
+ * 
+ * 2. 视觉层次：
+ *    - 头部：标题 + 日期
+ *    - 统计卡片：图标 + 标签 + 数值
+ *    - 底部：整体进度条（带渐变和发光效果）
+ * 
+ * 3. 交互反馈：
+ *    - 卡片悬停：轻微上移
+ *    - 进度条：流畅的宽度动画
+ *    - 完成时：进度条变为绿色渐变
+ * 
+ * 4. 无障碍性：
+ *    - 清晰的视觉层次
+ *    - 足够的对比度
+ *    - 尊重用户动画偏好
+ */

@@ -1,2 +1,102 @@
-/* TODO: 实现家庭仪表盘容器样式 */
+/**
+ * Family Dashboard Component Styles
+ * 家庭仪表盘容器样式 - 应用 Design System
+ */
 
+/* ========== 主容器 ========== */
+.family-dashboard {
+  /* [关键点] 为固定的 Header 和 Bottom Nav 留出空间 */
+  min-height: 100vh;
+  padding-top: calc(56px + var(--spacing-4));  /* Header 高度 + 顶部间距 */
+  padding-bottom: calc(64px + var(--spacing-4)); /* Bottom Nav 高度 + 底部间距 */
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-4);
+  
+  /* 背景色 */
+  background-color: var(--color-background);
+  
+  /* 布局 */
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+/* ========== 区块 ========== */
+.dashboard-section {
+  /* 动画 */
+  animation: fadeInUp 0.4s ease-out;
+}
+
+/* ========== 加载状态 ========== */
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: var(--spacing-8);
+}
+
+.loading-text {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+}
+
+/* ========== 动画定义 ========== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== 平板响应式 (≥768px) ========== */
+@media (min-width: 768px) {
+  .family-dashboard {
+    padding-left: var(--spacing-6);
+    padding-right: var(--spacing-6);
+    gap: var(--spacing-8);
+  }
+}
+
+/* ========== 桌面端响应式 (≥1024px) ========== */
+@media (min-width: 1024px) {
+  .family-dashboard {
+    /* 桌面端 Header 更高，没有 Bottom Nav */
+    padding-top: calc(64px + var(--spacing-6));
+    padding-bottom: var(--spacing-8);
+    padding-left: var(--spacing-8);
+    padding-right: var(--spacing-8);
+    
+    /* 最大宽度限制，居中显示 */
+    max-width: var(--container-max-width-xl);
+    margin: 0 auto;
+  }
+}
+
+/* ========== 尊重动画偏好设置 ========== */
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-section {
+    animation: none;
+  }
+}
+
+/**
+ * [设计说明]
+ * 
+ * 1. 布局策略：
+ *    - 使用 flexbox 垂直布局
+ *    - gap 间距自动调整（移动端 24px → 桌面端 32px）
+ *    - 为固定定位的 Header 和 Bottom Nav 预留空间
+ * 
+ * 2. 响应式：
+ *    - 移动端：紧凑布局，较小间距
+ *    - 桌面端：宽松布局，限制最大宽度居中显示
+ * 
+ * 3. 性能：
+ *    - 使用 CSS 动画（GPU 加速）
+ *    - 尊重用户动画偏好设置
+ */

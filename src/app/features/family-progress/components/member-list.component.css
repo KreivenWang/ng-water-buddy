@@ -1,7 +1,294 @@
-/* TODO: 实现成员列表样式 */
+/**
+ * Member List Component Styles
+ * 成员列表组件样式 - 应用 Design System
+ */
+
+/* ========== 列表容器 ========== */
 .member-list {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-3, 12px);
+  gap: var(--spacing-4);
 }
 
+/* ========== 成员卡片 ========== */
+.member-card {
+  /* 布局 */
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  
+  /* 尺寸 */
+  width: 100%;
+  
+  /* 样式 */
+  background-color: var(--color-surface);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-5);
+  box-shadow: var(--shadow-sm);
+  
+  /* 边框 */
+  border: 1px solid var(--color-border);
+  
+  /* 过渡动画 */
+  transition: all 0.3s ease-in-out;
+  
+  /* 交互 */
+  cursor: pointer;
+}
+
+.member-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.member-card:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ========== 成员信息区域 ========== */
+.member-info {
+  display: flex;
+  gap: var(--spacing-4);
+  align-items: flex-start;
+}
+
+/* ========== 头像 ========== */
+.member-avatar {
+  /* 尺寸 */
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  
+  /* 布局 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* 样式 */
+  border-radius: var(--radius-full);
+  font-size: 28px;
+  
+  /* 阴影 */
+  box-shadow: var(--shadow-sm);
+}
+
+/* ========== 成员详情 ========== */
+.member-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.member-name-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.member-name {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.water-amount {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+
+/* ========== 进度条 ========== */
+.progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background-color: var(--color-gray-200);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+[data-theme="dark"] .progress-bar-container {
+  background-color: var(--color-surface-variant);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-full);
+  transition: width 0.5s ease-out, background-color 0.3s ease;
+}
+
+/* 完成状态的进度条 */
+.progress-bar-fill.completed {
+  background-color: var(--color-success);
+}
+
+/* ========== 进度信息 ========== */
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-size-xs);
+}
+
+.percentage-text {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.record-count {
+  color: var(--color-text-secondary);
+}
+
+/* ========== 快捷操作按钮 ========== */
+.quick-actions {
+  display: flex;
+  gap: var(--spacing-2);
+  justify-content: space-between;
+}
+
+.quick-add-btn {
+  /* 布局 */
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* 尺寸 */
+  min-height: 40px;
+  padding: var(--spacing-2) var(--spacing-3);
+  
+  /* 样式 */
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border: none;
+  border-radius: var(--radius-lg);
+  
+  /* 字体 */
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  
+  /* 阴影 */
+  box-shadow: var(--shadow-sm);
+  
+  /* 过渡动画 */
+  transition: all 0.2s ease-in-out;
+  
+  /* 交互 */
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.quick-add-btn:hover {
+  background-color: var(--color-primary-dark);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.quick-add-btn:active {
+  transform: translateY(0) scale(0.95);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ========== 空状态 ========== */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-12) var(--spacing-6);
+  text-align: center;
+}
+
+.empty-text {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.empty-hint {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* ========== 平板响应式 (≥768px) ========== */
+@media (min-width: 768px) {
+  .member-list {
+    /* 双列网格布局 */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-6);
+  }
+  
+  .member-avatar {
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+    font-size: 32px;
+  }
+  
+  .quick-add-btn {
+    min-height: 44px;
+    font-size: var(--font-size-base);
+  }
+}
+
+/* ========== 桌面端响应式 (≥1024px) ========== */
+@media (min-width: 1024px) {
+  .member-list {
+    /* 三列网格布局 */
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-8);
+  }
+  
+  .member-card {
+    padding: var(--spacing-6);
+  }
+}
+
+/* ========== 超大屏响应式 (≥1280px) ========== */
+@media (min-width: 1280px) {
+  .member-list {
+    /* 四列网格布局 */
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ========== 尊重动画偏好设置 ========== */
+@media (prefers-reduced-motion: reduce) {
+  .member-card,
+  .progress-bar-fill,
+  .quick-add-btn {
+    transition: none;
+  }
+}
+
+/**
+ * [设计说明]
+ * 
+ * 1. 响应式布局：
+ *    - 移动端：单列，紧凑布局
+ *    - 平板：双列网格
+ *    - 桌面端：三列网格
+ *    - 超大屏：四列网格
+ * 
+ * 2. 交互反馈：
+ *    - 卡片悬停：轻微上移 + 阴影增强
+ *    - 按钮点击：缩小反馈
+ *    - 进度条：流畅的宽度过渡动画
+ * 
+ * 3. 视觉层次：
+ *    - 头像：圆形，带背景色和阴影
+ *    - 进度条：完成时变为绿色
+ *    - 快捷按钮：主色调，触摸友好尺寸
+ * 
+ * 4. 无障碍性：
+ *    - 卡片可点击，有 cursor: pointer
+ *    - 按钮有明确的视觉反馈
+ *    - 尊重用户动画偏好设置
+ */
