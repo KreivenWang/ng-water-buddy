@@ -1,0 +1,9 @@
+<!-- TODO: 实现提醒页面容器模板 -->
+<div class="reminder-page">
+  <app-reminder-settings
+    *ngIf="reminderConfig$ | async as config"
+    [config]="config"
+    (configChanged)="onConfigChanged($event)">
+  </app-reminder-settings>
+</div>
+

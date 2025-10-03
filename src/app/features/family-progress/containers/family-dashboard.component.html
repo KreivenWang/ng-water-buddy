@@ -1,0 +1,15 @@
+<!-- TODO: 实现家庭仪表盘容器模板 -->
+<div class="family-dashboard">
+  <app-progress-overview 
+    *ngIf="dailySummary$ | async as summary"
+    [summary]="summary">
+  </app-progress-overview>
+  
+  <app-member-list 
+    *ngIf="members$ | async as members"
+    [members]="members"
+    (memberEdit)="onMemberEdit($event)"
+    (memberDelete)="onMemberDelete($event)">
+  </app-member-list>
+</div>
+

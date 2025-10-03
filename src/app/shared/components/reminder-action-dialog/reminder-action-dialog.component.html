@@ -1,0 +1,21 @@
+<!-- TODO: 实现提醒交互弹窗模板 -->
+<div class="dialog-overlay" *ngIf="isOpen">
+  <div class="dialog-content">
+    <div class="emoji-icon">💧</div>
+    <h2>是否已喝完一杯水？</h2>
+    <p class="hint">点击"已喝完"将自动添加 200ml 记录</p>
+    
+    <div class="action-buttons">
+      <button class="btn-primary" (click)="onConfirm()">
+        ✅ 已喝完
+      </button>
+      <button class="btn-secondary" (click)="onSnooze()">
+        ⏰ 稍后提醒
+      </button>
+      <button class="btn-text" (click)="onDismiss()">
+        ❌ 忽略
+      </button>
+    </div>
+  </div>
+</div>
+

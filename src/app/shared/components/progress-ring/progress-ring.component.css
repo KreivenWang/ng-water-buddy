@@ -1,0 +1,14 @@
+/* TODO: 实现环形进度条样式 */
+.progress-ring {
+  position: relative;
+  cursor: pointer;
+}
+
+.ring-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+

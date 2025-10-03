@@ -1,0 +1,10 @@
+<!-- TODO: 实现设置页面容器模板 -->
+<div class="settings-page">
+  <h1>设置</h1>
+  <app-theme-toggle (themeChanged)="onThemeChanged($event)"></app-theme-toggle>
+  <app-data-export 
+    (exportData)="onExportData()"
+    (importData)="onImportData($event)">
+  </app-data-export>
+</div>
+

@@ -1,0 +1,11 @@
+<!-- TODO: 实现声音选择器模板 -->
+<div class="sound-picker">
+  <div 
+    *ngFor="let sound of soundOptions" 
+    class="sound-option"
+    [class.selected]="selectedSound === sound.value"
+    (click)="onSoundSelect(sound.value)">
+    {{ sound.label }}
+  </div>
+</div>
+

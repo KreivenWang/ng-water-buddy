@@ -1,0 +1,15 @@
+<!-- TODO: 实现成员卡片模板 -->
+<div class="member-card">
+  <div class="avatar" [style.background-color]="member.avatarBgColor">
+    {{ member.avatar }}
+  </div>
+  <div class="member-info">
+    <h3>{{ member.name }}</h3>
+    <p>目标: {{ member.dailyGoal }}ml</p>
+  </div>
+  <div class="actions">
+    <button (click)="onEdit()">编辑</button>
+    <button (click)="onDelete()">删除</button>
+  </div>
+</div>
+

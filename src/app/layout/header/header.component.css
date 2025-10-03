@@ -1,0 +1,7 @@
+/* TODO: 实现顶部导航栏样式 */
+.app-header {
+  padding: var(--spacing-4, 16px);
+  background: var(--color-primary, #4A90E2);
+  color: white;
+}
+

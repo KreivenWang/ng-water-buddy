@@ -1,0 +1,18 @@
+/* TODO: 实现水杯动画样式 */
+.water-cup {
+  position: relative;
+  width: 200px;
+  height: 300px;
+  border: 3px solid var(--color-border, #ccc);
+  border-radius: 0 0 var(--radius-xl, 20px) var(--radius-xl, 20px);
+  overflow: hidden;
+}
+
+.water {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: var(--color-water-blue, #1CB0F6);
+  transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+

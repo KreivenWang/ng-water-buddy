@@ -1,0 +1,7 @@
+/* TODO: 实现成员列表样式 */
+.member-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3, 12px);
+}
+

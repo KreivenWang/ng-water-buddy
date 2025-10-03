@@ -1,0 +1,10 @@
+<!-- TODO: 实现成员列表模板 -->
+<div class="member-list">
+  <app-family-member-card
+    *ngFor="let member of members; trackBy: trackByMemberId"
+    [member]="member"
+    (edit)="onMemberEdit($event)"
+    (delete)="onMemberDelete($event)">
+  </app-family-member-card>
+</div>
+

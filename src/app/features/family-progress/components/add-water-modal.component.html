@@ -1,0 +1,9 @@
+<!-- TODO: 实现添加喝水弹窗模板 -->
+<div class="modal-overlay" *ngIf="isOpen">
+  <div class="modal-content">
+    <h2>添加喝水记录</h2>
+    <app-quick-add-buttons (waterAdded)="onWaterAdded($event)"></app-quick-add-buttons>
+    <button class="close-btn" (click)="close()">关闭</button>
+  </div>
+</div>
+

@@ -1,0 +1,14 @@
+/* TODO: 实现应用根样式 */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: var(--spacing-4, 16px);
+  /* [关键点] 为底部导航留出空间 */
+  padding-bottom: calc(60px + var(--spacing-4, 16px));
+}
+

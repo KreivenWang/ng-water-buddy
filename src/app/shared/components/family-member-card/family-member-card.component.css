@@ -1,0 +1,10 @@
+/* TODO: 实现成员卡片样式 */
+.member-card {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-4, 16px);
+  border-radius: var(--radius-lg, 12px);
+  background: white;
+  box-shadow: var(--shadow-card, 0 2px 8px rgba(0,0,0,0.1));
+}
+

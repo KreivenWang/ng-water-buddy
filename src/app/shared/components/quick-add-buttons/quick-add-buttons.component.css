@@ -1,0 +1,16 @@
+/* TODO: 实现快捷按钮样式 */
+.quick-add-container {
+  display: flex;
+  gap: var(--spacing-3, 12px);
+  justify-content: center;
+}
+
+.quick-add-btn {
+  padding: var(--spacing-3, 12px) var(--spacing-4, 16px);
+  border: none;
+  border-radius: var(--radius-lg, 12px);
+  background: var(--color-primary, #4A90E2);
+  color: white;
+  cursor: pointer;
+}
+
