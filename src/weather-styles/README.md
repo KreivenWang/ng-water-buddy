@@ -15,6 +15,17 @@ src/weather-styles/
 │   └── icon.css              # 图标样式
 ├── responsive.css            # 响应式设计
 ├── weather-app.css           # 主样式文件（导入所有样式）
+├── weather-app-advanced.css  # 高级设计稿样式（复杂布局）
+├── color-system.css          # 精确配色系统（基于设计稿40-2621）
+├── color-showcase.html       # 配色系统展示页面
+├── homepage.html             # 主页面（基于设计稿50-1648）
+├── homepage.css              # 主页面专用样式
+├── complete-example.html     # 完整样式示例（推荐查看）
+├── assets/                   # 设计稿资源文件
+│   ├── 611b99ce-9481-43b2-a2af-4debe292fe4b.png  # 基础背景图
+│   ├── e41b3318-5f3f-4ae3-9d7d-047bff41c0ce.png  # 侧边栏背景
+│   ├── 3c7d24d9-1493-45b4-ba4f-731e7c1cd30a.png  # 天气图标
+│   └── [其他资源文件...]     # 更多设计稿资源
 └── README.md                 # 本文档
 ```
 
@@ -22,6 +33,7 @@ src/weather-styles/
 
 ### 颜色系统
 
+#### 基础配色（原始设计稿）
 | 属性 | 变量名 | 值/描述 |
 | :--- | :--- | :--- |
 | 主渐变 | `--gradient-primary` | 径向渐变：紫蓝色系 |
@@ -32,6 +44,29 @@ src/weather-styles/
 | 第三文本 | `--text-tertiary` | rgba(255, 255, 255, 0.6) |
 | 卡片背景 | `--bg-card` | rgba(255, 255, 255, 0.15) |
 | 叠加背景 | `--bg-overlay` | rgba(255, 255, 255, 0.1) |
+
+#### 精确配色系统（基于设计稿40-2621）
+
+**浅色主题 (Light Theme)**
+| 类别 | 变量名 | 色值 | 用途 |
+| :--- | :--- | :--- | :--- |
+| 主背景 | `--light-bg-primary` | #F4F7FB | 页面主背景色 |
+| 主文本 | `--light-text-primary` | #000000 | 主要文本颜色 |
+| 次要色 | `--light-secondary` | #3C3C43 | 次要元素颜色 |
+
+**深色主题 (Dark Theme)**
+| 类别 | 变量名 | 色值 | 用途 |
+| :--- | :--- | :--- | :--- |
+| 主背景 | `--dark-bg-primary` | #312B5B | 页面主背景色 |
+| 主文本 | `--dark-text-primary` | #FFFFFF | 主要文本颜色 |
+| 次要色 | `--dark-secondary` | #EBEBF5 | 次要元素颜色 |
+
+**自动主题切换**
+| 变量名 | 浅色主题值 | 深色主题值 | 说明 |
+| :--- | :--- | :--- | :--- |
+| `--bg-primary` | #F4F7FB | #312B5B | 自动切换的主背景 |
+| `--text-primary` | #000000 | #FFFFFF | 自动切换的主文本 |
+| `--color-primary` | #000000 | #FFFFFF | 自动切换的主色调 |
 
 ### 字体系统
 
@@ -260,9 +295,132 @@ src/weather-styles/
 
 ## 🚀 快速开始
 
+### 基础设计稿使用
+
 1. **引入样式文件**
    ```html
    <link rel="stylesheet" href="weather-app.css">
+   ```
+
+### 高级设计稿使用
+
+1. **引入高级样式文件**
+   ```html
+   <link rel="stylesheet" href="weather-app-advanced.css">
+   ```
+
+### 精确配色系统使用
+
+1. **引入配色系统**
+   ```html
+   <link rel="stylesheet" href="color-system.css">
+   ```
+
+2. **使用配色变量**
+   ```css
+   .my-component {
+     background-color: var(--bg-primary);
+     color: var(--text-primary);
+     border: 1px solid var(--border-primary);
+   }
+   ```
+
+3. **主题切换**
+   ```javascript
+   // 切换到深色主题
+   document.documentElement.setAttribute('data-theme', 'dark');
+   
+   // 切换到浅色主题
+   document.documentElement.setAttribute('data-theme', 'light');
+   
+   // 移除主题设置，使用系统默认
+   document.documentElement.removeAttribute('data-theme');
+   ```
+
+4. **查看配色展示**
+   ```bash
+   # 在浏览器中打开配色展示页面
+   open color-showcase.html
+   ```
+
+### 主页面使用
+
+1. **查看主页面**
+   ```bash
+   # 在浏览器中打开主页面
+   open homepage.html
+   ```
+
+2. **主页面特性**
+   - 基于Figma设计稿50-1648精确还原
+   - 径向渐变背景效果
+   - 完整的天气信息展示
+   - 小时预报和周预报
+   - 底部导航栏
+   - 响应式设计
+   - 实时时间显示
+   - 交互式元素
+
+3. **主页面结构**
+   - 状态栏（时间、信号等）
+   - 位置信息显示
+   - 当前天气大图显示
+   - 天气详情卡片
+   - 小时预报横向滚动
+   - 周预报列表
+   - 底部导航栏
+
+### 完整样式示例（推荐）
+
+1. **查看完整示例**
+   ```bash
+   # 在浏览器中打开完整样式示例
+   open complete-example.html
+   ```
+
+2. **示例包含内容**
+   - 🎨 **配色系统展示** - 完整的颜色调色板
+   - 🔘 **按钮组件** - 所有按钮样式和变体
+   - 🌤️ **天气卡片** - 各种类型的卡片组件
+   - 🎯 **图标组件** - 不同尺寸和样式的图标
+   - 📐 **布局系统** - 网格和布局示例
+   - 📱 **响应式设计** - 自适应布局演示
+   - 🛠️ **工具类** - 常用辅助样式
+   - 📖 **使用说明** - 代码示例和文档
+
+3. **交互功能**
+   - 实时主题切换
+   - 屏幕宽度显示
+   - 按钮点击效果
+   - 卡片悬停动画
+   - 响应式布局演示
+
+2. **使用高级布局结构**
+   ```html
+   <div class="weather-app-advanced">
+     <!-- 左侧边栏 -->
+     <div class="weather-sidebar">
+       <img src="assets/e41b3318-5f3f-4ae3-9d7d-047bff41c0ce.png" 
+            class="weather-sidebar-background" alt="侧边栏背景">
+     </div>
+     
+     <!-- 中间内容 -->
+     <div class="weather-main-content">
+       <div class="weather-icon-display">
+         <img src="assets/3c7d24d9-1493-45b4-ba4f-731e7c1cd30a.png" 
+              class="weather-icon-large" alt="天气图标">
+       </div>
+       
+       <div class="weather-info-card">
+         <!-- 天气信息卡片 -->
+       </div>
+     </div>
+     
+     <!-- 右侧内容 -->
+     <div class="weather-right-content">
+       <!-- 状态栏、搜索、天气详情等 -->
+     </div>
+   </div>
    ```
 
 2. **使用基础结构**

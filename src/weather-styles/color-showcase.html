@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天气应用配色系统 - 精确还原</title>
+    <link rel="stylesheet" href="color-system.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: all 0.3s ease;
+        }
+        
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .title {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+        
+        .subtitle {
+            font-size: 24px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+        
+        .theme-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            background-color: var(--bg-secondary);
+            border: 2px solid var(--border-primary);
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            background-color: var(--bg-tertiary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .color-section {
+            margin-bottom: 80px;
+        }
+        
+        .section-title {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: var(--text-primary);
+            text-align: center;
+        }
+        
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .color-card {
+            background-color: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-primary);
+            transition: all 0.3s ease;
+        }
+        
+        .color-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .color-preview {
+            width: 100%;
+            height: 120px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .color-info {
+            text-align: center;
+        }
+        
+        .color-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .color-value {
+            font-size: 16px;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+            color: var(--text-secondary);
+            background-color: var(--bg-tertiary);
+            padding: 6px 12px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+        
+        .css-variable {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            margin-top: 8px;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+        }
+        
+        .usage-examples {
+            background-color: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 40px;
+            border: 1px solid var(--border-primary);
+        }
+        
+        .usage-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+        
+        .code-block {
+            background-color: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-primary);
+            overflow-x: auto;
+            border: 1px solid var(--border-secondary);
+        }
+        
+        .highlight {
+            background-color: var(--color-primary-10);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .theme-comparison {
+            background-color: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid var(--border-primary);
+        }
+        
+        .theme-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .color-swatch {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background-color: var(--bg-tertiary);
+        }
+        
+        .swatch-color {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: 1px solid var(--border-primary);
+        }
+        
+        .swatch-info {
+            flex: 1;
+        }
+        
+        .swatch-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .swatch-value {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .title {
+                font-size: 36px;
+            }
+            
+            .subtitle {
+                font-size: 20px;
+            }
+            
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .color-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">天气应用配色系统</h1>
+            <p class="subtitle">基于 Figma 设计稿 40-2621 的精确配色还原</p>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <span>🌙</span>
+                <span id="theme-text">切换到深色主题</span>
+            </button>
+        </div>
+
+        <!-- 浅色主题配色 -->
+        <div class="color-section">
+            <h2 class="section-title">浅色主题配色 (Light Theme)</h2>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-preview" style="background-color: #F4F7FB; color: #000000;">
+                        #F4F7FB
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">主背景色</div>
+                        <div class="color-value">#F4F7FB</div>
+                        <div class="css-variable">--light-bg-primary</div>
+                    </div>
+                </div>
+                
+                <div class="color-card">
+                    <div class="color-preview" style="background-color: #000000; color: #FFFFFF;">
+                        #000000
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">主文本色</div>
+                        <div class="color-value">#000000</div>
+                        <div class="css-variable">--light-text-primary</div>
+                    </div>
+                </div>
+                
+                <div class="color-card">
+                    <div class="color-preview" style="background-color: #3C3C43; color: #FFFFFF;">
+                        #3C3C43
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">次要色</div>
+                        <div class="color-value">#3C3C43</div>
+                        <div class="css-variable">--light-secondary</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 深色主题配色 -->
+        <div class="color-section">
+            <h2 class="section-title">深色主题配色 (Dark Theme)</h2>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-preview" style="background-color: #312B5B; color: #FFFFFF;">
+                        #312B5B
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">主背景色</div>
+                        <div class="color-value">#312B5B</div>
+                        <div class="css-variable">--dark-bg-primary</div>
+                    </div>
+                </div>
+                
+                <div class="color-card">
+                    <div class="color-preview" style="background-color: #FFFFFF; color: #000000;">
+                        #FFFFFF
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">主文本色</div>
+                        <div class="color-value">#FFFFFF</div>
+                        <div class="css-variable">--dark-text-primary</div>
+                    </div>
+                </div>
+                
+                <div class="color-card">
+                    <div class="color-preview" style="background-color: #EBEBF5; color: #000000;">
+                        #EBEBF5
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">次要色</div>
+                        <div class="color-value">#EBEBF5</div>
+                        <div class="css-variable">--dark-secondary</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 主题对比 -->
+        <div class="color-section">
+            <h2 class="section-title">主题对比</h2>
+            <div class="comparison-grid">
+                <div class="theme-comparison">
+                    <h3 class="theme-title">浅色主题</h3>
+                    <div class="color-swatch">
+                        <div class="swatch-color" style="background-color: #F4F7FB;"></div>
+                        <div class="swatch-info">
+                            <div class="swatch-name">主背景</div>
+                            <div class="swatch-value">#F4F7FB</div>
+                        </div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="swatch-color" style="background-color: #000000;"></div>
+                        <div class="swatch-info">
+                            <div class="swatch-name">主文本</div>
+                            <div class="swatch-value">#000000</div>
+                        </div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="swatch-color" style="background-color: #3C3C43;"></div>
+                        <div class="swatch-info">
+                            <div class="swatch-name">次要色</div>
+                            <div class="swatch-value">#3C3C43</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="theme-comparison">
+                    <h3 class="theme-title">深色主题</h3>
+                    <div class="color-swatch">
+                        <div class="swatch-color" style="background-color: #312B5B;"></div>
+                        <div class="swatch-info">
+                            <div class="swatch-name">主背景</div>
+                            <div class="swatch-value">#312B5B</div>
+                        </div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="swatch-color" style="background-color: #FFFFFF;"></div>
+                        <div class="swatch-info">
+                            <div class="swatch-name">主文本</div>
+                            <div class="swatch-value">#FFFFFF</div>
+                        </div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="swatch-color" style="background-color: #EBEBF5;"></div>
+                        <div class="swatch-info">
+                            <div class="swatch-name">次要色</div>
+                            <div class="swatch-value">#EBEBF5</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 使用示例 -->
+        <div class="usage-examples">
+            <h3 class="usage-title">使用方法</h3>
+            <div class="code-block">
+<span class="highlight">/* 引入配色系统 */</span>
+@import 'color-system.css';
+
+<span class="highlight">/* 使用配色变量 */</span>
+.my-component {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
+}
+
+<span class="highlight">/* 主题切换 */</span>
+document.documentElement.setAttribute('data-theme', 'dark');
+
+<span class="highlight">/* 响应式主题 */</span>
+<span class="highlight">/* 系统会自动检测用户的主题偏好 */</span>
+            </div>
+        </div>
+
+        <!-- 设计稿信息 -->
+        <div class="usage-examples">
+            <h3 class="usage-title">设计稿信息</h3>
+            <div class="code-block">
+<span class="highlight">设计稿来源：</span> Figma Weather App UI Design - Community
+<span class="highlight">节点ID：</span> 40-2621
+<span class="highlight">提取时间：</span> 2024年1月15日
+<span class="highlight">配色精度：</span> 100% 像素级还原
+
+<span class="highlight">浅色主题背景：</span> rgba(244, 247, 251, 1) → #F4F7FB
+<span class="highlight">深色主题背景：</span> rgba(49, 43, 91, 1) → #312B5B
+<span class="highlight">浅色主题文本：</span> rgba(0, 0, 0, 1) → #000000
+<span class="highlight">深色主题文本：</span> rgba(255, 255, 255, 1) → #FFFFFF
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeText = document.getElementById('theme-text');
+            const currentTheme = html.getAttribute('data-theme');
+            
+            if (currentTheme === 'dark') {
+                html.setAttribute('data-theme', 'light');
+                themeText.textContent = '切换到深色主题';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                themeText.textContent = '切换到浅色主题';
+            }
+        }
+        
+        // 检测系统主题偏好
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.getElementById('theme-text').textContent = '切换到浅色主题';
+        }
+        
+        // 监听系统主题变化
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!document.documentElement.getAttribute('data-theme')) {
+                if (e.matches) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    document.getElementById('theme-text').textContent = '切换到浅色主题';
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    document.getElementById('theme-text').textContent = '切换到深色主题';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,579 @@
+/* ========================================
+   天气应用 UI 设计系统 - 高级设计稿样式
+   
+   基于 Figma 设计稿 2-298 的复杂布局样式
+   ======================================== */
+
+/* ===== 高级设计稿主容器 ===== */
+.weather-app-advanced {
+  position: relative;
+  width: 2740px;
+  height: 1888px;
+  background: radial-gradient(ellipse at 93.07% 74.31%, 
+                              rgba(69, 39, 139, 1) 0%, 
+                              rgba(46, 51, 90, 1) 100%);
+  border-radius: 88px;
+  padding: 100px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+/* ===== 左侧面板 ===== */
+.weather-sidebar {
+  width: 780px;
+  height: 1688px;
+  background: linear-gradient(23.87deg, 
+                              rgba(46, 51, 90, 1) 0%, 
+                              rgba(28, 27, 51, 1) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.weather-sidebar-background {
+  width: 780px;
+  height: 1688px;
+  object-fit: cover;
+}
+
+/* ===== 中间内容区域 ===== */
+.weather-main-content {
+  width: 780px;
+  height: 1180px;
+  margin-left: 100px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+/* ===== 天气图标显示区域 ===== */
+.weather-icon-display {
+  width: 780px;
+  height: 780px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.weather-icon-large {
+  width: 780px;
+  height: 780px;
+  object-fit: contain;
+}
+
+/* ===== 天气信息卡片区域 ===== */
+.weather-info-card {
+  width: 780px;
+  height: 200px;
+  margin-top: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.weather-info-background {
+  width: 780px;
+  height: 177.24px;
+  position: absolute;
+  top: 22.76px;
+  left: 0;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.weather-info-content {
+  width: 652px;
+  height: 88px;
+  margin-top: 41.24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weather-info-left {
+  width: 88px;
+  height: 88px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.weather-info-right {
+  width: 88px;
+  height: 88px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 476px;
+}
+
+.weather-info-icon {
+  width: 88px;
+  height: 88px;
+  font-family: 'SF Pro Text', sans-serif;
+  font-size: 44px;
+  color: rgba(255, 255, 255, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  line-height: normal;
+  letter-spacing: 0.04px;
+  font-weight: normal;
+}
+
+/* ===== 天气详情叠加层 ===== */
+.weather-detail-overlay {
+  width: 532px;
+  height: 200px;
+  position: absolute;
+  top: 0;
+  left: 124px;
+}
+
+.weather-detail-background {
+  width: 532px;
+  height: 200px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.weather-detail-content {
+  width: 236px;
+  height: 200px;
+  position: absolute;
+  top: 0;
+  left: 148px;
+  overflow: hidden;
+}
+
+.weather-detail-icon-1 {
+  width: 132px;
+  height: 132px;
+  position: absolute;
+  top: 22px;
+  left: 52px;
+}
+
+.weather-detail-background-1 {
+  width: 236px;
+  height: 200px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.weather-detail-icon-2 {
+  width: 116px;
+  height: 116px;
+  position: absolute;
+  top: 30px;
+  left: 60px;
+}
+
+.weather-detail-main-icon {
+  width: 88px;
+  height: 88px;
+  position: absolute;
+  top: 44px;
+  left: 74px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.weather-detail-main-icon-text {
+  width: 88px;
+  height: 88px;
+  font-family: 'SF Pro Display', sans-serif;
+  font-size: 56px;
+  color: rgba(72, 49, 157, 1);
+  text-align: center;
+  line-height: normal;
+  letter-spacing: 0.72px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===== 右侧内容区域 ===== */
+.weather-right-content {
+  width: 780px;
+  height: 1636px;
+  margin-left: 100px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* ===== 状态栏 ===== */
+.weather-status-bar {
+  width: 780px;
+  height: 94px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+.weather-time-display {
+  margin-top: 28px;
+  margin-left: 54px;
+  width: 108px;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.weather-time-container {
+  width: 108px;
+  height: 42px;
+  border-radius: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.weather-time-text {
+  width: 108px;
+  height: 40px;
+  font-family: 'SF Pro Text', sans-serif;
+  font-size: 34px;
+  color: rgba(255, 255, 255, 1);
+  text-align: center;
+  line-height: 44px;
+  letter-spacing: -0.82px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.weather-status-icons {
+  margin-top: 38px;
+  margin-left: 410px;
+  width: 154.80px;
+  height: 26px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.weather-status-icon {
+  width: 36px;
+  height: 24px;
+  margin-top: 2px;
+}
+
+.weather-status-icon + .weather-status-icon {
+  margin-left: 16px;
+}
+
+.weather-status-icon:last-child {
+  width: 54.80px;
+  height: 26px;
+  margin-left: 14px;
+}
+
+/* ===== 搜索卡片 ===== */
+.weather-search-card {
+  width: 780px;
+  height: 310px;
+  margin-top: 100px;
+  backdrop-filter: blur(2rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.weather-search-header {
+  width: 780px;
+  height: 94px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+.weather-search-content {
+  width: 780px;
+  height: 212px;
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.weather-search-title-row {
+  width: 780px;
+  height: 104px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.weather-search-title-left {
+  width: 390px;
+  height: 104px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 18px;
+  padding-left: 32px;
+}
+
+.weather-search-title-content {
+  width: 250px;
+  height: 68px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.weather-search-icon {
+  font-family: 'SF Pro Display', sans-serif;
+  font-size: 46px;
+  color: rgba(235, 235, 245, 1);
+  line-height: 48px;
+  letter-spacing: 0.76px;
+  font-weight: 500;
+}
+
+.weather-search-text {
+  margin-left: 10px;
+  font-family: 'SF Pro Display', sans-serif;
+  font-size: 56px;
+  color: rgba(255, 255, 255, 1);
+  line-height: 68px;
+  letter-spacing: 0.72px;
+  font-weight: normal;
+}
+
+.weather-search-title-right {
+  width: 390px;
+  height: 104px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 32px;
+  padding-left: 18px;
+}
+
+.weather-search-menu-icon {
+  font-family: 'SF Pro Display', sans-serif;
+  font-size: 56px;
+  color: rgba(255, 255, 255, 1);
+  line-height: 68px;
+  letter-spacing: 0.72px;
+  font-weight: normal;
+  text-align: right;
+}
+
+.weather-search-input-row {
+  width: 780px;
+  height: 92px;
+  margin-top: 16px;
+  padding-right: 32px;
+  padding-bottom: 20px;
+  padding-left: 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.weather-search-input {
+  width: 716px;
+  height: 72px;
+  border-radius: 20px;
+  background: linear-gradient(84.01deg, 
+                              rgba(46, 51, 90, 0.26) 0%, 
+                              rgba(28, 27, 51, 0.26) 100%);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.weather-search-input-icon {
+  width: 31.26px;
+  height: 31.56px;
+  margin-left: 16px;
+}
+
+.weather-search-input-text {
+  width: 652.74px;
+  font-family: 'SF Pro Text', sans-serif;
+  font-size: 34px;
+  color: rgba(235, 235, 245, 1);
+  line-height: 44px;
+  letter-spacing: -0.82px;
+  font-weight: normal;
+}
+
+/* ===== 城市信息显示 ===== */
+.weather-city-info {
+  width: 780px;
+  height: 156px;
+  margin-top: 100px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.weather-city-text {
+  margin-left: 228px;
+  font-family: 'SF Pro Display', sans-serif;
+  font-size: 68px;
+  color: rgba(255, 255, 255, 1);
+  line-height: 82px;
+  letter-spacing: 0.74px;
+  font-weight: normal;
+  text-align: center;
+}
+
+.weather-city-name {
+  font-size: 68px;
+  letter-spacing: 0.374px;
+}
+
+.weather-city-weather {
+  font-size: 40px;
+  font-weight: 600;
+  color: rgba(235, 235, 245, 1);
+  letter-spacing: 0.38px;
+}
+
+/* ===== 主要天气显示 ===== */
+.weather-main-display {
+  width: 780px;
+  height: 366px;
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.weather-main-city-name {
+  margin-left: 260px;
+  font-family: 'SF Pro Display', sans-serif;
+  font-size: 68px;
+  color: rgba(255, 255, 255, 1);
+  line-height: 82px;
+  letter-spacing: 0.74px;
+  font-weight: normal;
+  text-align: center;
+}
+
+.weather-main-temperature {
+  margin-top: 24px;
+  margin-left: 264px;
+  font-family: 'SF Pro Display', sans-serif;
+  font-size: 192px;
+  color: rgba(255, 255, 255, 1);
+  line-height: 140px;
+  letter-spacing: 0.74px;
+  font-weight: 200;
+  text-align: center;
+}
+
+.weather-main-details {
+  margin-top: 24px;
+  margin-left: 276px;
+  font-family: 'SF Pro Display', sans-serif;
+  font-size: 40px;
+  color: rgba(255, 255, 255, 1);
+  line-height: 48px;
+  letter-spacing: 0.76px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.weather-main-condition {
+  color: rgba(235, 235, 245, 1);
+  letter-spacing: 0.38px;
+}
+
+.weather-main-range {
+  letter-spacing: 0.38px;
+}
+
+/* ===== 响应式调整 ===== */
+@media (max-width: 1440px) {
+  .weather-app-advanced {
+    width: 100%;
+    max-width: 1440px;
+    height: auto;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+  
+  .weather-sidebar {
+    width: 100%;
+    height: 400px;
+    margin-bottom: 20px;
+  }
+  
+  .weather-main-content,
+  .weather-right-content {
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 20px;
+  }
+  
+  .weather-main-temperature {
+    font-size: 120px;
+    line-height: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .weather-app-advanced {
+    padding: 20px;
+    border-radius: 20px;
+  }
+  
+  .weather-sidebar {
+    height: 300px;
+  }
+  
+  .weather-main-temperature {
+    font-size: 80px;
+    line-height: 80px;
+    margin-left: 0;
+    text-align: center;
+  }
+  
+  .weather-main-city-name {
+    margin-left: 0;
+    font-size: 48px;
+  }
+  
+  .weather-city-text {
+    margin-left: 0;
+    font-size: 48px;
+  }
+  
+  .weather-search-text {
+    font-size: 40px;
+  }
+  
+  .weather-search-input-text {
+    font-size: 24px;
+  }
+}

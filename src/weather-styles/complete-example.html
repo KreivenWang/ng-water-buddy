@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天气应用 - 完整样式示例</title>
+    
+    <!-- 引入所有样式文件 -->
+    <link rel="stylesheet" href="color-system.css">
+    <link rel="stylesheet" href="variables.css">
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components/weather-card.css">
+    <link rel="stylesheet" href="components/button.css">
+    <link rel="stylesheet" href="components/icon.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="weather-app.css">
+    <link rel="stylesheet" href="weather-app-advanced.css">
+    <link rel="stylesheet" href="homepage.css">
+    
+    <style>
+        /* 示例页面专用样式 */
+        .example-container {
+            min-height: 100vh;
+            background: var(--gradient-primary);
+            padding: 20px;
+            font-family: var(--font-family-primary);
+        }
+        
+        .example-section {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xxl);
+            margin-bottom: var(--spacing-xxl);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .example-title {
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+        }
+        
+        .example-subtitle {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .example-description {
+            color: var(--text-tertiary);
+            margin-bottom: var(--spacing-lg);
+            line-height: var(--line-height-relaxed);
+        }
+        
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .component-item {
+            background: var(--bg-overlay);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .component-label {
+            font-size: var(--font-size-sm);
+            color: var(--text-tertiary);
+            font-weight: var(--font-weight-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .theme-toggle-demo {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .color-swatch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .color-box {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xs);
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .color-name {
+            font-size: var(--font-size-xs);
+            color: var(--text-tertiary);
+            text-align: center;
+        }
+        
+        .layout-demo {
+            background: var(--bg-overlay);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            margin: var(--spacing-md) 0;
+        }
+        
+        .demo-header {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .demo-main {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .demo-sidebar {
+            background: var(--bg-overlay);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+        }
+        
+        .responsive-demo {
+            background: var(--bg-overlay);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            margin: var(--spacing-md) 0;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+        }
+        
+        .responsive-info {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+        }
+        
+        @media (max-width: 768px) {
+            .example-container {
+                padding: var(--spacing-md);
+            }
+            
+            .example-section {
+                padding: var(--spacing-lg);
+            }
+            
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .theme-toggle-demo {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-bottom: var(--spacing-lg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="example-container">
+        
+        <!-- 主题切换按钮 -->
+        <div class="theme-toggle-demo">
+            <button class="btn btn--primary" onclick="toggleTheme()">
+                <span class="icon icon--md">🌙</span>
+                <span id="theme-text">深色主题</span>
+            </button>
+        </div>
+        
+        <!-- 页面标题 -->
+        <div class="example-section">
+            <h1 class="example-title">天气应用完整样式示例</h1>
+            <p class="example-description">
+                这是一个完整的CSS样式示例，展示了天气应用设计系统中所有可用的组件、配色、布局和响应式功能。
+                基于多个Figma设计稿精确还原，包含完整的组件库和设计令牌系统。
+            </p>
+        </div>
+        
+        <!-- 配色系统展示 -->
+        <div class="example-section">
+            <h2 class="example-subtitle">🎨 配色系统</h2>
+            <p class="example-description">
+                基于Figma设计稿提取的精确配色方案，支持浅色和深色主题自动切换。
+            </p>
+            
+            <div class="color-palette">
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: var(--bg-primary);">主背景</div>
+                    <div class="color-name">主背景色</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: var(--bg-secondary);">次背景</div>
+                    <div class="color-name">次背景色</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: var(--text-primary); color: var(--bg-primary);">主文本</div>
+                    <div class="color-name">主文本色</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: var(--text-secondary); color: var(--bg-primary);">次文本</div>
+                    <div class="color-name">次文本色</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: var(--color-success);">成功</div>
+                    <div class="color-name">成功色</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: var(--color-warning);">警告</div>
+                    <div class="color-name">警告色</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: var(--color-error);">错误</div>
+                    <div class="color-name">错误色</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background-color: var(--color-info);">信息</div>
+                    <div class="color-name">信息色</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 按钮组件展示 -->
+        <div class="example-section">
+            <h2 class="example-subtitle">🔘 按钮组件</h2>
+            <p class="example-description">
+                多种样式的按钮组件，支持不同尺寸、状态和变体。
+            </p>
+            
+            <div class="component-grid">
+                <div class="component-item">
+                    <div class="component-label">主要按钮</div>
+                    <button class="btn btn--primary">主要按钮</button>
+                    <button class="btn btn--primary btn--small">小按钮</button>
+                    <button class="btn btn--primary btn--large">大按钮</button>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">次要按钮</div>
+                    <button class="btn btn--secondary">次要按钮</button>
+                    <button class="btn btn--outline">轮廓按钮</button>
+                    <button class="btn btn--text">文本按钮</button>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">图标按钮</div>
+                    <button class="btn btn--icon">
+                        <span class="icon icon--md">⚙️</span>
+                    </button>
+                    <button class="btn btn--icon btn--circle">
+                        <span class="icon icon--md">➕</span>
+                    </button>
+                    <button class="btn btn--primary btn--icon">
+                        <span class="icon icon--md">🔍</span>
+                        <span>搜索</span>
+                    </button>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">按钮组</div>
+                    <div class="btn-group">
+                        <button class="btn btn--secondary">左</button>
+                        <button class="btn btn--secondary">中</button>
+                        <button class="btn btn--secondary">右</button>
+                    </div>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">状态按钮</div>
+                    <button class="btn btn--primary">正常</button>
+                    <button class="btn btn--primary" disabled>禁用</button>
+                    <button class="btn btn--primary btn--loading">加载中</button>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">全宽按钮</div>
+                    <button class="btn btn--primary btn--full">全宽按钮</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 天气卡片组件展示 -->
+        <div class="example-section">
+            <h2 class="example-subtitle">🌤️ 天气卡片组件</h2>
+            <p class="example-description">
+                各种类型的天气卡片，用于展示不同的天气信息。
+            </p>
+            
+            <div class="component-grid">
+                <div class="component-item">
+                    <div class="component-label">基础卡片</div>
+                    <div class="weather-card">
+                        <div class="weather-card__header">
+                            <h3 class="weather-card__title">今日天气</h3>
+                        </div>
+                        <div class="weather-card__content">
+                            <div class="weather-card__body">
+                                <p>晴天，温度适宜，适合外出。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">当前天气卡片</div>
+                    <div class="weather-card current-weather-card">
+                        <div class="temperature">25°C</div>
+                        <div class="condition">晴天</div>
+                    </div>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">预报卡片</div>
+                    <div class="weather-card forecast-card">
+                        <div class="day">今天</div>
+                        <div class="icon">☀️</div>
+                        <div class="temperature-range">
+                            <span class="temp-high">28°</span>
+                            <span class="temp-low">18°</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">详情卡片</div>
+                    <div class="detail-card">
+                        <div class="icon">
+                            <span class="icon icon--md">💨</span>
+                        </div>
+                        <div class="content">
+                            <div class="label">风速</div>
+                            <div class="value">12 km/h</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">大卡片</div>
+                    <div class="weather-card weather-card--large">
+                        <div class="weather-card__header">
+                            <h3 class="weather-card__title">详细预报</h3>
+                            <p class="weather-card__subtitle">未来7天</p>
+                        </div>
+                        <div class="weather-card__content">
+                            <div class="weather-card__body">
+                                <p>本周天气以晴天为主，温度适宜。</p>
+                            </div>
+                            <div class="weather-card__footer">
+                                <button class="btn btn--text">查看详情</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">透明卡片</div>
+                    <div class="weather-card weather-card--transparent">
+                        <div class="weather-card__content">
+                            <div class="weather-card__body">
+                                <p>透明背景的卡片样式。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 图标组件展示 -->
+        <div class="example-section">
+            <h2 class="example-subtitle">🎯 图标组件</h2>
+            <p class="example-description">
+                各种尺寸和样式的图标组件，包含天气图标和功能图标。
+            </p>
+            
+            <div class="component-grid">
+                <div class="component-item">
+                    <div class="component-label">基础图标尺寸</div>
+                    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+                        <span class="icon icon--xs">🌤️</span>
+                        <span class="icon icon--sm">🌤️</span>
+                        <span class="icon icon--md">🌤️</span>
+                        <span class="icon icon--lg">🌤️</span>
+                        <span class="icon icon--xl">🌤️</span>
+                        <span class="icon icon--2xl">🌤️</span>
+                        <span class="icon icon--3xl">🌤️</span>
+                    </div>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">天气图标</div>
+                    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+                        <span class="icon icon--lg weather-icon weather-icon--sun">☀️</span>
+                        <span class="icon icon--lg weather-icon weather-icon--cloud">☁️</span>
+                        <span class="icon icon--lg weather-icon weather-icon--rain">🌧️</span>
+                        <span class="icon icon--lg weather-icon weather-icon--snow">❄️</span>
+                        <span class="icon icon--lg weather-icon weather-icon--storm">⛈️</span>
+                    </div>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">图标容器</div>
+                    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+                        <div class="icon-container icon-container--sm">
+                            <span class="icon icon--md">🌤️</span>
+                        </div>
+                        <div class="icon-container icon-container--md">
+                            <span class="icon icon--md">🌤️</span>
+                        </div>
+                        <div class="icon-container icon-container--lg">
+                            <span class="icon icon--md">🌤️</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">功能图标</div>
+                    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+                        <span class="icon icon--md icon--menu">📋</span>
+                        <span class="icon icon--md icon--close">❌</span>
+                        <span class="icon icon--md icon--refresh">🔄</span>
+                        <span class="icon icon--md icon--arrow icon--arrow-up">⬆️</span>
+                        <span class="icon icon--md icon--arrow icon--arrow-down">⬇️</span>
+                        <span class="icon icon--md icon--arrow icon--arrow-left">⬅️</span>
+                        <span class="icon icon--md icon--arrow icon--arrow-right">➡️</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 布局系统展示 -->
+        <div class="example-section">
+            <h2 class="example-subtitle">📐 布局系统</h2>
+            <p class="example-description">
+                展示不同的布局模式和容器样式。
+            </p>
+            
+            <div class="layout-demo">
+                <div class="demo-header">
+                    <h3>页眉区域</h3>
+                    <p>包含导航和主要操作按钮</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px;">
+                    <div class="demo-main">
+                        <h4>主要内容区</h4>
+                        <p>这里是主要内容区域，可以包含天气信息、图表等。</p>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px;">
+                            <div class="weather-card weather-card--small">
+                                <div class="weather-card__content">
+                                    <div class="weather-card__body">
+                                        <p>卡片 1</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="weather-card weather-card--small">
+                                <div class="weather-card__content">
+                                    <div class="weather-card__body">
+                                        <p>卡片 2</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="weather-card weather-card--small">
+                                <div class="weather-card__content">
+                                    <div class="weather-card__body">
+                                        <p>卡片 3</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-sidebar">
+                        <h4>侧边栏</h4>
+                        <p>侧边栏内容</p>
+                        <div style="margin-top: 16px;">
+                            <button class="btn btn--secondary btn--full">操作按钮</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 响应式设计展示 -->
+        <div class="example-section">
+            <h2 class="example-subtitle">📱 响应式设计</h2>
+            <p class="example-description">
+                展示在不同屏幕尺寸下的自适应布局效果。
+            </p>
+            
+            <div class="responsive-demo">
+                <div class="responsive-info">
+                    <p>💡 调整浏览器窗口大小查看响应式效果</p>
+                    <p>当前屏幕宽度: <span id="screen-width"></span>px</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 20px;">
+                    <div class="weather-card">
+                        <div class="weather-card__content">
+                            <div class="weather-card__body">
+                                <p>响应式卡片 1</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weather-card">
+                        <div class="weather-card__content">
+                            <div class="weather-card__body">
+                                <p>响应式卡片 2</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="weather-card">
+                        <div class="weather-card__content">
+                            <div class="weather-card__body">
+                                <p>响应式卡片 3</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 工具类展示 -->
+        <div class="example-section">
+            <h2 class="example-subtitle">🛠️ 工具类</h2>
+            <p class="example-description">
+                常用的工具类和辅助样式。
+            </p>
+            
+            <div class="component-grid">
+                <div class="component-item">
+                    <div class="component-label">背景色工具类</div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <div class="bg-primary" style="padding: 8px 16px; border-radius: 4px;">bg-primary</div>
+                        <div class="bg-secondary" style="padding: 8px 16px; border-radius: 4px;">bg-secondary</div>
+                        <div class="bg-tertiary" style="padding: 8px 16px; border-radius: 4px;">bg-tertiary</div>
+                    </div>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">文本色工具类</div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <div class="text-primary" style="padding: 8px 16px; background: var(--bg-overlay); border-radius: 4px;">text-primary</div>
+                        <div class="text-secondary" style="padding: 8px 16px; background: var(--bg-overlay); border-radius: 4px;">text-secondary</div>
+                        <div class="text-tertiary" style="padding: 8px 16px; background: var(--bg-overlay); border-radius: 4px;">text-tertiary</div>
+                    </div>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">布局工具类</div>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div class="flex" style="gap: 8px;">
+                            <div class="weather-card weather-card--small" style="flex: 1;">
+                                <div class="weather-card__content">
+                                    <div class="weather-card__body">
+                                        <p>flex item 1</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="weather-card weather-card--small" style="flex: 1;">
+                                <div class="weather-card__content">
+                                    <div class="weather-card__body">
+                                        <p>flex item 2</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <span class="text-secondary">text-center 居中对齐</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">动画工具类</div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <div class="weather-card weather-fade-in" style="padding: 16px;">
+                            <div class="weather-card__content">
+                                <div class="weather-card__body">
+                                    <p>fade-in 淡入</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="weather-card weather-slide-up" style="padding: 16px;">
+                            <div class="weather-card__content">
+                                <div class="weather-card__body">
+                                    <p>slide-up 上滑</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="weather-card weather-scale-in" style="padding: 16px;">
+                            <div class="weather-card__content">
+                                <div class="weather-card__body">
+                                    <p>scale-in 缩放</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 使用说明 -->
+        <div class="example-section">
+            <h2 class="example-subtitle">📖 使用说明</h2>
+            <p class="example-description">
+                这个完整的样式示例展示了天气应用设计系统的所有功能。您可以直接使用这些组件和样式来构建您的天气应用。
+            </p>
+            
+            <div class="component-grid">
+                <div class="component-item">
+                    <div class="component-label">快速开始</div>
+                    <div style="font-family: 'SF Mono', monospace; font-size: 14px; color: var(--text-secondary);">
+                        &lt;!-- 引入样式文件 --&gt;<br>
+                        &lt;link rel="stylesheet" href="weather-app.css"&gt;<br><br>
+                        &lt;!-- 使用组件 --&gt;<br>
+                        &lt;div class="weather-card"&gt;<br>
+                        &nbsp;&nbsp;&lt;!-- 内容 --&gt;<br>
+                        &lt;/div&gt;
+                    </div>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">主题切换</div>
+                    <div style="font-family: 'SF Mono', monospace; font-size: 14px; color: var(--text-secondary);">
+                        // 切换到深色主题<br>
+                        document.documentElement<br>
+                        &nbsp;&nbsp;.setAttribute('data-theme', 'dark');<br><br>
+                        // 切换到浅色主题<br>
+                        document.documentElement<br>
+                        &nbsp;&nbsp;.setAttribute('data-theme', 'light');
+                    </div>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">自定义样式</div>
+                    <div style="font-family: 'SF Mono', monospace; font-size: 14px; color: var(--text-secondary);">
+                        .my-component {<br>
+                        &nbsp;&nbsp;background: var(--bg-primary);<br>
+                        &nbsp;&nbsp;color: var(--text-primary);<br>
+                        &nbsp;&nbsp;padding: var(--spacing-md);<br>
+                        &nbsp;&nbsp;border-radius: var(--radius-md);<br>
+                        }
+                    </div>
+                </div>
+                
+                <div class="component-item">
+                    <div class="component-label">响应式设计</div>
+                    <div style="font-family: 'SF Mono', monospace; font-size: 14px; color: var(--text-secondary);">
+                        .responsive-grid {<br>
+                        &nbsp;&nbsp;display: grid;<br>
+                        &nbsp;&nbsp;grid-template-columns:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;repeat(auto-fit, minmax(300px, 1fr));<br>
+                        &nbsp;&nbsp;gap: var(--spacing-md);<br>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        // 主题切换功能
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeText = document.getElementById('theme-text');
+            const currentTheme = html.getAttribute('data-theme');
+            
+            if (currentTheme === 'dark') {
+                html.setAttribute('data-theme', 'light');
+                themeText.textContent = '深色主题';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                themeText.textContent = '浅色主题';
+            }
+        }
+        
+        // 屏幕宽度显示
+        function updateScreenWidth() {
+            const widthElement = document.getElementById('screen-width');
+            if (widthElement) {
+                widthElement.textContent = window.innerWidth;
+            }
+        }
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 更新屏幕宽度
+            updateScreenWidth();
+            window.addEventListener('resize', updateScreenWidth);
+            
+            // 检测系统主题偏好
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-text').textContent = '浅色主题';
+            }
+            
+            // 监听系统主题变化
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                if (!document.documentElement.getAttribute('data-theme')) {
+                    if (e.matches) {
+                        document.documentElement.setAttribute('data-theme', 'dark');
+                        document.getElementById('theme-text').textContent = '浅色主题';
+                    } else {
+                        document.documentElement.setAttribute('data-theme', 'light');
+                        document.getElementById('theme-text').textContent = '深色主题';
+                    }
+                }
+            });
+            
+            // 按钮点击效果
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    if (this.type !== 'submit') {
+                        e.preventDefault();
+                    }
+                    
+                    // 添加点击效果
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+            
+            // 卡片悬停效果
+            const cards = document.querySelectorAll('.weather-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天气应用 - 主页面</title>
+    
+    <!-- 引入样式文件 -->
+    <link rel="stylesheet" href="color-system.css">
+    <link rel="stylesheet" href="variables.css">
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components/weather-card.css">
+    <link rel="stylesheet" href="components/button.css">
+    <link rel="stylesheet" href="components/icon.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="homepage.css">
+    
+    <style>
+        /* 临时样式，用于快速预览 */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body>
+    <!-- 主页面容器 -->
+    <div class="homepage-container">
+        <!-- 背景图片层 -->
+        <img src="assets/background.png" 
+             alt="主页面背景" 
+             class="homepage-background">
+        
+        <!-- 内容层 -->
+        <div class="homepage-content">
+            
+            <!-- 状态栏 -->
+            <div class="status-bar">
+                <div class="time-display">
+                    <span class="time">9:41</span>
+                </div>
+                <div class="status-icons">
+                    <div class="signal-icon">📶</div>
+                    <div class="wifi-icon">📶</div>
+                    <div class="battery-icon">🔋</div>
+                </div>
+            </div>
+            
+            <!-- 主内容区域 -->
+            <div class="main-content">
+                
+                <!-- 头部区域 -->
+                <header class="homepage-header">
+                    <div class="location-info">
+                        <h1 class="location-name">北京市</h1>
+                        <p class="location-detail">中国</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn--icon" aria-label="搜索">
+                            <span class="icon icon--md">🔍</span>
+                        </button>
+                        <button class="btn btn--icon" aria-label="设置">
+                            <span class="icon icon--md">⚙️</span>
+                        </button>
+                    </div>
+                </header>
+                
+                <!-- 当前天气显示 -->
+                <section class="current-weather-section">
+                    <div class="weather-icon-large">
+                        <span class="icon icon--3xl weather-icon weather-icon--sun">☀️</span>
+                    </div>
+                    <div class="temperature-display">
+                        <span class="temperature">25°</span>
+                        <span class="temperature-unit">C</span>
+                    </div>
+                    <div class="weather-condition">
+                        <h2 class="condition-text">晴天</h2>
+                        <p class="condition-detail">最高 28° · 最低 18°</p>
+                    </div>
+                </section>
+                
+                <!-- 天气详情卡片 -->
+                <section class="weather-details-section">
+                    <div class="detail-cards">
+                        <div class="detail-card">
+                            <div class="detail-icon">
+                                <span class="icon icon--lg">💨</span>
+                            </div>
+                            <div class="detail-info">
+                                <div class="detail-label">风速</div>
+                                <div class="detail-value">12 km/h</div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-card">
+                            <div class="detail-icon">
+                                <span class="icon icon--lg">💧</span>
+                            </div>
+                            <div class="detail-info">
+                                <div class="detail-label">湿度</div>
+                                <div class="detail-value">65%</div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-card">
+                            <div class="detail-icon">
+                                <span class="icon icon--lg">🌡️</span>
+                            </div>
+                            <div class="detail-info">
+                                <div class="detail-label">体感温度</div>
+                                <div class="detail-value">27°C</div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-card">
+                            <div class="detail-icon">
+                                <span class="icon icon--lg">👁️</span>
+                            </div>
+                            <div class="detail-info">
+                                <div class="detail-label">能见度</div>
+                                <div class="detail-value">10 km</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 小时预报 -->
+                <section class="hourly-forecast-section">
+                    <h3 class="section-title">今日预报</h3>
+                    <div class="hourly-forecast">
+                        <div class="hour-item">
+                            <div class="hour-time">现在</div>
+                            <div class="hour-icon">☀️</div>
+                            <div class="hour-temp">25°</div>
+                        </div>
+                        <div class="hour-item">
+                            <div class="hour-time">12:00</div>
+                            <div class="hour-icon">☀️</div>
+                            <div class="hour-temp">27°</div>
+                        </div>
+                        <div class="hour-item">
+                            <div class="hour-time">15:00</div>
+                            <div class="hour-icon">⛅</div>
+                            <div class="hour-temp">28°</div>
+                        </div>
+                        <div class="hour-item">
+                            <div class="hour-time">18:00</div>
+                            <div class="hour-icon">🌤️</div>
+                            <div class="hour-temp">26°</div>
+                        </div>
+                        <div class="hour-item">
+                            <div class="hour-time">21:00</div>
+                            <div class="hour-icon">🌙</div>
+                            <div class="hour-temp">22°</div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 周预报 -->
+                <section class="weekly-forecast-section">
+                    <h3 class="section-title">本周预报</h3>
+                    <div class="weekly-forecast">
+                        <div class="day-item">
+                            <div class="day-name">今天</div>
+                            <div class="day-icon">☀️</div>
+                            <div class="day-temps">
+                                <span class="day-high">28°</span>
+                                <span class="day-low">18°</span>
+                            </div>
+                        </div>
+                        <div class="day-item">
+                            <div class="day-name">明天</div>
+                            <div class="day-icon">⛅</div>
+                            <div class="day-temps">
+                                <span class="day-high">26°</span>
+                                <span class="day-low">16°</span>
+                            </div>
+                        </div>
+                        <div class="day-item">
+                            <div class="day-name">周三</div>
+                            <div class="day-icon">🌧️</div>
+                            <div class="day-temps">
+                                <span class="day-high">24°</span>
+                                <span class="day-low">14°</span>
+                            </div>
+                        </div>
+                        <div class="day-item">
+                            <div class="day-name">周四</div>
+                            <div class="day-icon">🌤️</div>
+                            <div class="day-temps">
+                                <span class="day-high">27°</span>
+                                <span class="day-low">17°</span>
+                            </div>
+                        </div>
+                        <div class="day-item">
+                            <div class="day-name">周五</div>
+                            <div class="day-icon">☀️</div>
+                            <div class="day-temps">
+                                <span class="day-high">29°</span>
+                                <span class="day-low">19°</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+            </div>
+            
+            <!-- 底部导航 -->
+            <nav class="bottom-navigation">
+                <div class="nav-item active">
+                    <div class="nav-icon">🏠</div>
+                    <div class="nav-label">首页</div>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">📊</div>
+                    <div class="nav-label">图表</div>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">🌍</div>
+                    <div class="nav-label">地图</div>
+                </div>
+                <div class="nav-item">
+                    <div class="nav-icon">⚙️</div>
+                    <div class="nav-label">设置</div>
+                </div>
+            </nav>
+            
+        </div>
+    </div>
+
+    <script>
+        // 简单的交互功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 更新时间显示
+            function updateTime() {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('zh-CN', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                });
+                const timeElement = document.querySelector('.time');
+                if (timeElement) {
+                    timeElement.textContent = timeString;
+                }
+            }
+            
+            // 初始更新时间
+            updateTime();
+            
+            // 每分钟更新时间
+            setInterval(updateTime, 60000);
+            
+            // 底部导航点击事件
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // 移除所有active类
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    // 添加active类到当前项
+                    this.classList.add('active');
+                });
+            });
+            
+            // 按钮点击事件
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // 添加点击效果
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

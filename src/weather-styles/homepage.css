@@ -1,0 +1,605 @@
+/* ========================================
+   天气应用主页面样式
+   
+   基于 Figma 设计稿 50-1648 的主页面还原
+   ======================================== */
+
+/* ===== 主页面容器 ===== */
+.homepage-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 93.07% 74.31%, 
+                              rgba(69, 39, 139, 1) 0%, 
+                              rgba(46, 51, 90, 1) 100%);
+  border-radius: 88px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== 背景图片层 ===== */
+.homepage-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  opacity: 0.9;
+}
+
+/* ===== 内容层 ===== */
+.homepage-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 100px;
+  box-sizing: border-box;
+}
+
+/* ===== 状态栏 ===== */
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  margin-bottom: 40px;
+}
+
+.time-display {
+  font-size: 34px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: 'SF Pro Display', sans-serif;
+}
+
+.status-icons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 24px;
+}
+
+.signal-icon,
+.wifi-icon,
+.battery-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== 主内容区域 ===== */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+/* ===== 头部区域 ===== */
+.homepage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.location-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.location-name {
+  font-size: 48px;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin: 0;
+  font-family: 'SF Pro Display', sans-serif;
+}
+
+.location-detail {
+  font-size: 24px;
+  color: var(--text-secondary);
+  margin: 0;
+  font-family: 'SF Pro Display', sans-serif;
+}
+
+.header-actions {
+  display: flex;
+  gap: 16px;
+}
+
+/* ===== 当前天气显示 ===== */
+.current-weather-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+}
+
+.weather-icon-large {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.temperature-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.temperature {
+  font-size: 120px;
+  font-weight: 200;
+  color: var(--text-primary);
+  line-height: 1;
+  font-family: 'SF Pro Display', sans-serif;
+}
+
+.temperature-unit {
+  font-size: 48px;
+  font-weight: 300;
+  color: var(--text-secondary);
+  font-family: 'SF Pro Display', sans-serif;
+}
+
+.weather-condition {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.condition-text {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  font-family: 'SF Pro Display', sans-serif;
+}
+
+.condition-detail {
+  font-size: 20px;
+  color: var(--text-secondary);
+  margin: 0;
+  font-family: 'SF Pro Display', sans-serif;
+}
+
+/* ===== 天气详情卡片 ===== */
+.weather-details-section {
+  margin: 40px 0;
+}
+
+.detail-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.detail-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.detail-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.detail-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-size: 24px;
+}
+
+.detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail-label {
+  font-size: 14px;
+  color: var(--text-tertiary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-value {
+  font-size: 20px;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-family: 'SF Pro Display', sans-serif;
+}
+
+/* ===== 小时预报 ===== */
+.hourly-forecast-section {
+  margin: 40px 0;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+  font-family: 'SF Pro Display', sans-serif;
+}
+
+.hourly-forecast {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 20px 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hourly-forecast::-webkit-scrollbar {
+  display: none;
+}
+
+.hour-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  min-width: 80px;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.hour-item:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.hour-time {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.hour-icon {
+  font-size: 32px;
+}
+
+.hour-temp {
+  font-size: 18px;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-family: 'SF Pro Display', sans-serif;
+}
+
+/* ===== 周预报 ===== */
+.weekly-forecast-section {
+  margin: 40px 0;
+}
+
+.weekly-forecast {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.day-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.day-item:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(4px);
+}
+
+.day-name {
+  font-size: 18px;
+  color: var(--text-primary);
+  font-weight: 500;
+  min-width: 60px;
+}
+
+.day-icon {
+  font-size: 32px;
+  width: 48px;
+  text-align: center;
+}
+
+.day-temps {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.day-high {
+  font-size: 18px;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-family: 'SF Pro Display', sans-serif;
+}
+
+.day-low {
+  font-size: 18px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-family: 'SF Pro Display', sans-serif;
+}
+
+/* ===== 底部导航 ===== */
+.bottom-navigation {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 24px 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 24px 24px 0 0;
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: 60px;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 60px;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.nav-item.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.nav-icon {
+  font-size: 24px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-align: center;
+}
+
+.nav-item.active .nav-label {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* ===== 响应式设计 ===== */
+@media (max-width: 1024px) {
+  .homepage-content {
+    padding: 60px 40px;
+  }
+  
+  .location-name {
+    font-size: 40px;
+  }
+  
+  .temperature {
+    font-size: 100px;
+  }
+  
+  .detail-cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .hourly-forecast {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .homepage-container {
+    border-radius: 0;
+  }
+  
+  .homepage-content {
+    padding: 40px 20px;
+  }
+  
+  .status-bar {
+    padding: 16px 0;
+    margin-bottom: 30px;
+  }
+  
+  .time-display {
+    font-size: 28px;
+  }
+  
+  .main-content {
+    gap: 40px;
+  }
+  
+  .location-name {
+    font-size: 36px;
+  }
+  
+  .location-detail {
+    font-size: 20px;
+  }
+  
+  .temperature {
+    font-size: 80px;
+  }
+  
+  .temperature-unit {
+    font-size: 36px;
+  }
+  
+  .condition-text {
+    font-size: 28px;
+  }
+  
+  .condition-detail {
+    font-size: 18px;
+  }
+  
+  .detail-card {
+    padding: 20px;
+  }
+  
+  .detail-value {
+    font-size: 18px;
+  }
+  
+  .hour-item {
+    padding: 16px;
+    min-width: 70px;
+  }
+  
+  .day-item {
+    padding: 16px 20px;
+  }
+  
+  .bottom-navigation {
+    padding: 20px 0;
+    margin-top: 40px;
+  }
+  
+  .nav-icon {
+    font-size: 20px;
+  }
+  
+  .nav-label {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .homepage-content {
+    padding: 30px 16px;
+  }
+  
+  .location-name {
+    font-size: 32px;
+  }
+  
+  .temperature {
+    font-size: 70px;
+  }
+  
+  .condition-text {
+    font-size: 24px;
+  }
+  
+  .detail-cards {
+    gap: 12px;
+  }
+  
+  .detail-card {
+    padding: 16px;
+  }
+  
+  .hourly-forecast {
+    gap: 12px;
+  }
+  
+  .hour-item {
+    padding: 12px;
+    min-width: 60px;
+  }
+  
+  .day-item {
+    padding: 12px 16px;
+  }
+  
+  .bottom-navigation {
+    padding: 16px 0;
+  }
+}
+
+/* ===== 动画效果 ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.homepage-content > * {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.homepage-content > *:nth-child(1) { animation-delay: 0.1s; }
+.homepage-content > *:nth-child(2) { animation-delay: 0.2s; }
+.homepage-content > *:nth-child(3) { animation-delay: 0.3s; }
+.homepage-content > *:nth-child(4) { animation-delay: 0.4s; }
+.homepage-content > *:nth-child(5) { animation-delay: 0.5s; }
+
+/* ===== 滚动条样式 ===== */
+.hourly-forecast::-webkit-scrollbar {
+  height: 4px;
+}
+
+.hourly-forecast::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+.hourly-forecast::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+.hourly-forecast::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
