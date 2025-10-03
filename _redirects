@@ -1,0 +1,16 @@
+# Cloudflare Pages 重定向规则
+# 确保 SPA 路由正常工作
+
+# 处理 Angular 路由
+/*    /index.html   200
+
+# 处理 PWA 相关路由
+/manifest.webmanifest    /manifest.webmanifest   200
+/ngsw-worker.js    /ngsw-worker.js   200
+/ngsw.json    /ngsw.json   200
+
+# 处理静态资源
+/assets/*    /assets/*   200
+
+# 安全重定向（HTTPS 强制）
+http://*    https://*    301
