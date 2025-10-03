@@ -1,0 +1,214 @@
+/* ========================================
+   天气应用 UI 设计系统 - 天气卡片组件
+   ======================================== */
+
+/* ===== 基础卡片样式 ===== */
+.weather-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+}
+
+.weather-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ===== 卡片变体 ===== */
+.weather-card--large {
+  padding: var(--spacing-xxl);
+  border-radius: var(--radius-lg);
+}
+
+.weather-card--small {
+  padding: var(--spacing-md);
+  border-radius: var(--radius-sm);
+}
+
+.weather-card--transparent {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* ===== 卡片头部 ===== */
+.weather-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.weather-card__title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.weather-card__subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+/* ===== 卡片内容 ===== */
+.weather-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.weather-card__body {
+  flex: 1;
+}
+
+/* ===== 卡片底部 ===== */
+.weather-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ===== 特殊卡片类型 ===== */
+
+/* 当前天气卡片 */
+.current-weather-card {
+  text-align: center;
+  background: linear-gradient(135deg, 
+                              rgba(255, 255, 255, 0.1) 0%, 
+                              rgba(255, 255, 255, 0.05) 100%);
+}
+
+.current-weather-card .temperature {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-light);
+  line-height: 1;
+  margin-bottom: var(--spacing-sm);
+}
+
+.current-weather-card .condition {
+  font-size: var(--font-size-lg);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* 预报卡片 */
+.forecast-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 120px;
+}
+
+.forecast-card .day {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--spacing-sm);
+}
+
+.forecast-card .icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: var(--spacing-sm);
+}
+
+.forecast-card .temperature-range {
+  display: flex;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+}
+
+.forecast-card .temp-high {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.forecast-card .temp-low {
+  color: var(--text-secondary);
+}
+
+/* 详情卡片 */
+.detail-card {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.detail-card .icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-overlay);
+  border-radius: var(--radius-sm);
+}
+
+.detail-card .content {
+  flex: 1;
+}
+
+.detail-card .label {
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-card .value {
+  font-size: var(--font-size-lg);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ===== 响应式调整 ===== */
+@media (max-width: 768px) {
+  .weather-card {
+    padding: var(--spacing-md);
+  }
+  
+  .weather-card--large {
+    padding: var(--spacing-lg);
+  }
+  
+  .current-weather-card .temperature {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .forecast-card {
+    min-width: 100px;
+  }
+  
+  .forecast-card .icon {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .weather-card {
+    padding: var(--spacing-sm);
+  }
+  
+  .weather-card--large {
+    padding: var(--spacing-md);
+  }
+  
+  .current-weather-card .temperature {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .forecast-card {
+    min-width: 80px;
+  }
+}

@@ -1,0 +1,302 @@
+/* ========================================
+   天气应用 UI 设计系统 - 图标组件
+   ======================================== */
+
+/* ===== 基础图标样式 ===== */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 0;
+}
+
+/* ===== 图标尺寸 ===== */
+.icon--xs {
+  width: 12px;
+  height: 12px;
+  font-size: 12px;
+}
+
+.icon--sm {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+}
+
+.icon--md {
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+}
+
+.icon--lg {
+  width: 32px;
+  height: 32px;
+  font-size: 32px;
+}
+
+.icon--xl {
+  width: 48px;
+  height: 48px;
+  font-size: 48px;
+}
+
+.icon--2xl {
+  width: 64px;
+  height: 64px;
+  font-size: 64px;
+}
+
+.icon--3xl {
+  width: 96px;
+  height: 96px;
+  font-size: 96px;
+}
+
+/* ===== 图标颜色变体 ===== */
+.icon--primary {
+  color: var(--text-primary);
+}
+
+.icon--secondary {
+  color: var(--text-secondary);
+}
+
+.icon--tertiary {
+  color: var(--text-tertiary);
+}
+
+.icon--accent {
+  color: #ffd700; /* 金色强调色 */
+}
+
+.icon--warning {
+  color: #ff6b6b; /* 警告色 */
+}
+
+.icon--success {
+  color: #51cf66; /* 成功色 */
+}
+
+.icon--info {
+  color: #74c0fc; /* 信息色 */
+}
+
+/* ===== 天气图标特殊样式 ===== */
+.weather-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.weather-icon--sun {
+  color: #ffd700;
+  animation: weather-icon-pulse 3s ease-in-out infinite;
+}
+
+.weather-icon--cloud {
+  color: #87ceeb;
+}
+
+.weather-icon--rain {
+  color: #4682b4;
+  animation: weather-icon-bounce 1s ease-in-out infinite alternate;
+}
+
+.weather-icon--snow {
+  color: #ffffff;
+  animation: weather-icon-spin 4s linear infinite;
+}
+
+.weather-icon--storm {
+  color: #4169e1;
+  animation: weather-icon-flash 0.5s ease-in-out infinite alternate;
+}
+
+/* ===== 图标动画 ===== */
+@keyframes weather-icon-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes weather-icon-bounce {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes weather-icon-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes weather-icon-flash {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* ===== 图标背景样式 ===== */
+.icon-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--bg-overlay);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.icon-container--primary {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.icon-container--accent {
+  background: rgba(255, 215, 0, 0.1);
+  border-color: rgba(255, 215, 0, 0.3);
+}
+
+.icon-container--sm {
+  width: 32px;
+  height: 32px;
+}
+
+.icon-container--md {
+  width: 40px;
+  height: 40px;
+}
+
+.icon-container--lg {
+  width: 48px;
+  height: 48px;
+}
+
+/* ===== 功能图标 ===== */
+.icon--menu {
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.icon--menu:hover {
+  transform: rotate(90deg);
+}
+
+.icon--close {
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.icon--close:hover {
+  transform: rotate(90deg);
+}
+
+.icon--refresh {
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.icon--refresh:hover {
+  transform: rotate(180deg);
+}
+
+.icon--arrow {
+  transition: transform var(--transition-fast);
+}
+
+.icon--arrow-up {
+  transform: rotate(-90deg);
+}
+
+.icon--arrow-down {
+  transform: rotate(90deg);
+}
+
+.icon--arrow-left {
+  transform: rotate(180deg);
+}
+
+.icon--arrow-right {
+  transform: rotate(0deg);
+}
+
+/* ===== 图标组 ===== */
+.icon-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.icon-group--vertical {
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.icon-group--spaced {
+  gap: var(--spacing-md);
+}
+
+/* ===== 响应式调整 ===== */
+@media (max-width: 768px) {
+  .icon--3xl {
+    width: 80px;
+    height: 80px;
+    font-size: 80px;
+  }
+  
+  .icon--2xl {
+    width: 56px;
+    height: 56px;
+    font-size: 56px;
+  }
+  
+  .icon--xl {
+    width: 40px;
+    height: 40px;
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .icon--3xl {
+    width: 64px;
+    height: 64px;
+    font-size: 64px;
+  }
+  
+  .icon--2xl {
+    width: 48px;
+    height: 48px;
+    font-size: 48px;
+  }
+  
+  .icon--xl {
+    width: 32px;
+    height: 32px;
+    font-size: 32px;
+  }
+}
