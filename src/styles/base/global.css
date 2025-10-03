@@ -1,0 +1,113 @@
+/**
+ * 全局样式 (Global Styles)
+ * Weather App Design System
+ */
+
+/* ========== 滚动条样式 (Scrollbar Styling) ========== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gray-400);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gray-500);
+}
+
+/* 深色模式滚动条 */
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--color-gray-600);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gray-500);
+}
+
+/* ========== 选中文本样式 (Text Selection) ========== */
+::selection {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+/* ========== 焦点样式 (Focus Styles) ========== */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ========== 过渡动画 (Transitions) ========== */
+* {
+  transition-property: color, background-color, border-color, box-shadow, transform;
+  transition-duration: 200ms;
+  transition-timing-function: ease-in-out;
+}
+
+/* 尊重用户的动画偏好设置 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ========== 禁用状态 (Disabled State) ========== */
+:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ========== 容器 (Container) ========== */
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-padding-mobile);
+  padding-right: var(--container-padding-mobile);
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: var(--container-max-width-sm);
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: var(--container-max-width-md);
+    padding-left: var(--container-padding-tablet);
+    padding-right: var(--container-padding-tablet);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: var(--container-max-width-lg);
+    padding-left: var(--container-padding-desktop);
+    padding-right: var(--container-padding-desktop);
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: var(--container-max-width-xl);
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: var(--container-max-width-2xl);
+  }
+}
+

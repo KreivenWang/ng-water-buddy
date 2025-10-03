@@ -1,0 +1,131 @@
+/**
+ * CSS Reset
+ * Weather App Design System
+ */
+
+/* ========== 通用重置 (Universal Reset) ========== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ========== HTML & Body ========== */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+  overflow-x: hidden;
+}
+
+/* ========== 标题重置 (Headings Reset) ========== */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+}
+
+/* ========== 段落重置 (Paragraph Reset) ========== */
+p {
+  margin: 0;
+  padding: 0;
+}
+
+/* ========== 列表重置 (List Reset) ========== */
+ul, ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ========== 链接重置 (Link Reset) ========== */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ========== 按钮重置 (Button Reset) ========== */
+button {
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+}
+
+button:focus {
+  outline: none;
+}
+
+/* ========== 表单元素重置 (Form Reset) ========== */
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+
+/* ========== 图片重置 (Image Reset) ========== */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ========== 表格重置 (Table Reset) ========== */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* ========== 其他元素 (Other Elements) ========== */
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ========== 辅助功能 (Accessibility) ========== */
+/* 视觉隐藏但保留屏幕阅读器可访问性 */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+

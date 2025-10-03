@@ -1,0 +1,135 @@
+/**
+ * Weather App Design System - 主入口文件
+ * 
+ * 这是整个设计系统的主入口文件
+ * 导入所有的 Design Tokens、基础样式和工具类
+ * 
+ * 使用方法:
+ * 在 Angular 的 styles.css 或 angular.json 中导入此文件:
+ * @import './styles/design-system.css';
+ * 
+ * 或在 angular.json 的 styles 数组中添加:
+ * "styles": [
+ *   "src/styles/design-system.css"
+ * ]
+ */
+
+/* ========== Design Tokens (设计令牌) ========== */
+@import './tokens/colors.css';
+@import './tokens/typography.css';
+@import './tokens/spacing.css';
+@import './tokens/shadows.css';
+@import './tokens/borders.css';
+@import './tokens/breakpoints.css';
+
+/* ========== Base Styles (基础样式) ========== */
+@import './base/reset.css';
+@import './base/global.css';
+@import './base/dark-mode.css';
+
+/* ========== Utilities (工具类) ========== */
+@import './utilities/spacing.css';
+@import './utilities/typography.css';
+@import './utilities/layout.css';
+@import './utilities/colors.css';
+@import './utilities/responsive.css';
+
+/**
+ * ========================================
+ * 设计系统概览
+ * ========================================
+ * 
+ * 1. Design Tokens (设计令牌)
+ *    - colors.css: 颜色系统（主色调、语义色、中性色、天气状态色）
+ *    - typography.css: 字体系统（字体族、字号、字重、行高）
+ *    - spacing.css: 间距系统（基于4px的间距比例）
+ *    - shadows.css: 阴影系统（不同层级的阴影）
+ *    - borders.css: 边框系统（圆角、边框宽度）
+ *    - breakpoints.css: 响应式断点（移动端优先）
+ * 
+ * 2. Base Styles (基础样式)
+ *    - reset.css: CSS重置，提供一致的基础样式
+ *    - global.css: 全局样式（滚动条、选中文本、焦点、容器）
+ *    - dark-mode.css: 深色模式切换逻辑
+ * 
+ * 3. Utilities (工具类)
+ *    - spacing.css: 间距工具类（margin、padding、gap）
+ *    - typography.css: 字体工具类（字号、字重、颜色、对齐）
+ *    - layout.css: 布局工具类（display、flexbox、grid、position）
+ *    - colors.css: 颜色工具类（背景色、边框、圆角、阴影）
+ *    - responsive.css: 响应式工具类（显示/隐藏、断点前缀）
+ * 
+ * ========================================
+ * 使用示例
+ * ========================================
+ * 
+ * HTML:
+ * ```html
+ * <div class="container">
+ *   <div class="flex flex-col gap-4 p-4 bg-surface rounded-lg shadow-md">
+ *     <h1 class="text-2xl font-bold text-primary">天气预报</h1>
+ *     <p class="text-base text-secondary">今天是个好天气</p>
+ *     <div class="flex items-center gap-2">
+ *       <span class="text-6xl font-bold">25°</span>
+ *       <span class="text-lg text-secondary">晴天</span>
+ *     </div>
+ *   </div>
+ * </div>
+ * ```
+ * 
+ * ========================================
+ * 深色模式切换
+ * ========================================
+ * 
+ * TypeScript/JavaScript:
+ * ```typescript
+ * // 切换到深色模式
+ * document.documentElement.setAttribute('data-theme', 'dark');
+ * 
+ * // 切换到浅色模式
+ * document.documentElement.setAttribute('data-theme', 'light');
+ * 
+ * // 跟随系统偏好
+ * document.documentElement.removeAttribute('data-theme');
+ * ```
+ * 
+ * ========================================
+ * 响应式设计
+ * ========================================
+ * 
+ * 移动端优先 (Mobile First):
+ * ```html
+ * <!-- 默认单列，平板2列，桌面3列 -->
+ * <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+ *   <!-- 内容 -->
+ * </div>
+ * 
+ * <!-- 移动端隐藏，桌面显示 -->
+ * <div class="hidden lg:block">
+ *   仅在桌面显示
+ * </div>
+ * ```
+ * 
+ * ========================================
+ * 自定义样式
+ * ========================================
+ * 
+ * 使用 CSS 变量自定义组件样式:
+ * ```css
+ * .custom-button {
+ *   background-color: var(--color-primary);
+ *   color: var(--color-text-inverse);
+ *   padding: var(--spacing-3) var(--spacing-6);
+ *   border-radius: var(--radius-lg);
+ *   font-size: var(--font-size-base);
+ *   font-weight: var(--font-weight-medium);
+ *   box-shadow: var(--shadow-md);
+ * }
+ * 
+ * .custom-button:hover {
+ *   background-color: var(--color-primary-dark);
+ *   box-shadow: var(--shadow-lg);
+ * }
+ * ```
+ */
+
