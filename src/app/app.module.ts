@@ -15,7 +15,7 @@ import { environment } from '../environments/environment';
  */
 @NgModule({
   declarations: [
-    AppComponent
+    // AppComponent 现在是 standalone 组件，不需要在这里声明
   ],
   imports: [
     BrowserModule,
@@ -30,11 +30,13 @@ import { environment } from '../environments/environment';
     LayoutModule,
     
     // [关键点] PWA Service Worker 配置
-    // TODO: 取消注释以启用 PWA
-    // ServiceWorkerModule.register('ngsw-worker.js', {
-    //   enabled: environment.production,
-    //   registrationStrategy: 'registerWhenStable:30000'
-    // })
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
+    
+    // [关键点] AppComponent 现在是 standalone 组件
+    AppComponent
   ],
   providers: [],
   bootstrap: [AppComponent],

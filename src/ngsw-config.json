@@ -5,6 +5,7 @@
     {
       "name": "app",
       "installMode": "prefetch",
+      "updateMode": "prefetch",
       "resources": {
         "files": [
           "/favicon.ico",
@@ -25,6 +26,16 @@
           "/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
         ]
       }
+    },
+    {
+      "name": "icons",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/icons/**"
+        ]
+      }
     }
   ],
   "dataGroups": [
@@ -36,6 +47,18 @@
       "cacheConfig": {
         "maxSize": 100,
         "maxAge": "1d",
+        "strategy": "freshness"
+      }
+    },
+    {
+      "name": "static-data",
+      "urls": [
+        "https://fonts.googleapis.com/**",
+        "https://fonts.gstatic.com/**"
+      ],
+      "cacheConfig": {
+        "maxSize": 50,
+        "maxAge": "7d",
         "strategy": "freshness"
       }
     }

@@ -1,40 +1,94 @@
 {
   "name": "Water Buddy - 家庭喝水管理",
   "short_name": "Water Buddy",
-  "description": "帮助全家养成健康喝水习惯",
+  "description": "帮助全家养成健康喝水习惯，智能提醒，进度追踪，让喝水变得更有趣",
   "theme_color": "#4A90E2",
   "background_color": "#F5F7FA",
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
-  "start_url": "/",
+  "start_url": "/?source=pwa",
+  "lang": "zh-CN",
+  "categories": ["health", "lifestyle", "productivity"],
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",
       "sizes": "72x72",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "assets/icons/icon-96x96.png",
       "sizes": "96x96",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "assets/icons/icon-128x128.png",
       "sizes": "128x128",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "assets/icons/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "assets/icons/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
-  ]
+  ],
+  "screenshots": [
+    {
+      "src": "assets/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Water Buddy 主界面"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "添加喝水记录",
+      "short_name": "添加记录",
+      "description": "快速添加喝水记录",
+      "url": "/dashboard?action=add",
+      "icons": [
+        {
+          "src": "assets/icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "查看进度",
+      "short_name": "进度",
+      "description": "查看家庭喝水进度",
+      "url": "/dashboard",
+      "icons": [
+        {
+          "src": "assets/icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false
 }
 

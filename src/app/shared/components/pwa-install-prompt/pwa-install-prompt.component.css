@@ -1,0 +1,183 @@
+/* PWA 安装提示样式 */
+.pwa-install-prompt {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: linear-gradient(135deg, #4A90E2 0%, #22D3EE 100%);
+  color: white;
+  padding: var(--spacing-4);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.prompt-content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.prompt-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex: 1;
+}
+
+.app-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prompt-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.prompt-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin: 0 0 var(--spacing-1) 0;
+  color: white;
+}
+
+.prompt-description {
+  font-size: var(--font-size-sm);
+  margin: 0;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+.prompt-actions {
+  display: flex;
+  gap: var(--spacing-2);
+  align-items: center;
+}
+
+.btn-install {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+}
+
+.btn-install:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-install:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-later {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-later:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-dismiss {
+  background: transparent;
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: var(--font-size-lg);
+  opacity: 0.7;
+  transition: all 0.2s ease;
+}
+
+.btn-dismiss:hover {
+  background: rgba(255, 255, 255, 0.2);
+  opacity: 1;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .pwa-install-prompt {
+    padding: var(--spacing-3);
+  }
+  
+  .prompt-content {
+    gap: var(--spacing-2);
+  }
+  
+  .prompt-header {
+    gap: var(--spacing-2);
+  }
+  
+  .app-icon {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .prompt-title {
+    font-size: var(--font-size-base);
+  }
+  
+  .prompt-description {
+    font-size: var(--font-size-xs);
+  }
+  
+  .btn-install,
+  .btn-later {
+    padding: var(--spacing-2);
+    font-size: var(--font-size-xs);
+  }
+  
+  .btn-dismiss {
+    width: 28px;
+    height: 28px;
+    font-size: var(--font-size-base);
+  }
+}
+
+/* 安全区域适配（iPhone） */
+@supports (padding: max(0px)) {
+  .pwa-install-prompt {
+    padding-bottom: max(var(--spacing-4), env(safe-area-inset-bottom));
+  }
+}

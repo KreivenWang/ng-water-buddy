@@ -1,0 +1,154 @@
+/* PWA 更新提示样式 */
+.pwa-update-prompt {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  background: linear-gradient(135deg, #FFC800 0%, #FF9600 100%);
+  color: #333;
+  padding: var(--spacing-3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.update-content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.update-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  flex: 1;
+}
+
+.update-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.update-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.update-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  margin: 0 0 var(--spacing-1) 0;
+  color: #333;
+}
+
+.update-description {
+  font-size: var(--font-size-sm);
+  margin: 0;
+  opacity: 0.8;
+  line-height: 1.4;
+}
+
+.update-actions {
+  display: flex;
+  gap: var(--spacing-2);
+  align-items: center;
+}
+
+.btn-update {
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  border: 1px solid rgba(255, 255, 255, 1);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+}
+
+.btn-update:hover:not(:disabled) {
+  background: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-update:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-later {
+  background: transparent;
+  color: #333;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-later:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .pwa-update-prompt {
+    padding: var(--spacing-2);
+  }
+  
+  .update-content {
+    gap: var(--spacing-2);
+  }
+  
+  .update-header {
+    gap: var(--spacing-2);
+  }
+  
+  .update-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .update-title {
+    font-size: var(--font-size-sm);
+  }
+  
+  .update-description {
+    font-size: var(--font-size-xs);
+  }
+  
+  .btn-update,
+  .btn-later {
+    padding: var(--spacing-2);
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* 安全区域适配（iPhone） */
+@supports (padding: max(0px)) {
+  .pwa-update-prompt {
+    padding-top: max(var(--spacing-3), env(safe-area-inset-top));
+  }
+}
