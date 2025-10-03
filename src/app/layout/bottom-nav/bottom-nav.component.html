@@ -1,12 +1,23 @@
-<!-- TODO: 实现底部导航栏模板 -->
-<nav class="bottom-nav">
+<nav class="bottom-nav" role="navigation" aria-label="主导航">
   <a 
-    *ngFor="let item of navItems" 
+    *ngFor="let item of navItems; trackBy: trackByPath" 
     [routerLink]="item.path"
     routerLinkActive="active"
-    class="nav-item">
-    <span class="icon">{{ item.icon }}</span>
-    <span class="label">{{ item.label }}</span>
+    #rla="routerLinkActive"
+    class="nav-item"
+    [attr.aria-label]="item.label"
+    [attr.aria-current]="rla.isActive ? 'page' : null">
+    
+    <!-- [关键点] 使用 Ionicons，激活时显示实心图标，未激活显示轮廓图标 -->
+    <div class="nav-item-icon">
+      <ion-icon 
+        [name]="rla.isActive ? item.icon : item.iconOutline"
+        class="icon"
+        aria-hidden="true">
+      </ion-icon>
+    </div>
+    
+    <span class="nav-item-label">{{ item.label }}</span>
   </a>
 </nav>
 

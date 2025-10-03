@@ -1,0 +1,35 @@
+/**
+ * Z-Index 令牌 (Z-Index Tokens)
+ * Weather App Design System
+ * 
+ * 统一管理应用中的层级关系，避免 z-index 冲突
+ */
+
+:root {
+  /* ========== 层级定义 (Layer Definitions) ========== */
+  --z-index-base: 0;              /* 基础层 */
+  --z-index-dropdown: 10;         /* 下拉菜单 */
+  --z-index-sticky: 20;           /* 粘性定位元素 */
+  --z-index-fixed: 30;            /* 固定定位元素 */
+  --z-index-bottom-nav: 40;       /* 底部导航栏 */
+  --z-index-header: 50;           /* 顶部导航栏 */
+  --z-index-modal-backdrop: 60;   /* 模态框背景 */
+  --z-index-modal: 70;            /* 模态框 */
+  --z-index-popover: 80;          /* 弹出层 */
+  --z-index-tooltip: 90;          /* 工具提示 */
+  --z-index-notification: 100;    /* 通知提示 */
+}
+
+/**
+ * 使用指南:
+ * 
+ * 1. 始终使用预定义的 z-index 值，不要使用魔法数字
+ * 2. 如果需要在两个层级之间插入新层级，添加新的 token
+ * 3. 层级从低到高排列，数值越大越靠前
+ * 
+ * 示例:
+ * .header {
+ *   z-index: var(--z-index-header);
+ * }
+ */
+

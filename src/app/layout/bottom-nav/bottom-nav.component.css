@@ -1,27 +1,260 @@
-/* TODO: 实现底部导航栏样式 */
+/**
+ * Bottom Navigation Component Styles
+ * 底部导航栏样式 - 应用 Design System + 明显动画效果
+ */
+
+/* ========== 主容器 ========== */
 .bottom-nav {
+  /* [关键点] 固定在底部 */
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 100%;
+  right: 0;
+  z-index: var(--z-index-bottom-nav);
+  
+  /* [关键点] 颜色 - 自动支持深色模式 */
+  background-color: var(--color-surface);
+  
+  /* [关键点] 边框和阴影 - 向上投影，增强层次感 */
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1),
+              0 -2px 4px -1px rgba(0, 0, 0, 0.06);
+  
+  /* 布局 */
   display: flex;
   justify-content: space-around;
-  padding: var(--spacing-3, 12px);
-  background: white;
-  box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
-  /* [关键点] 安全区域适配 */
-  padding-bottom: max(var(--spacing-3, 12px), env(safe-area-inset-bottom));
+  align-items: center;
+  
+  /* [关键点] 间距 - 安全区域适配（全面屏底部手势条） */
+  padding: var(--spacing-2) var(--spacing-4);
+  padding-bottom: max(var(--spacing-2), env(safe-area-inset-bottom));
+  
+  /* [性能] 启用 GPU 加速 */
+  will-change: transform;
+  transform: translateZ(0);
 }
 
+/* ========== 导航项 ========== */
 .nav-item {
+  /* 布局 */
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: var(--spacing-1);
+  
+  /* [关键点] 尺寸 - 触摸友好（最小 48x48px） */
+  min-width: 64px;
+  min-height: 48px;
+  padding: var(--spacing-2);
+  
+  /* [关键点] 颜色 - 未激活状态 */
+  color: var(--color-text-secondary);
   text-decoration: none;
-  color: var(--color-text-secondary, #666);
+  
+  /* 圆角 */
+  border-radius: var(--radius-lg);
+  
+  /* [关键点] 过渡动画 - 平滑的颜色和变换过渡 */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* 用户体验 */
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
+/* ========== 导航项：悬停效果（桌面端） ========== */
+@media (hover: hover) {
+  .nav-item:hover {
+    background-color: var(--color-gray-100);
+    transform: translateY(-2px);
+  }
+  
+  [data-theme="dark"] .nav-item:hover {
+    background-color: var(--color-surface-variant);
+  }
+}
+
+/* ========== 导航项：点击效果 ========== */
+.nav-item:active {
+  /* [关键点] 明显的按下反馈 */
+  transform: scale(0.92);
+  transition-duration: 0.1s;
+}
+
+/* ========== 导航项：激活状态 ========== */
 .nav-item.active {
-  color: var(--color-primary, #4A90E2);
+  /* [关键点] 激活颜色 - 使用主色调 */
+  color: var(--color-primary);
+  
+  /* [关键点] 背景色 - 半透明主色 */
+  background-color: rgba(74, 144, 226, 0.12);
+  
+  /* [关键点] 明显动画 - 轻微放大 + 加粗效果 */
+  transform: scale(1.05);
+  font-weight: var(--font-weight-semibold);
 }
 
+/* 深色模式下的激活状态背景 */
+[data-theme="dark"] .nav-item.active {
+  background-color: rgba(96, 165, 250, 0.15);
+}
+
+/* ========== 图标容器 ========== */
+.nav-item-icon {
+  /* 布局 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  
+  /* 尺寸 */
+  width: 28px;
+  height: 28px;
+  
+  /* [关键点] 过渡动画 */
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 激活状态的图标动画 */
+.nav-item.active .nav-item-icon {
+  /* [关键点] 图标放大 + 轻微弹跳效果 */
+  transform: scale(1.15);
+  animation: iconBounce 0.5s ease-in-out;
+}
+
+/* [关键点] 图标弹跳动画 */
+@keyframes iconBounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1.15);
+  }
+}
+
+/* ========== 图标样式（Ionicons） ========== */
+.icon {
+  /* 尺寸 */
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  
+  /* 对齐 */
+  display: block;
+  
+  /* 颜色继承父元素 */
+  color: currentColor;
+}
+
+/* ========== 标签文字 ========== */
+.nav-item-label {
+  /* 字体 */
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-tight);
+  
+  /* 文字不换行 */
+  white-space: nowrap;
+  
+  /* [关键点] 过渡动画 */
+  transition: all 0.3s ease-in-out;
+}
+
+/* 激活状态的标签 */
+.nav-item.active .nav-item-label {
+  /* [关键点] 激活时文字稍微放大 */
+  transform: scale(1.05);
+}
+
+/* ========== 平板响应式 (≥768px) ========== */
+@media (min-width: 768px) {
+  .bottom-nav {
+    padding: var(--spacing-3) var(--spacing-6);
+    padding-bottom: max(var(--spacing-3), env(safe-area-inset-bottom));
+  }
+  
+  .nav-item {
+    min-width: 80px;
+    padding: var(--spacing-3);
+  }
+  
+  .icon {
+    font-size: 26px;
+    width: 26px;
+    height: 26px;
+  }
+  
+  .nav-item-label {
+    font-size: var(--font-size-sm);
+  }
+}
+
+/* ========== 桌面端响应式 (≥1024px) ========== */
+@media (min-width: 1024px) {
+  /* [关键点] 桌面端隐藏底部导航 */
+  .bottom-nav {
+    display: none;
+  }
+}
+
+/* ========== 深色模式增强 ========== */
+[data-theme="dark"] .bottom-nav {
+  /* 深色模式下增强阴影 */
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.4),
+              0 -2px 4px -1px rgba(0, 0, 0, 0.3);
+}
+
+/* ========== 无障碍性增强 ========== */
+/* 键盘焦点样式 */
+.nav-item:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* 尊重用户的动画偏好设置 */
+@media (prefers-reduced-motion: reduce) {
+  .nav-item,
+  .nav-item-icon,
+  .nav-item-label {
+    transition: none;
+    animation: none;
+  }
+  
+  .nav-item.active .nav-item-icon {
+    animation: none;
+    transform: scale(1.1);
+  }
+}
+
+/**
+ * [设计理念]
+ * 
+ * 1. 明显动画效果：
+ *    - 激活状态：背景色 + 放大(1.05x) + 图标弹跳动画
+ *    - 点击反馈：缩小(0.92x) 快速反馈
+ *    - 图标切换：实心/轮廓图标自动切换
+ * 
+ * 2. 触摸友好设计：
+ *    - 最小可点击区域：64x48px（超过推荐的 44x44px）
+ *    - 元素间距充足，避免误触
+ *    - 点击时有明显的视觉和触觉反馈
+ * 
+ * 3. 响应式策略：
+ *    - 移动端：完整显示，较小间距
+ *    - 平板：增加间距和图标大小
+ *    - 桌面端：完全隐藏（使用侧边栏或顶部导航替代）
+ * 
+ * 4. 无障碍性：
+ *    - ARIA 标签完整
+ *    - 键盘焦点样式清晰
+ *    - 支持动画减弱偏好设置
+ *    - 颜色对比度符合 WCAG AA 标准
+ * 
+ * 5. 性能优化：
+ *    - 使用 CSS transform 而非 position 变化（GPU 加速）
+ *    - trackBy 函数优化列表渲染
+ *    - will-change 提示浏览器优化
+ */

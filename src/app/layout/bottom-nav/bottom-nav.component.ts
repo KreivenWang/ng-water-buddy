@@ -2,6 +2,12 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 /**
  * 底部导航栏组件（移动端）
+ * 
+ * 功能：
+ * - 提供主要功能的快速导航入口
+ * - 响应式设计：仅在移动端和平板显示，桌面端隐藏
+ * - 支持深色模式自动切换
+ * - 触摸友好设计（最小可点击区域 48x48px）
  */
 @Component({
   selector: 'app-bottom-nav',
@@ -10,12 +16,38 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BottomNavComponent {
+  /**
+   * 导航项配置
+   * 使用 Ionicons 图标名称
+   * 图标查询: https://ionic.io/ionicons
+   */
   navItems = [
-    { path: '/dashboard', label: '仪表盘', icon: '📊' },
-    { path: '/reminder', label: '提醒', icon: '⏰' },
-    { path: '/settings', label: '设置', icon: '⚙️' }
+    { 
+      path: '/dashboard', 
+      label: '仪表盘', 
+      icon: 'water',           // 水滴图标
+      iconOutline: 'water-outline' 
+    },
+    { 
+      path: '/reminder', 
+      label: '提醒', 
+      icon: 'notifications',   // 通知图标
+      iconOutline: 'notifications-outline' 
+    },
+    { 
+      path: '/settings', 
+      label: '设置', 
+      icon: 'settings',        // 设置图标
+      iconOutline: 'settings-outline' 
+    }
   ];
 
-  // TODO: 实现底部导航逻辑
+  /**
+   * TrackBy 函数优化 *ngFor 性能
+   * [性能] 避免不必要的 DOM 重新渲染
+   */
+  trackByPath(index: number, item: any): string {
+    return item.path;
+  }
 }
 

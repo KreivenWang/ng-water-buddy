@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
@@ -24,7 +24,9 @@ import { BottomNavComponent } from './bottom-nav/bottom-nav.component';
   exports: [
     HeaderComponent,
     BottomNavComponent
-  ]
+  ],
+  // [关键点] 允许使用自定义元素（Ionicons Web Components）
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class LayoutModule { }
 
