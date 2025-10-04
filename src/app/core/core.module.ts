@@ -1,8 +1,6 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LocalStorageAdapter } from './services/adapters/local-storage.adapter';
-import { SupabaseAdapter } from './services/adapters/supabase.adapter';
-import { environment } from '../../environments/environment';
+import { SmartAdapter } from './services/adapters/smart.adapter';
 
 /**
  * Core 模块
@@ -15,11 +13,10 @@ import { environment } from '../../environments/environment';
     CommonModule
   ],
   providers: [
-    // [关键点] 根据环境切换存储适配器
-    // 开发环境使用 LocalStorage，生产环境使用 Supabase
+    // [关键点] 使用智能适配器，自动选择正确的存储后端
     {
       provide: 'STORAGE_ADAPTER',
-      useClass: environment.useLocalStorage ? LocalStorageAdapter : SupabaseAdapter
+      useClass: SmartAdapter
     }
   ]
 })

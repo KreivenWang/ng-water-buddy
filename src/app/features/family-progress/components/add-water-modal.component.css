@@ -1,9 +1,4 @@
-/**
- * Add Water Modal Component Styles
- * 添加喝水记录模态框组件样式
- */
-
-/* ========== 模态框遮罩层 ========== */
+/* 模态框遮罩层 */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -15,29 +10,22 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  
-  /* 动画 */
   animation: fadeIn 0.2s ease-out;
 }
 
-/* ========== 模态框内容 ========== */
+/* 模态框内容 */
 .modal-content {
-  /* 布局 */
   width: 90%;
   max-width: 400px;
   max-height: 90vh;
   overflow-y: auto;
-  
-  /* 样式 */
   background-color: var(--color-surface);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-xl);
-  
-  /* 动画 */
   animation: slideUp 0.3s ease-out;
 }
 
-/* ========== 模态框头部 ========== */
+/* 模态框头部 */
 .modal-header {
   display: flex;
   align-items: center;
@@ -54,26 +42,17 @@
 }
 
 .close-btn {
-  /* 布局 */
   display: flex;
   align-items: center;
   justify-content: center;
-  
-  /* 尺寸 */
   width: 32px;
   height: 32px;
-  
-  /* 样式 */
   background-color: transparent;
   border: none;
   border-radius: var(--radius-lg);
   color: var(--color-text-secondary);
   font-size: var(--font-size-lg);
-  
-  /* 过渡动画 */
   transition: all 0.2s ease-in-out;
-  
-  /* 交互 */
   cursor: pointer;
 }
 
@@ -82,7 +61,7 @@
   color: var(--color-text-primary);
 }
 
-/* ========== 成员信息 ========== */
+/* 成员信息 */
 .member-info {
   display: flex;
   gap: var(--spacing-4);
@@ -141,8 +120,9 @@
   margin: 0;
 }
 
-/* ========== 快捷添加区域 ========== */
-.quick-add-section {
+/* 快捷添加区域 */
+.quick-add-section,
+.custom-input-section {
   padding: var(--spacing-5);
 }
 
@@ -161,32 +141,19 @@
 }
 
 .preset-btn {
-  /* 布局 */
   display: flex;
   align-items: center;
   justify-content: center;
-  
-  /* 尺寸 */
   min-height: 48px;
   padding: var(--spacing-3) var(--spacing-4);
-  
-  /* 样式 */
   background-color: var(--color-primary);
   color: var(--color-text-inverse);
   border: none;
   border-radius: var(--radius-lg);
-  
-  /* 字体 */
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
-  
-  /* 阴影 */
   box-shadow: var(--shadow-sm);
-  
-  /* 过渡动画 */
   transition: all 0.2s ease-in-out;
-  
-  /* 交互 */
   cursor: pointer;
 }
 
@@ -201,30 +168,19 @@
 }
 
 .custom-btn {
-  /* 布局 */
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  
-  /* 尺寸 */
   min-height: 44px;
   padding: var(--spacing-3) var(--spacing-4);
-  
-  /* 样式 */
   background-color: var(--color-surface-variant);
   color: var(--color-text-primary);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  
-  /* 字体 */
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
-  
-  /* 过渡动画 */
   transition: all 0.2s ease-in-out;
-  
-  /* 交互 */
   cursor: pointer;
 }
 
@@ -237,11 +193,7 @@
   background-color: var(--color-gray-700);
 }
 
-/* ========== 自定义输入区域 ========== */
-.custom-input-section {
-  padding: var(--spacing-5);
-}
-
+/* 自定义输入区域 */
 .input-group {
   display: flex;
   align-items: center;
@@ -279,27 +231,16 @@
 }
 
 .action-btn {
-  /* 布局 */
   display: flex;
   align-items: center;
   justify-content: center;
-  
-  /* 尺寸 */
   min-height: 44px;
   padding: var(--spacing-3) var(--spacing-5);
-  
-  /* 字体 */
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-medium);
-  
-  /* 样式 */
   border: none;
   border-radius: var(--radius-lg);
-  
-  /* 过渡动画 */
   transition: all 0.2s ease-in-out;
-  
-  /* 交互 */
   cursor: pointer;
 }
 
@@ -336,7 +277,7 @@
   background-color: var(--color-gray-700);
 }
 
-/* ========== 平板响应式 (≥768px) ========== */
+/* 响应式设计 */
 @media (min-width: 768px) {
   .modal-content {
     width: 85%;
@@ -357,21 +298,10 @@
   }
 }
 
-/* ========== 桌面端响应式 (≥1024px) ========== */
-@media (min-width: 1024px) {
-  .modal-content {
-    max-width: 600px;
-  }
-}
-
-/* ========== 动画定义 ========== */
+/* 动画定义 */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideUp {
@@ -385,7 +315,7 @@
   }
 }
 
-/* ========== 尊重动画偏好设置 ========== */
+/* 尊重动画偏好设置 */
 @media (prefers-reduced-motion: reduce) {
   .modal-overlay,
   .modal-content,
@@ -397,30 +327,3 @@
     transition: none;
   }
 }
-
-/**
- * [设计说明]
- * 
- * 1. 模态框设计：
- *    - 居中显示，最大宽度限制
- *    - 背景遮罩，点击关闭
- *    - ESC 键支持关闭
- *    - 平滑的进入/退出动画
- * 
- * 2. 交互流程：
- *    - 预设按钮：直接添加，立即关闭
- *    - 自定义输入：输入验证，确认后关闭
- *    - 取消操作：重置状态，返回预设选择
- * 
- * 3. 无障碍性：
- *    - 完整的 ARIA 属性
- *    - 键盘导航支持
- *    - 清晰的焦点指示
- *    - 屏幕阅读器友好
- * 
- * 4. 响应式布局：
- *    - 移动端：2列网格
- *    - 平板端：4列网格
- *    - 自适应宽度和间距
- */
-

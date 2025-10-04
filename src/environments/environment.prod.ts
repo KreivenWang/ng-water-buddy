@@ -5,8 +5,8 @@
 export const environment = {
   production: true,
   
-  // [关键点] 生产环境使用 Supabase 适配器
-  useLocalStorage: false,
+  // [关键点] 生产环境：有 Supabase 配置时使用 Supabase，否则使用 LocalStorage
+  useLocalStorage: true,
   
   // Supabase 配置（部署时需要填写）
   supabase: {
