@@ -5,11 +5,15 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:https": "ng serve --ssl --ssl-cert certs/cert.pem --ssl-key certs/key.pem",
     "build": "ng build",
     "build:prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "deploy": "./deploy.sh",
+    "test:pwa": "./test-local.sh",
+    "preview": "ng serve --configuration production"
   },
   "private": true,
   "dependencies": {
@@ -41,4 +45,3 @@
     "typescript": "5.2.2"
   }
 }
-

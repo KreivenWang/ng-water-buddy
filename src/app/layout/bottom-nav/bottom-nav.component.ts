@@ -1,4 +1,6 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 /**
  * 底部导航栏组件（移动端）
@@ -11,9 +13,12 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
  */
 @Component({
   selector: 'app-bottom-nav',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './bottom-nav.component.html',
   styleUrls: ['./bottom-nav.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class BottomNavComponent {
   /**

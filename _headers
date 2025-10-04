@@ -1,0 +1,29 @@
+# Cloudflare Pages 自定义头部配置
+# 确保 PWA 和 Service Worker 正常工作
+
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+
+# Service Worker 文件需要特殊的缓存策略
+/ngsw-worker.js
+  Cache-Control: no-cache, no-store, must-revalidate
+  Service-Worker-Allowed: /
+
+# Manifest 文件缓存策略
+/manifest.webmanifest
+  Cache-Control: public, max-age=31536000
+
+# 静态资源缓存策略
+/assets/*
+  Cache-Control: public, max-age=31536000
+
+# HTML 文件缓存策略
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# 安全头部
+/ngsw.json
+  Cache-Control: no-cache, no-store, must-revalidate
