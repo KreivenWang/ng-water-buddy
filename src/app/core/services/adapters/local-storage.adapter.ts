@@ -68,6 +68,8 @@ export class LocalStorageAdapter implements IStorageAdapter {
           avatar: '👧',
           avatarBgColor: '#FF6B6B',
           dailyGoal: 2000,
+          isOwner: true,
+          isActive: true,
           createdAt: new Date(),
           updatedAt: new Date()
         },
@@ -78,6 +80,8 @@ export class LocalStorageAdapter implements IStorageAdapter {
           avatar: '👦',
           avatarBgColor: '#4ECDC4',
           dailyGoal: 2000,
+          isOwner: false,
+          isActive: true,
           createdAt: new Date(),
           updatedAt: new Date()
         }
@@ -148,6 +152,8 @@ export class LocalStorageAdapter implements IStorageAdapter {
       avatar: creatorAvatar,
       avatarBgColor: AVATAR_COLORS[0],
       dailyGoal: 2000,
+      isOwner: true,
+      isActive: true,
       createdAt: new Date(),
       updatedAt: new Date()
     };
@@ -187,6 +193,8 @@ export class LocalStorageAdapter implements IStorageAdapter {
       avatar: memberAvatar,
       avatarBgColor: AVATAR_COLORS[Math.floor(Math.random() * AVATAR_COLORS.length)],
       dailyGoal: 2000,
+      isOwner: false,
+      isActive: true,
       createdAt: new Date(),
       updatedAt: new Date()
     };

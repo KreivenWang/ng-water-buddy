@@ -193,6 +193,25 @@
   box-shadow: var(--shadow-sm);
 }
 
+/* ========== 登录和权限提示 ========== */
+.login-prompt,
+.permission-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-3) var(--spacing-4);
+  background-color: var(--color-surface-variant);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+}
+
+.prompt-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+  text-align: center;
+}
+
 /* ========== 空状态 ========== */
 .empty-state {
   display: flex;

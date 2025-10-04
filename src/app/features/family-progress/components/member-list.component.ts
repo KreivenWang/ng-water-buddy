@@ -21,6 +21,8 @@ import { DailySummary } from '../../../models/daily-summary.interface';
 export class MemberListComponent {
   @Input() members: FamilyMember[] = [];
   @Input() dailySummary: DailySummary | null = null;
+  @Input() isAuthenticated: boolean = false;        // 是否已登录
+  @Input() currentMemberId: string | null = null;   // 当前登录用户的成员ID
   
   @Output() waterAdded = new EventEmitter<{ memberId: string; amount: number }>();
   @Output() memberClick = new EventEmitter<FamilyMember>();
@@ -63,6 +65,18 @@ export class MemberListComponent {
    * 处理快捷添加喝水
    */
   onQuickAdd(member: FamilyMember, amount: number): void {
+    // [关键点] 权限检查：只有登录用户才能添加记录
+    if (!this.isAuthenticated || !this.currentMemberId) {
+      console.warn('未登录用户无法添加喝水记录');
+      return;
+    }
+
+    // [关键点] 权限检查：只能为自己添加记录
+    if (this.currentMemberId !== member.id) {
+      console.warn('只能为自己添加喝水记录');
+      return;
+    }
+
     // [关键点] 触觉反馈
     if ('vibrate' in navigator) {
       navigator.vibrate(50);
@@ -72,6 +86,13 @@ export class MemberListComponent {
       memberId: member.id,
       amount
     });
+  }
+
+  /**
+   * 检查是否可以修改指定成员
+   */
+  canModifyMember(member: FamilyMember): boolean {
+    return this.isAuthenticated && this.currentMemberId === member.id;
   }
 
   /**

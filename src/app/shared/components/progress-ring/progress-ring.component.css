@@ -1,14 +1,149 @@
-/* TODO: 实现环形进度条样式 */
+/**
+ * Progress Ring Component Styles
+ * 环形进度条组件样式
+ */
+
+/* ========== 主容器 ========== */
 .progress-ring {
   position: relative;
+  width: 120px;
+  height: 120px;
   cursor: pointer;
+  
+  /* 过渡动画 */
+  transition: transform 0.2s ease-in-out;
 }
 
+.progress-ring:hover {
+  transform: scale(1.05);
+}
+
+.progress-ring:active {
+  transform: scale(0.95);
+}
+
+/* ========== SVG 样式 ========== */
+.progress-ring svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 进度圆环动画 */
+.progress-circle {
+  transition: stroke-dashoffset 0.8s ease-out;
+}
+
+/* ========== 圆环内容 ========== */
 .ring-content {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-1);
+  pointer-events: none;
 }
+
+/* ========== 头像 ========== */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ========== 成员名称 ========== */
+.member-name {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* ========== 百分比 ========== */
+.percentage {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* ========== 平板响应式 (≥768px) ========== */
+@media (min-width: 768px) {
+  .progress-ring {
+    width: 140px;
+    height: 140px;
+  }
+  
+  .avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+  }
+  
+  .member-name {
+    font-size: var(--font-size-sm);
+  }
+  
+  .percentage {
+    font-size: var(--font-size-base);
+  }
+}
+
+/* ========== 桌面端响应式 (≥1024px) ========== */
+@media (min-width: 1024px) {
+  .progress-ring {
+    width: 160px;
+    height: 160px;
+  }
+  
+  .avatar {
+    width: 56px;
+    height: 56px;
+    font-size: 28px;
+  }
+}
+
+/* ========== 尊重动画偏好设置 ========== */
+@media (prefers-reduced-motion: reduce) {
+  .progress-ring,
+  .progress-circle {
+    transition: none;
+  }
+}
+
+/**
+ * [设计说明]
+ * 
+ * 1. SVG 环形进度条：
+ *    - 背景圆环：浅灰色，透明度 0.3
+ *    - 进度圆环：根据进度动态变色（红→黄→绿）
+ *    - 圆角端点：stroke-linecap="round"
+ *    - 从顶部开始：transform="rotate(-90 60 60)"
+ * 
+ * 2. 交互反馈：
+ *    - 悬停：轻微放大（1.05倍）
+ *    - 点击：缩小（0.95倍）
+ *    - 进度动画：0.8秒缓动过渡
+ * 
+ * 3. 响应式设计：
+ *    - 移动端：120px
+ *    - 平板：140px
+ *    - 桌面端：160px
+ * 
+ * 4. 无障碍性：
+ *    - 圆环内容不可点击（pointer-events: none）
+ *    - 清晰的视觉层次
+ *    - 尊重用户动画偏好
+ */
 

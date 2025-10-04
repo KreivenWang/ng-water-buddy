@@ -4,10 +4,13 @@
 export interface FamilyMember {
   id: string;                    // UUID
   familyId: string;              // 关联家庭 ID
+  userId?: string;               // 关联用户ID（登录用户）
   name: string;                  // 成员名称
   avatar: string;                // 头像（emoji，如 '👤'）
   avatarBgColor: string;         // 头像背景色（如 '#FF6B6B'）
   dailyGoal: number;             // 每日目标（毫升），默认 2000
+  isOwner: boolean;              // 是否为家庭创建者
+  isActive: boolean;             // 是否激活状态
   createdAt: Date;
   updatedAt: Date;
 }

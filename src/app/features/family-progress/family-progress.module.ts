@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { FamilyProgressRoutingModule } from './family-progress-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 
@@ -8,6 +9,7 @@ import { ProgressOverviewComponent } from './components/progress-overview.compon
 import { MemberListComponent } from './components/member-list.component';
 import { AddWaterModalComponent } from './components/add-water-modal.component';
 import { HistoryCalendarComponent } from './components/history-calendar.component';
+import { PersonalWaterLogComponent } from './components/personal-water-log.component';
 
 // Containers
 import { FamilyDashboardComponent } from './containers/family-dashboard.component';
@@ -22,10 +24,12 @@ import { FamilyDashboardComponent } from './containers/family-dashboard.componen
     MemberListComponent,
     AddWaterModalComponent,
     HistoryCalendarComponent,
+    PersonalWaterLogComponent,
     FamilyDashboardComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
     SharedModule,
     FamilyProgressRoutingModule
   ]

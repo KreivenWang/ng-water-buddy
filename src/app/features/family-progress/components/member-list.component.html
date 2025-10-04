@@ -43,7 +43,7 @@
     </div>
     
     <!-- 快捷添加按钮 -->
-    <div class="quick-actions" (click)="$event.stopPropagation()">
+    <div class="quick-actions" (click)="$event.stopPropagation()" *ngIf="canModifyMember(member)">
       <button 
         class="quick-add-btn"
         (click)="onQuickAdd(member, 200)"
@@ -62,6 +62,16 @@
         type="button">
         +750ml
       </button>
+    </div>
+
+    <!-- 未登录提示 -->
+    <div class="login-prompt" *ngIf="!isAuthenticated">
+      <p class="prompt-text">请登录以添加喝水记录</p>
+    </div>
+
+    <!-- 权限提示 -->
+    <div class="permission-prompt" *ngIf="isAuthenticated && !canModifyMember(member)">
+      <p class="prompt-text">只能为自己添加记录</p>
     </div>
   </div>
 

@@ -1,23 +1,38 @@
-<!-- TODO: 实现环形进度条 SVG -->
 <div class="progress-ring" (click)="onRingClick()">
-  <svg width="120" height="120">
+  <svg width="120" height="120" viewBox="0 0 120 120">
     <!-- 背景圆环 -->
-    <circle cx="60" cy="60" r="54" fill="none" stroke="#e0e0e0" stroke-width="8"></circle>
+    <circle 
+      cx="60" 
+      cy="60" 
+      r="50" 
+      fill="none" 
+      stroke="var(--color-gray-200)" 
+      stroke-width="8"
+      opacity="0.3">
+    </circle>
+    
     <!-- 进度圆环 -->
     <circle 
       cx="60" 
       cy="60" 
-      r="54" 
+      r="50" 
       fill="none" 
       [attr.stroke]="strokeColor" 
       stroke-width="8"
       stroke-linecap="round"
-      [style.stroke-dasharray]="340"
-      [style.stroke-dashoffset]="340 - (340 * percentage / 100)">
+      [style.stroke-dasharray]="circumference"
+      [style.stroke-dashoffset]="strokeDashoffset"
+      class="progress-circle"
+      transform="rotate(-90 60 60)">
     </circle>
   </svg>
+  
   <div class="ring-content">
-    <div class="avatar" [style.background-color]="avatarBgColor">{{ avatar }}</div>
+    <div 
+      class="avatar" 
+      [style.background-color]="avatarBgColor">
+      {{ avatar }}
+    </div>
     <p class="member-name">{{ memberName }}</p>
     <p class="percentage">{{ percentage | number:'1.0-0' }}%</p>
   </div>

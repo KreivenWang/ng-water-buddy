@@ -1,15 +1,57 @@
-<!-- TODO: 实现成员卡片模板 -->
-<div class="member-card">
-  <div class="avatar" [style.background-color]="member.avatarBgColor">
-    {{ member.avatar }}
+<div class="member-card" (click)="onCardClick()">
+  <!-- 成员基本信息 -->
+  <div class="member-main">
+    <!-- 头像 -->
+    <div 
+      class="avatar" 
+      [style.background-color]="member.avatarBgColor">
+      {{ member.avatar }}
+    </div>
+    
+    <!-- 成员信息 -->
+    <div class="member-info">
+      <h3 class="member-name">{{ member.name }}</h3>
+      <p class="member-goal">目标: {{ member.dailyGoal }}ml</p>
+      <p class="member-progress">
+        今日: {{ currentAmount }}ml 
+        <span class="percentage" [style.color]="progressColor">
+          ({{ percentage | number:'1.0-0' }}%)
+        </span>
+      </p>
+    </div>
   </div>
-  <div class="member-info">
-    <h3>{{ member.name }}</h3>
-    <p>目标: {{ member.dailyGoal }}ml</p>
+  
+  <!-- 进度条 -->
+  <div class="progress-section">
+    <div class="progress-bar-container">
+      <div 
+        class="progress-bar-fill"
+        [class.completed]="percentage >= 100"
+        [style.background-color]="progressColor"
+        [style.width.%]="percentage">
+      </div>
+    </div>
+    <p class="progress-text" [style.color]="progressColor">
+      {{ progressText }}
+    </p>
   </div>
-  <div class="actions">
-    <button (click)="onEdit()">编辑</button>
-    <button (click)="onDelete()">删除</button>
+  
+  <!-- 操作按钮 -->
+  <div *ngIf="showActions" class="actions" (click)="$event.stopPropagation()">
+    <button 
+      class="action-btn edit-btn"
+      type="button"
+      (click)="onEdit($event)"
+      aria-label="编辑成员信息">
+      <span class="btn-icon">✏️</span>
+    </button>
+    <button 
+      class="action-btn delete-btn"
+      type="button"
+      (click)="onDelete($event)"
+      aria-label="删除成员">
+      <span class="btn-icon">🗑️</span>
+    </button>
   </div>
 </div>
 

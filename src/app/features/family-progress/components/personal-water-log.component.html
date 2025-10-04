@@ -1,0 +1,65 @@
+<div class="personal-water-log">
+  <!-- 用户信息卡片 -->
+  <div class="user-info-card">
+    <div class="user-avatar" [style.background-color]="user.avatarBgColor">
+      {{ user.avatar }}
+    </div>
+    <div class="user-details">
+      <h2 class="user-name">{{ user.name }}</h2>
+      <p class="user-goal">每日目标: {{ user.dailyGoal }}ml</p>
+      <p class="user-progress">
+        今日已喝 {{ userTodayData.totalAmount }}ml
+        <span class="percentage" [style.color]="progressColor">
+          ({{ progressPercentage | number:'1.0-0' }}%)
+        </span>
+      </p>
+    </div>
+  </div>
+
+  <!-- 进度条 -->
+  <div class="progress-section">
+    <div class="progress-bar-container">
+      <div 
+        class="progress-bar-fill"
+        [class.completed]="progressPercentage >= 100"
+        [style.background-color]="progressColor"
+        [style.width.%]="progressPercentage">
+      </div>
+    </div>
+    <p class="progress-text" [style.color]="progressColor">
+      {{ progressText }}
+    </p>
+    <p *ngIf="remainingAmount > 0" class="remaining-amount">
+      还需 {{ remainingAmount }}ml 完成目标
+    </p>
+  </div>
+
+  <!-- 快捷添加按钮 -->
+  <div class="quick-add-section">
+    <h3 class="section-title">快速添加</h3>
+    <div class="preset-buttons">
+      <button 
+        *ngFor="let amount of presetAmounts"
+        class="preset-btn"
+        type="button"
+        (click)="onQuickAdd(amount)"
+        [attr.aria-label]="'添加 ' + amount + ' 毫升水'">
+        +{{ amount }}ml
+      </button>
+    </div>
+  </div>
+
+  <!-- 今日记录统计 -->
+  <div class="stats-section">
+    <div class="stat-item">
+      <span class="stat-label">今日记录</span>
+      <span class="stat-value">{{ userTodayData.recordCount }} 次</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">平均单次</span>
+      <span class="stat-value">
+        {{ userTodayData.recordCount > 0 ? (userTodayData.totalAmount / userTodayData.recordCount | number:'1.0-0') : 0 }}ml
+      </span>
+    </div>
+  </div>
+</div>

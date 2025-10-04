@@ -20,19 +20,39 @@ export class ProgressRingComponent {
   @Output() ringClick = new EventEmitter<void>();
 
   /**
+   * 圆环半径
+   */
+  private readonly radius = 50;
+
+  /**
+   * 圆环周长
+   */
+  get circumference(): number {
+    return 2 * Math.PI * this.radius;
+  }
+
+  /**
    * 计算进度百分比
    */
   get percentage(): number {
+    if (!this.total || this.total === 0) return 0;
     return Math.min((this.progress / this.total) * 100, 100);
+  }
+
+  /**
+   * 计算进度圆环的 stroke-dashoffset
+   */
+  get strokeDashoffset(): number {
+    return this.circumference - (this.circumference * this.percentage / 100);
   }
 
   /**
    * 根据进度返回颜色
    */
   get strokeColor(): string {
-    if (this.percentage < 30) return 'var(--color-progress-low)';
-    if (this.percentage < 70) return 'var(--color-progress-medium)';
-    return 'var(--color-progress-high)';
+    if (this.percentage < 30) return '#FF4B4B';    // 红色
+    if (this.percentage < 70) return '#FFC800';    // 黄色
+    return '#58CC02';                               // 绿色
   }
 
   onRingClick(): void {

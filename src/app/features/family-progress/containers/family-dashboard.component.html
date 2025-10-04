@@ -1,25 +1,86 @@
 <div class="family-dashboard">
-  <!-- 进度总览组件 -->
-  <app-progress-overview 
-    *ngIf="dailySummary$ | async as summary"
-    [summary]="summary"
-    class="dashboard-section">
-  </app-progress-overview>
-  
-  <!-- 成员列表组件 -->
-  <app-member-list 
-    *ngIf="members$ | async as members; else loading"
-    [members]="members"
-    [dailySummary]="dailySummary$ | async"
-    (waterAdded)="onWaterAdded($event)"
-    (memberClick)="onMemberClick($event)"
-    class="dashboard-section">
-  </app-member-list>
+  <!-- 视图切换标签页 -->
+  <div class="view-tabs">
+    <button 
+      class="tab-btn"
+      [class.active]="isPersonalView"
+      (click)="switchToPersonalView()"
+      type="button">
+      <span class="tab-icon">👤</span>
+      <span class="tab-label">个人视图</span>
+    </button>
+    <button 
+      class="tab-btn"
+      [class.active]="isFamilyView"
+      (click)="switchToFamilyView()"
+      type="button">
+      <span class="tab-icon">👨‍👩‍👧‍👦</span>
+      <span class="tab-label">家庭视图</span>
+    </button>
+  </div>
 
-  <!-- 加载状态 -->
-  <ng-template #loading>
-    <div class="loading-container">
-      <p class="loading-text">加载中...</p>
+  <!-- 个人视图 -->
+  <div *ngIf="isPersonalView" class="personal-view">
+    <!-- 未登录状态 -->
+    <div *ngIf="!isAuthenticated" class="login-prompt">
+      <div class="prompt-content">
+        <div class="prompt-icon">💧</div>
+        <h2 class="prompt-title">欢迎使用 Water Buddy</h2>
+        <p class="prompt-description">请先登录以记录您的喝水进度</p>
+        <button 
+          class="login-btn"
+          type="button"
+          (click)="goToLogin()">
+          立即登录
+        </button>
+      </div>
     </div>
-  </ng-template>
+
+    <!-- 已登录的个人视图 -->
+    <div *ngIf="isAuthenticated && currentUser" class="personal-content">
+      <!-- 个人进度总览 -->
+      <app-progress-overview 
+        *ngIf="dailySummary$ | async as summary"
+        [summary]="summary"
+        class="dashboard-section">
+      </app-progress-overview>
+      
+      <!-- 个人喝水记录 -->
+      <app-personal-water-log 
+        [user]="currentUser"
+        [dailySummary]="dailySummary$ | async"
+        (waterAdded)="onWaterAdded($event)"
+        class="dashboard-section">
+      </app-personal-water-log>
+    </div>
+  </div>
+
+  <!-- 家庭视图 -->
+  <div *ngIf="isFamilyView" class="family-view">
+    <!-- 进度总览组件 -->
+    <app-progress-overview 
+      *ngIf="dailySummary$ | async as summary"
+      [summary]="summary"
+      class="dashboard-section">
+    </app-progress-overview>
+    
+    <!-- 成员列表组件 -->
+    <app-member-list 
+      *ngIf="members$ | async as members; else loading"
+      [members]="members"
+      [dailySummary]="dailySummary$ | async"
+      [isAuthenticated]="isAuthenticated"
+      [currentMemberId]="currentMemberId"
+      (waterAdded)="onWaterAdded($event)"
+      (memberClick)="onMemberClick($event)"
+      class="dashboard-section">
+    </app-member-list>
+
+    <!-- 加载状态 -->
+    <ng-template #loading>
+      <div class="loading-container">
+        <p class="loading-text">加载中...</p>
+      </div>
+    </ng-template>
+  </div>
 </div>

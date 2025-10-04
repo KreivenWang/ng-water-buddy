@@ -1,0 +1,280 @@
+/**
+ * Personal Water Log Component Styles
+ * 个人喝水记录组件样式
+ */
+
+/* ========== 主容器 ========== */
+.personal-water-log {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5);
+}
+
+/* ========== 用户信息卡片 ========== */
+.user-info-card {
+  display: flex;
+  gap: var(--spacing-4);
+  align-items: center;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-5);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+}
+
+.user-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  box-shadow: var(--shadow-sm);
+}
+
+.user-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.user-name {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.user-goal {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.user-progress {
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  margin: 0;
+  font-weight: var(--font-weight-medium);
+}
+
+.percentage {
+  font-weight: var(--font-weight-bold);
+}
+
+/* ========== 进度区域 ========== */
+.progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-5);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 12px;
+  background-color: var(--color-gray-200);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+[data-theme="dark"] .progress-bar-container {
+  background-color: var(--color-surface-variant);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.8s ease-out, background-color 0.3s ease;
+}
+
+.progress-bar-fill.completed {
+  background: linear-gradient(90deg, var(--color-success) 0%, #34D399 100%);
+}
+
+.progress-text {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+  text-align: center;
+}
+
+.remaining-amount {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+  text-align: center;
+}
+
+/* ========== 快捷添加区域 ========== */
+.quick-add-section {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-5);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+}
+
+.section-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-4) 0;
+  text-align: center;
+}
+
+.preset-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-3);
+}
+
+.preset-btn {
+  /* 布局 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* 尺寸 */
+  min-height: 56px;
+  padding: var(--spacing-4) var(--spacing-5);
+  
+  /* 样式 */
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border: none;
+  border-radius: var(--radius-lg);
+  
+  /* 字体 */
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  
+  /* 阴影 */
+  box-shadow: var(--shadow-sm);
+  
+  /* 过渡动画 */
+  transition: all 0.2s ease-in-out;
+  
+  /* 交互 */
+  cursor: pointer;
+}
+
+.preset-btn:hover {
+  background-color: var(--color-primary-dark);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.preset-btn:active {
+  transform: translateY(0) scale(0.95);
+}
+
+/* ========== 统计区域 ========== */
+.stats-section {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-3);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-1);
+  background-color: var(--color-surface-variant);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-4);
+}
+
+.stat-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+.stat-value {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+}
+
+/* ========== 平板响应式 (≥768px) ========== */
+@media (min-width: 768px) {
+  .user-info-card {
+    padding: var(--spacing-6);
+  }
+  
+  .user-avatar {
+    width: 80px;
+    height: 80px;
+    font-size: 40px;
+  }
+  
+  .user-name {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .progress-section,
+  .quick-add-section {
+    padding: var(--spacing-6);
+  }
+  
+  .preset-buttons {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .stats-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ========== 桌面端响应式 (≥1024px) ========== */
+@media (min-width: 1024px) {
+  .preset-buttons {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-4);
+  }
+  
+  .preset-btn {
+    min-height: 64px;
+    font-size: var(--font-size-xl);
+  }
+}
+
+/* ========== 尊重动画偏好设置 ========== */
+@media (prefers-reduced-motion: reduce) {
+  .progress-bar-fill,
+  .preset-btn {
+    transition: none;
+  }
+}
+
+/**
+ * [设计说明]
+ * 
+ * 1. 个人视图设计：
+ *    - 突出显示当前用户的头像和信息
+ *    - 大号快捷添加按钮，便于快速操作
+ *    - 清晰的进度指示和状态反馈
+ * 
+ * 2. 交互反馈：
+ *    - 按钮悬停和点击效果
+ *    - 进度条动画过渡
+ *    - 触觉反馈（移动端）
+ * 
+ * 3. 响应式布局：
+ *    - 移动端：2列按钮网格
+ *    - 平板/桌面端：4列按钮网格
+ *    - 自适应头像和文字大小
+ * 
+ * 4. 无障碍性：
+ *    - 清晰的 aria-label
+ *    - 足够的点击区域
+ *    - 高对比度颜色
+ */

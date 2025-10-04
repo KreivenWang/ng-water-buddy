@@ -1,9 +1,93 @@
-<!-- TODO: 实现添加喝水弹窗模板 -->
-<div class="modal-overlay" *ngIf="isOpen">
-  <div class="modal-content">
-    <h2>添加喝水记录</h2>
-    <app-quick-add-buttons (waterAdded)="onWaterAdded($event)"></app-quick-add-buttons>
-    <button class="close-btn" (click)="close()">关闭</button>
+<div class="modal-overlay" *ngIf="isOpen" (click)="onBackdropClick($event)">
+  <div class="modal-content" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+    <!-- 模态框头部 -->
+    <div class="modal-header">
+      <h2 id="modal-title" class="modal-title">添加喝水记录</h2>
+      <button 
+        class="close-btn" 
+        type="button"
+        (click)="close()"
+        aria-label="关闭模态框">
+        ✕
+      </button>
+    </div>
+
+    <!-- 成员信息 -->
+    <div *ngIf="member" class="member-info">
+      <div 
+        class="member-avatar"
+        [style.background-color]="member.avatarBgColor">
+        {{ member.avatar }}
+      </div>
+      <div class="member-details">
+        <h3 class="member-name">{{ member.name }}</h3>
+        <p class="member-progress">
+          今日已喝 {{ currentAmount }}ml / {{ member.dailyGoal }}ml
+          <span class="percentage">({{ progressPercentage | number:'1.0-0' }}%)</span>
+        </p>
+        <p *ngIf="remainingAmount > 0" class="remaining-goal">
+          还需 {{ remainingAmount }}ml 完成目标
+        </p>
+        <p *ngIf="remainingAmount === 0" class="goal-completed">
+          🎉 今日目标已完成！
+        </p>
+      </div>
+    </div>
+
+    <!-- 快捷添加按钮 -->
+    <div class="quick-add-section" *ngIf="!showCustomInput">
+      <h3 class="section-title">选择水量</h3>
+      <div class="preset-buttons">
+        <button 
+          *ngFor="let amount of presetAmounts"
+          class="preset-btn"
+          type="button"
+          (click)="onPresetAmountAdded(amount)"
+          [attr.aria-label]="'添加 ' + amount + ' 毫升水'">
+          +{{ amount }}ml
+        </button>
+      </div>
+      
+      <button 
+        class="custom-btn"
+        type="button"
+        (click)="showCustomAmountInput()">
+        自定义水量
+      </button>
+    </div>
+
+    <!-- 自定义输入 -->
+    <div class="custom-input-section" *ngIf="showCustomInput">
+      <h3 class="section-title">输入水量</h3>
+      <div class="input-group">
+        <input 
+          type="number"
+          class="amount-input"
+          [(ngModel)]="customAmount"
+          placeholder="请输入水量"
+          min="1"
+          max="5000"
+          #amountInput
+          (keydown.enter)="onCustomAmountAdded()">
+        <span class="input-suffix">ml</span>
+      </div>
+      
+      <div class="custom-actions">
+        <button 
+          class="action-btn secondary"
+          type="button"
+          (click)="cancelCustomInput()">
+          取消
+        </button>
+        <button 
+          class="action-btn primary"
+          type="button"
+          [disabled]="!customAmount || customAmount <= 0"
+          (click)="onCustomAmountAdded()">
+          添加
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 

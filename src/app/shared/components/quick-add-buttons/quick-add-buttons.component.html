@@ -1,12 +1,17 @@
-<!-- TODO: 实现快捷按钮模板 -->
 <div class="quick-add-container">
   <button 
     *ngFor="let amount of presetAmounts"
     class="quick-add-btn"
-    (click)="onAddWater(amount)">
+    type="button"
+    (click)="onAddWater(amount)"
+    [attr.aria-label]="'添加 ' + amount + ' 毫升水'">
     +{{ amount }}ml
   </button>
-  <button class="quick-add-btn custom" (click)="onCustomAmount()">
+  <button 
+    class="quick-add-btn custom" 
+    type="button"
+    (click)="onCustomAmount()"
+    aria-label="自定义添加水量">
     自定义
   </button>
 </div>
